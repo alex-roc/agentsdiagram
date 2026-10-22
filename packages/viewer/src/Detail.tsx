@@ -1,5 +1,5 @@
 import type { Diagnostic, Node as IrNode } from "@agentsdiagram/protocol";
-import { ICONS } from "./nodes";
+import { Icon } from "./icons";
 import { KIND_LABELS } from "./model";
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
@@ -25,31 +25,48 @@ export function Detail({
   const a = node.attrs;
   const extra = Object.entries(a.extra);
   return (
-    <aside className="panel detail" aria-label={`Details of ${node.name}`}>
+    <section className={`panel detail kind-${node.kind}`} aria-label={`Details of ${node.name}`}>
       <header className="panel-head">
-        <h2>
-          <span aria-hidden="true">{ICONS[node.kind]}</span> {node.name}
-        </h2>
-        <button className="icon-btn" onClick={onClose} aria-label="Close details">
-          ✕
+        <span className="ad-tile">
+          <Icon name={node.kind} size={16} />
+        </span>
+        <div className="panel-title">
+          <h2>{node.name}</h2>
+          <p>
+            {KIND_LABELS[node.kind]} in {node.framework === "pydantic_ai" ? "PydanticAI" : "smolagents"}
+            {node.status !== "resolved" && <span className={`ad-status s-${node.status}`}>{node.status}</span>}
+          </p>
+        </div>
+        <button className="icon-btn" onClick={onClose} aria-label="Close details" title="Close (Esc)">
+          <Icon name="close" />
         </button>
       </header>
+      {node.source && (
+        <button className="btn primary block" onClick={onReveal}>
+          <Icon name="code" />
+          <span className="btn-label">Go to code</span>
+          <span className="btn-meta">
+            {node.source.file}:{node.source.range.start.line}
+          </span>
+        </button>
+      )}
       <dl>
-        <Row label="Kind">{KIND_LABELS[node.kind]}</Row>
-        <Row label="Framework">{node.framework}</Row>
-        <Row label="Status">{node.status}</Row>
         {a.agent_class && <Row label="Class">{a.agent_class}</Row>}
-        {a.model && <Row label="Model">{a.model}</Row>}
-        {a.instructions && <Row label="Instructions"><pre>{a.instructions}</pre></Row>}
-        {a.dynamic_instructions.length > 0 && <Row label="Dynamic instructions">{a.dynamic_instructions.join(", ")}</Row>}
+        {a.model && <Row label="Model"><code>{a.model}</code></Row>}
+        {a.instructions && <Row label="Instructions"><pre className="quote">{a.instructions}</pre></Row>}
+        {a.dynamic_instructions.length > 0 && (
+          <Row label="Dynamic instructions">
+            {a.dynamic_instructions.map((d) => <code key={d} className="pill">{d}</code>)}
+          </Row>
+        )}
         {a.description && <Row label="Description">{a.description}</Row>}
         {a.output_type && <Row label="Output type"><code>{a.output_type}</code></Row>}
         {a.deps_type && <Row label="Deps type"><code>{a.deps_type}</code></Row>}
         {a.signature && <Row label="Signature"><code>{a.signature}</code></Row>}
-        {a.takes_ctx !== null && <Row label="takes_ctx">{String(a.takes_ctx)}</Row>}
+        {a.takes_ctx !== null && <Row label="Takes context">{a.takes_ctx ? "Yes" : "No"}</Row>}
         {a.url && <Row label="URL"><code>{a.url}</code></Row>}
         {a.command && <Row label="Command"><code>{a.command}</code></Row>}
-        {a.docstring && <Row label="Docstring"><pre>{a.docstring}</pre></Row>}
+        {a.docstring && <Row label="Docstring"><pre className="quote">{a.docstring}</pre></Row>}
         {a.badges.length > 0 && (
           <Row label="Badges">
             {a.badges.map((b) => (
@@ -58,35 +75,24 @@ export function Detail({
           </Row>
         )}
         {extra.length > 0 && (
-          <Row label="Extra">
+          <Row label="More">
             <pre>{extra.map(([k, v]) => `${k}: ${typeof v === "string" ? v : JSON.stringify(v)}`).join("\n")}</pre>
           </Row>
         )}
-        {node.source && (
-          <Row label="Source">
-            <code>
-              {node.source.file}:{node.source.range.start.line}
-            </code>
-          </Row>
-        )}
       </dl>
-      {node.source && (
-        <button className="btn" onClick={onReveal}>
-          Go to code
-        </button>
-      )}
       {diagnostics.length > 0 && (
         <>
-          <h3>Node diagnostics</h3>
+          <h3>Problems in this node</h3>
           <ul className="diag-list">
             {diagnostics.map((d, i) => (
               <li key={i} className={`sev-${d.severity}`}>
-                <code>{d.code}</code> {d.message}
+                <span className="diag-msg">{d.message}</span>
+                <code className="diag-code">{d.code}</code>
               </li>
             ))}
           </ul>
         </>
       )}
-    </aside>
+    </section>
   );
 }

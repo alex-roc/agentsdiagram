@@ -53,7 +53,7 @@ export function staticTransport(data: unknown, mermaid: string | null): ViewerTr
         const { file, range } = message.source;
         window.location.href = revealUrl(result.project.root, file, range.start.line, range.start.column);
       } else if (message.type === "copyMermaid" && mermaid !== null) {
-        void navigator.clipboard?.writeText(mermaid);
+        copyText(mermaid);
       }
     },
     subscribe(listener) {
@@ -61,6 +61,22 @@ export function staticTransport(data: unknown, mermaid: string | null): ViewerTr
       return () => clearTimeout(t);
     },
   };
+}
+
+/** Clipboard API when allowed (secure contexts), else the old textarea + execCommand route. */
+function copyText(text: string): void {
+  const fallback = () => {
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+  };
+  if (navigator.clipboard) navigator.clipboard.writeText(text).catch(fallback);
+  else fallback();
 }
 
 function scriptText(id: string): string | null {

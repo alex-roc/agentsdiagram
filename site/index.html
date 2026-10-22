@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agentsdiagram — see your AI agents</title>
+<meta name="description" content="Static analysis of PydanticAI and smolagents code that draws your agents, tools, MCP servers, delegation and flows. Your code is parsed, never run.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235b5bd6'/%3E%3Cpath d='M10 10.5 22 16 10 21.5' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Ccircle cx='10' cy='10.5' r='3.2' fill='%23fff'/%3E%3Ccircle cx='22' cy='16' r='3.2' fill='%23fff'/%3E%3Ccircle cx='10' cy='21.5' r='3.2' fill='%23fff'/%3E%3C/svg%3E">
+<script>
+  // Apply a stored theme before the first paint. Same key as the viewer, so the demos follow it.
+  try {
+    var t = localStorage.getItem("agentsdiagram.theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  } catch (e) {}
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="./" aria-label="agentsdiagram home">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7"/><path d="M10 10.5 22 16 10 21.5"/><circle cx="10" cy="10.5" r="3.2"/><circle cx="22" cy="16" r="3.2"/><circle cx="10" cy="21.5" r="3.2"/></svg>
+      <span>agentsdiagram</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#get">Get it</a>
+      <a href="https://github.com/alex-roc/agentsdiagram">GitHub</a>
+      <button class="theme" type="button" id="theme" aria-label="Switch to dark theme">
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero wrap">
+    <h1>See your AI agents.</h1>
+    <p class="lede">
+      agentsdiagram reads the code of your <strong>PydanticAI</strong> and <strong>smolagents</strong>
+      agents and draws them: agents, tools, toolsets, MCP servers, capabilities, delegation,
+      hand-off workflows and pydantic-graph flows. Your code is parsed, never run.
+    </p>
+    <div class="cmd" id="hero-cmd">
+      <span class="prompt" aria-hidden="true">$</span>
+      <code>uvx agentsdiagram scan . -f html -o agents.html</code>
+      <button type="button" class="copy" data-copy="uvx agentsdiagram scan . -f html -o agents.html">Copy</button>
+    </div>
+  </section>
+
+  <section class="demo wrap" aria-label="Live demo">
+    <div class="demo-bar">
+      <div class="tabs" role="tablist" aria-label="Example project">
+        <button type="button" role="tab" id="tab-support" aria-selected="true" aria-controls="demo-panel" data-demo="support">
+          <span class="mono">support_desk</span> <span class="fw">PydanticAI</span>
+        </button>
+        <button type="button" role="tab" id="tab-research" aria-selected="false" aria-controls="demo-panel" tabindex="-1" data-demo="research">
+          <span class="mono">research_team</span> <span class="fw">smolagents</span>
+        </button>
+      </div>
+      <a class="full" id="demo-full" href="demo/support-desk.html" target="_blank" rel="noopener">Open full screen</a>
+    </div>
+
+    <div class="demo-body" id="demo-panel" role="tabpanel" aria-labelledby="tab-support">
+      <div class="code">
+        <div class="code-head">
+          <span class="mono" id="code-file">examples/support_desk/agents.py</span>
+          <span class="muted">excerpt</span>
+        </div>
+<pre class="src" data-src="support"><code><span class="v">billing</span> = <span class="f">Agent</span>(
+    <span class="s">"openai:gpt-5-mini"</span>,
+    name=<span class="s">"billing"</span>,
+    toolsets=[crm.<span class="f">prefixed</span>(<span class="s">"crm"</span>)],
+)
+
+<span class="v">tech</span> = <span class="f">Agent</span>(
+    <span class="s">"anthropic:claude-sonnet-5-5"</span>,
+    name=<span class="s">"tech"</span>,
+    tools=[<span class="f">Tool</span>(status_page, takes_ctx=<span class="k">False</span>)],
+    toolsets=[help_center],  <span class="c"># MCPToolset</span>
+    capabilities=[
+        <span class="f">NativeTool</span>(<span class="f">WebSearchTool</span>()),
+        <span class="f">Thinking</span>(effort=<span class="s">"medium"</span>),
+    ],
+)
+
+<span class="v">triage</span> = <span class="f">Agent</span>(<span class="s">"openai:gpt-5"</span>, name=<span class="s">"triage"</span>)
+
+<span class="d">@triage.tool</span>
+<span class="k">async def</span> <span class="f">ask_billing</span>(ctx, question: <span class="k">str</span>) -&gt; <span class="k">str</span>:
+    <span class="c"># an agent run inside a tool: delegation</span>
+    r = <span class="k">await</span> billing.<span class="f">run</span>(question, deps=ctx.deps)
+    <span class="k">return</span> r.output</code></pre>
+<pre class="src" data-src="research" hidden><code><span class="d">@tool</span>
+<span class="k">def</span> <span class="f">plot</span>(path: <span class="k">str</span>, x: <span class="k">str</span>, y: <span class="k">str</span>) -&gt; <span class="k">str</span>:
+    <span class="s">"""Draw a line chart and return the image path."""</span>
+
+<span class="v">web_researcher</span> = <span class="f">ToolCallingAgent</span>(
+    tools=[<span class="f">WebSearchTool</span>(), <span class="f">VisitWebpageTool</span>()],
+    model=model,
+    name=<span class="s">"web_researcher"</span>,
+    description=<span class="s">"Searches the web, reads pages."</span>,
+)
+
+<span class="v">analyst</span> = <span class="f">CodeAgent</span>(
+    tools=[<span class="f">CsvSummary</span>(), plot],
+    model=model,
+    name=<span class="s">"analyst"</span>,
+    description=<span class="s">"Analyses CSV data."</span>,
+)
+
+<span class="v">papers</span> = <span class="f">StdioServerParameters</span>(command=<span class="s">"uvx"</span>, ...)
+
+<span class="k">with</span> <span class="f">ToolCollection</span>.<span class="f">from_mcp</span>(papers, ...) <span class="k">as</span> arxiv:
+    <span class="v">lead</span> = <span class="f">CodeAgent</span>(
+        tools=[*arxiv.tools],
+        model=model,
+        managed_agents=[web_researcher, analyst],
+    )</code></pre>
+        <p class="code-foot" id="code-foot">
+          The diagram also reads <span class="mono">tools.py</span>, <span class="mono">escalation.py</span>
+          and <span class="mono">flow.py</span>.
+          <a href="https://github.com/alex-roc/agentsdiagram/tree/main/examples/support_desk" id="code-link">Full source</a>
+        </p>
+      </div>
+      <div class="frame">
+        <iframe id="demo-frame" src="demo/support-desk.html" title="Interactive diagram of the support_desk example"></iframe>
+      </div>
+    </div>
+    <p class="demo-note">This is the real viewer, generated by <span class="mono">agentsdiagram scan</span> from the
+      <a href="https://github.com/alex-roc/agentsdiagram/tree/main/examples">examples folder</a>.
+      Click a node to see where it is defined; drag, zoom and filter by kind.</p>
+  </section>
+
+  <section class="sec wrap" id="how">
+    <h2>How it works</h2>
+    <div class="how">
+      <div class="how-text">
+        <p>
+          agentsdiagram is static analysis. It parses your Python files with LibCST and looks for the
+          constructs each framework uses to declare agents, tools and their wiring. Nothing is imported
+          or executed: no API keys, no dependencies of your project, no network.
+        </p>
+        <p>
+          The result is a small, versioned JSON graph. The CLI turns it into Mermaid, Markdown or a
+          self-contained HTML page; the VS Code extension keeps it next to your code and redraws it as
+          you type.
+        </p>
+        <p>
+          Anything that only exists at runtime, like tools fetched from a server or lists built in a
+          loop, shows up as a dashed <em>dynamic</em> node instead of silently disappearing.
+        </p>
+      </div>
+      <figure class="pipe" aria-label="Pipeline">
+        <ol>
+          <li><span class="mono">your code</span><span class="muted">.py files, read as text</span></li>
+          <li><span class="mono">adapters</span><span class="muted">pydantic_ai, smolagents</span></li>
+          <li><span class="mono">IR</span><span class="muted">versioned JSON graph</span></li>
+          <li class="outs"><span class="mono">Mermaid · HTML viewer · VS Code</span><span class="muted">front ends</span></li>
+        </ol>
+      </figure>
+    </div>
+    <p class="truth">The code stays the source of truth. The diagram is drawn from it on every scan and on every keystroke in VS Code; there is no second model to keep in sync.</p>
+  </section>
+
+  <section class="sec wrap" id="coverage">
+    <h2>What it understands</h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Framework coverage">
+      <table>
+        <thead>
+          <tr><th scope="col"></th><th scope="col">PydanticAI 2.x</th><th scope="col">smolagents 1.x</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><i class="dot" style="--c:var(--k-agent)"></i>Agents</th>
+            <td><code>Agent(...)</code>, <code>Agent.from_file("spec.yaml")</code>, factories (<code>make_agent()</code>)</td>
+            <td><code>CodeAgent</code>, <code>ToolCallingAgent</code></td></tr>
+          <tr><th scope="row"><i class="dot" style="--c:var(--k-tool)"></i>Tools</th>
+            <td><code>@agent.tool</code>, <code>@agent.tool_plain</code>, <code>tools=[f, Tool(...)]</code></td>
+            <td><code>@tool</code>, <code>Tool</code> subclasses, default tools, <code>add_base_tools</code></td></tr>
+          <tr><th scope="row"><i class="dot" style="--c:var(--k-toolset)"></i>Toolsets</th>
+            <td><code>FunctionToolset</code>, wrappers (<code>.prefixed()</code>, <code>.filtered()</code>…), <code>@agent.toolset</code></td>
+            <td><code>ToolCollection</code>, Hub/Space/LangChain sources</td></tr>
+          <tr><th scope="row"><i class="dot" style="--c:var(--k-mcp_server)"></i>MCP</th>
+            <td><code>MCPToolset(...)</code>, <code>load_mcp_toolsets("mcp.json")</code>, <code>MCP(url=...)</code></td>
+            <td><code>ToolCollection.from_mcp</code>, <code>MCPClient</code></td></tr>
+          <tr><th scope="row"><i class="dot" style="--c:var(--k-workflow)"></i>Multi-agent</th>
+            <td>agent run inside a tool, <code>SubAgents</code>, hand-off functions</td>
+            <td><code>managed_agents=[...]</code></td></tr>
+          <tr><th scope="row"><i class="dot" style="--c:var(--k-graph)"></i>Flows</th>
+            <td>pydantic-graph <code>GraphBuilder</code> (steps, decisions, joins) and <code>BaseNode</code></td>
+            <td class="muted">—</td></tr>
+          <tr><th scope="row"><i class="dot" style="--c:var(--warn)"></i>Checks</th>
+            <td>v1 API still in use</td>
+            <td>managed agents without name/description, <code>@tool</code> without hints, name clashes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Full coverage matrices:
+      <a href="https://github.com/alex-roc/agentsdiagram/blob/main/docs/adapters/pydantic_ai.md">PydanticAI</a> ·
+      <a href="https://github.com/alex-roc/agentsdiagram/blob/main/docs/adapters/smolagents.md">smolagents</a></p>
+  </section>
+
+  <section class="sec wrap" id="get">
+    <h2>Get it</h2>
+    <div class="get">
+      <ol class="steps">
+        <li>
+          <h3>Run it once, nothing to install</h3>
+          <p>With <a href="https://docs.astral.sh/uv/">uv</a>, from the root of your project:</p>
+          <div class="cmd">
+            <span class="prompt" aria-hidden="true">$</span>
+            <code>uvx agentsdiagram scan .</code>
+            <button type="button" class="copy" data-copy="uvx agentsdiagram scan .">Copy</button>
+          </div>
+          <p class="small">Prints Mermaid. Add <code>-f html -o agents.html</code> for the interactive page,
+            <code>-f markdown</code> for GitHub, or run <code>agentsdiagram check .</code> in CI.</p>
+        </li>
+        <li>
+          <h3>Keep it next to your code</h3>
+          <p>The <strong>Agents Diagram</strong> extension shows a live diagram that follows your edits,
+            with “Show in diagram” code lenses and diagnostics. It runs the CLI through uv.</p>
+          <p class="links">
+            <a class="btn" href="https://marketplace.visualstudio.com/items?itemName=alex-roc.agentsdiagram">VS Code Marketplace</a>
+            <a class="btn" href="https://open-vsx.org/extension/alex-roc/agentsdiagram">Open VSX</a>
+          </p>
+          <p class="small">Open VSX covers Cursor, Windsurf and Positron.</p>
+        </li>
+        <li>
+          <h3>Or install the CLI</h3>
+          <div class="cmd">
+            <span class="prompt" aria-hidden="true">$</span>
+            <code>uv tool install agentsdiagram</code>
+            <button type="button" class="copy" data-copy="uv tool install agentsdiagram">Copy</button>
+          </div>
+          <p class="small">Also on <a href="https://pypi.org/project/agentsdiagram/">PyPI</a>
+            (<code>pip install agentsdiagram</code>). Python 3.11+.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="roadmap">
+    <h2>Roadmap</h2>
+    <dl class="road">
+      <div>
+        <dt><span class="ver">v0.3</span> Plan</dt>
+        <dd>Draw agents and tools that do not exist yet; agentsdiagram writes the stubs.</dd>
+      </div>
+      <div>
+        <dt><span class="ver">v0.4</span> Edit</dt>
+        <dd>Connect, add and remove tools and agents in the diagram. The change is written to your code
+          with LibCST, preserving formatting. The code stays the single source of truth.</dd>
+      </div>
+      <div>
+        <dt><span class="ver">later</span> More frameworks</dt>
+        <dd>Through adapters. See <a href="https://github.com/alex-roc/agentsdiagram/blob/main/docs/adding-a-framework.md">adding a framework</a>.</dd>
+      </div>
+    </dl>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <span>MIT © 2026 Alex Ojeda Copa</span>
+    <span class="foot-links">
+      <a href="https://github.com/alex-roc/agentsdiagram">GitHub</a>
+      <a href="https://github.com/alex-roc/agentsdiagram/blob/main/CHANGELOG.md">Changelog</a>
+      <a href="https://pypi.org/project/agentsdiagram/">PyPI</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var KEY = "agentsdiagram.theme";
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("theme");
+  var frame = document.getElementById("demo-frame");
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function current() {
+    return root.dataset.theme || (mq.matches ? "dark" : "light");
+  }
+  function label() {
+    themeBtn.setAttribute("aria-label", current() === "dark" ? "Switch to light theme" : "Switch to dark theme");
+  }
+  label();
+  mq.addEventListener("change", label);
+  themeBtn.addEventListener("click", function () {
+    var next = current() === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+    label();
+    // The viewer reads the same key on load: reload it so the demo follows.
+    try { frame.contentWindow.location.reload(); } catch (e) {}
+  });
+
+  // Demo switcher
+  var demos = {
+    support: {
+      page: "demo/support-desk.html",
+      title: "Interactive diagram of the support_desk example",
+      file: "examples/support_desk/agents.py",
+      foot: 'The diagram also reads <span class="mono">tools.py</span>, <span class="mono">escalation.py</span> and <span class="mono">flow.py</span>.',
+      link: "https://github.com/alex-roc/agentsdiagram/tree/main/examples/support_desk"
+    },
+    research: {
+      page: "demo/research-team.html",
+      title: "Interactive diagram of the research_team example",
+      file: "examples/research_team/team.py",
+      foot: 'One file: a manager <span class="mono">CodeAgent</span> with two managed agents and MCP tools.',
+      link: "https://github.com/alex-roc/agentsdiagram/blob/main/examples/research_team/team.py"
+    }
+  };
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var panel = document.getElementById("demo-panel");
+  var full = document.getElementById("demo-full");
+  var file = document.getElementById("code-file");
+  var foot = document.getElementById("code-foot");
+  var srcs = document.querySelectorAll("pre[data-src]");
+
+  function select(tab, focus) {
+    var key = tab.dataset.demo;
+    var d = demos[key];
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+    });
+    if (focus) tab.focus();
+    panel.setAttribute("aria-labelledby", tab.id);
+    Array.prototype.forEach.call(srcs, function (p) { p.hidden = p.dataset.src !== key; });
+    file.textContent = d.file;
+    foot.innerHTML = d.foot + ' <a href="' + d.link + '">Full source</a>';
+    full.href = d.page;
+    if (frame.getAttribute("src") !== d.page) {
+      frame.title = d.title;
+      frame.setAttribute("src", d.page);
+    }
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { select(t, false); });
+    t.addEventListener("keydown", function (e) {
+      var j = null;
+      if (e.key === "ArrowRight") j = (i + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") j = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") j = 0;
+      else if (e.key === "End") j = tabs.length - 1;
+      if (j !== null) { e.preventDefault(); select(tabs[j], true); }
+    });
+  });
+
+  // Copy buttons
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok ? Promise.resolve() : Promise.reject();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".copy"), function (b) {
+    b.addEventListener("click", function () {
+      var text = b.dataset.copy;
+      var p = navigator.clipboard && window.isSecureContext
+        ? navigator.clipboard.writeText(text).catch(function () { return fallbackCopy(text); })
+        : fallbackCopy(text);
+      p.then(function () { b.textContent = "Copied"; }, function () { b.textContent = "Press ⌘C"; })
+        .then(function () {
+          b.classList.add("done");
+          setTimeout(function () { b.textContent = "Copy"; b.classList.remove("done"); }, 1600);
+        });
+    });
+  });
+})();
+</script>
+</body>
+</html>

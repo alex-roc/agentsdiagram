@@ -2,7 +2,7 @@ import type { Project } from "@agentsdiagram/protocol";
 import { describe, expect, it } from "vitest";
 import sample from "../../protocol/fixtures/sample.json";
 import { layoutGraph } from "./layout";
-import { buildFlow, edgeLabel, kindsPresent, searchNodes, subtitleOf } from "./model";
+import { AGENT_SIZE, buildFlow, edgeLabel, kindCounts, kindsPresent, neighborhood, searchNodes, sizeOf, subtitleOf } from "./model";
 import { revealUrl, toGraphResult } from "./transport";
 
 const project = sample as unknown as Project;
@@ -99,5 +99,32 @@ describe("transport helpers", () => {
   });
   it("builds vscode:// links with 1-based column", () => {
     expect(revealUrl("/a/b/", "x/y.py", 3, 0)).toBe("vscode://file/a/b/x/y.py:3:1");
+  });
+});
+
+describe("neighborhood, counts and sizes", () => {
+  const project = sample as unknown as Project;
+  const graph = buildFlow(project);
+
+  it("a node's neighborhood is itself plus everything one edge away", () => {
+    const e = graph.edges[0]!;
+    const near = neighborhood(graph, e.source);
+    expect(near.has(e.source)).toBe(true);
+    expect(near.has(e.target)).toBe(true);
+    for (const id of near) {
+      const touches = id === e.source || graph.edges.some((x) => (x.source === e.source && x.target === id) || (x.target === e.source && x.source === id));
+      const family = graph.nodes.some((n) => (n.id === id && n.parentId === e.source) || (n.id === e.source && n.parentId === id));
+      expect(touches || family).toBe(true);
+    }
+  });
+
+  it("counts every node once by kind", () => {
+    const counts = kindCounts(project);
+    expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(project.nodes.length);
+  });
+
+  it("agents get the larger card", () => {
+    const agent = project.nodes.find((n) => n.kind === "agent")!;
+    expect(sizeOf(agent)).toEqual(AGENT_SIZE);
   });
 });

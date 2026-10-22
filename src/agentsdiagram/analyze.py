@@ -337,6 +337,24 @@ def analyze(
     return link(Analyzer(files, frameworks=frameworks, cache=cache, overrides=overrides))
 
 
+def _contains(outer: Range, inner: Range) -> bool:
+    def key(p: Position) -> tuple[int, int]:
+        return (p.line, p.column)
+
+    return key(outer.start) <= key(inner.start) and key(inner.end) <= key(outer.end)
+
+
+def _innermost_node(nodes: list[Node], ref: SourceRef) -> Node | None:
+    """The node a diagnostic is about: the smallest node whose source contains its range."""
+    best: Node | None = None
+    for n in nodes:
+        if n.source is None or n.source.file != ref.file or not _contains(n.source.range, ref.range):
+            continue
+        if best is None or best.source is None or _contains(best.source.range, n.source.range):
+            best = n
+    return best
+
+
 def link(an: Analyzer) -> Project:
     root = an.files.root
     seed_names = [module_name(root, p.resolve()) for p in an.files.seeds if an.worth_parsing(p)]
@@ -634,9 +652,7 @@ def _build(an: Analyzer, seeds: list[str], visible: set[str], links: list[_Link]
         diagnostics.extend(an.facts[name].diagnostics)
     for d in diagnostics:
         if d.node_id is None and d.ref is not None:
-            match = next(
-                (n for n in nodes if n.source and n.source.file == d.ref.file and n.source.range == d.ref.range), None
-            )
+            match = _innermost_node(nodes, d.ref)
             if match:
                 d.node_id = match.id
 

@@ -8,7 +8,15 @@ pydantic-graph flows.
 It is **static analysis**: your code is parsed, never imported or executed. No API keys, no
 dependencies of your project, no network.
 
-![The interactive viewer](docs/images/viewer.png)
+![The interactive viewer, light theme](docs/images/viewer.png)
+
+<details><summary>Dark theme</summary>
+
+![The interactive viewer, dark theme](docs/images/viewer-dark.png)
+
+</details>
+
+**Website and live demos:** <https://alex-roc.github.io/agentsdiagram/>
 
 - **CLI**: Mermaid, JSON or a self-contained interactive HTML page.
 - **VS Code extension** (also on Open VSX for Cursor, Windsurf and Positron): a live diagram next to
@@ -52,6 +60,13 @@ exclude = ["tests/**", "notebooks/**"]
 | Multi-agent | agent run inside a tool, `SubAgents`, hand-off functions | `managed_agents=[...]` |
 | Flows | pydantic-graph `GraphBuilder` (steps, decisions, joins) and `BaseNode` | — |
 | Checks | v1 API still in use | managed agents without name/description, `@tool` without hints, name clashes |
+
+Try it on the two projects in [`examples/`](examples/): a PydanticAI support desk and a
+smolagents research team (`uvx agentsdiagram scan examples -f html -o examples.html`).
+
+In the HTML page and in VS Code: click a node to see its details and its neighbors, `/` to
+search, the legend to show or hide node kinds, **Problems** for what the analysis found, and the
+moon/sun button for the theme (VS Code follows your editor theme).
 
 Anything that only exists at runtime (lists built in a loop, tools fetched from a server) shows up
 as a dashed **dynamic** node instead of silently disappearing. Full coverage matrices:

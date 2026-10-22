@@ -75,7 +75,18 @@ export interface Filter {
   hiddenKinds: ReadonlySet<Kind>;
 }
 
-export const NODE_SIZE = { width: 210, height: 64 };
+export const NODE_SIZE = { width: 212, height: 52 };
+/** Agents are the protagonists: a larger card with room for the model. */
+export const AGENT_SIZE = { width: 240, height: 68 };
+/** Start and end of a pydantic-graph flow. */
+export const TERMINAL_SIZE = { width: 96, height: 36 };
+
+export function sizeOf(n: IrNode): { width: number; height: number } {
+  if (n.kind === "agent") return AGENT_SIZE;
+  const role = n.attrs.extra["role"];
+  if (n.kind === "graph_step" && (role === "start" || role === "end")) return TERMINAL_SIZE;
+  return NODE_SIZE;
+}
 
 export function subtitleOf(n: IrNode): string | null {
   if (n.kind === "agent") return n.attrs.model ?? n.attrs.agent_class;
@@ -148,4 +159,25 @@ export function searchNodes(nodes: readonly FlowNode[], query: string): string[]
 export function kindsPresent(project: Project): Kind[] {
   const present = new Set(project.nodes.map((n) => n.kind));
   return KINDS.filter((k) => present.has(k));
+}
+
+/** Number of nodes of each kind (for the legend). */
+export function kindCounts(project: Project): Map<Kind, number> {
+  const counts = new Map<Kind, number>();
+  for (const n of project.nodes) counts.set(n.kind, (counts.get(n.kind) ?? 0) + 1);
+  return counts;
+}
+
+/** The node and everything one edge away from it (contains edges included, so a graph keeps its steps). */
+export function neighborhood(graph: FlowGraph, id: string): Set<string> {
+  const out = new Set([id]);
+  for (const e of graph.edges) {
+    if (e.source === id) out.add(e.target);
+    if (e.target === id) out.add(e.source);
+  }
+  for (const n of graph.nodes) {
+    if (n.parentId === id) out.add(n.id);
+    if (n.id === id && n.parentId) out.add(n.parentId);
+  }
+  return out;
 }

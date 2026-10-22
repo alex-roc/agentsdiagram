@@ -2,3 +2,4 @@
 dist/
 media/
 *.vsix
+.shots/

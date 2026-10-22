@@ -125,7 +125,7 @@
       dict({
         'code': 'AD203',
         'message': '@tool `bad_tool` needs type hints (parameters x missing).',
-        'node_id': None,
+        'node_id': 'smolagents:tool:smol.managed_without_name.bad_tool',
         'ref': dict({
           'file': 'smol/managed_without_name.py',
           'name_range': None,
@@ -145,7 +145,7 @@
       dict({
         'code': 'AD203',
         'message': '@tool `bad_tool` needs a docstring with an `Args:` section.',
-        'node_id': None,
+        'node_id': 'smolagents:tool:smol.managed_without_name.bad_tool',
         'ref': dict({
           'file': 'smol/managed_without_name.py',
           'name_range': None,

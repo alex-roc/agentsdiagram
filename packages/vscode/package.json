@@ -152,7 +152,8 @@
     "package": "vsce package --no-dependencies",
     "publish:vsce": "vsce publish --no-dependencies",
     "publish:ovsx": "ovsx publish --no-dependencies",
-    "test:e2e": "pnpm run build && vscode-test --label e2e"
+    "test:e2e": "pnpm run build && vscode-test --label e2e",
+    "test:visual": "pnpm run build && vscode-test --label visual"
   },
   "dependencies": {},
   "devDependencies": {

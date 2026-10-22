@@ -1,0 +1,58 @@
+name: Pages
+
+# Builds the website in site/ and the live demos (generated from examples/, not committed)
+# and deploys them to https://alex-roc.github.io/agentsdiagram/
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "examples/**"
+      - "packages/viewer/**"
+      - "src/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build site and demos
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: astral-sh/setup-uv@v10.3.2
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @agentsdiagram/viewer build
+      - name: Generate the demo pages
+        run: |
+          uv run agentsdiagram scan examples/support_desk -f html -o site/demo/support-desk.html --title "support_desk (PydanticAI)"
+          uv run agentsdiagram scan examples/research_team -f html -o site/demo/research-team.html --title "research_team (smolagents)"
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

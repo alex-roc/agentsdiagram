@@ -19,7 +19,7 @@ const common = {
 const configs = [
   { ...common, entryPoints: ["src/extension.ts"], outfile: "dist/extension.js" },
   // Tests are never shipped (.vscodeignore), so they stay unminified.
-  { ...common, minify: false, external: ["vscode", "mocha"], entryPoints: ["src/test/smoke.test.ts", "src/test/e2e.test.ts"], outdir: "dist/test" },
+  { ...common, minify: false, external: ["vscode", "mocha"], entryPoints: ["src/test/smoke.test.ts", "src/test/e2e.test.ts", "src/test/visual.test.ts"], outdir: "dist/test" },
 ];
 
 async function copyViewer() {

@@ -1,10 +1,16 @@
 // dagre layout: top level LR; each graph group is laid out internally (TB) and then
 // placed as one block of its computed size.
 import dagre from "@dagrejs/dagre";
-import { NODE_SIZE, type FlowGraph, type FlowNode } from "./model";
+import { NODE_SIZE, sizeOf, type FlowGraph, type FlowNode } from "./model";
 
 const GAP = 48;
 const GROUP_PAD = { x: 24, top: 44, bottom: 24 };
+
+interface LayoutEdge {
+  source: string;
+  target: string;
+  label?: string | undefined;
+}
 
 interface Box {
   width: number;
@@ -14,7 +20,7 @@ interface Box {
 function runDagre(
   ids: string[],
   size: (id: string) => Box,
-  edges: { source: string; target: string }[],
+  edges: LayoutEdge[],
   rankdir: "LR" | "TB",
 ): Map<string, { x: number; y: number }> {
   const g = new dagre.graphlib.Graph();
@@ -22,7 +28,11 @@ function runDagre(
   g.setDefaultEdgeLabel(() => ({}));
   const known = new Set(ids);
   for (const id of ids) g.setNode(id, { ...size(id) }); // dagre writes x/y into the label: never share objects
-  for (const e of edges) if (known.has(e.source) && known.has(e.target) && e.source !== e.target) g.setEdge(e.source, e.target);
+  for (const e of edges) {
+    if (!known.has(e.source) || !known.has(e.target) || e.source === e.target) continue;
+    // reserve room for the label so it is not drawn under a node
+    g.setEdge(e.source, e.target, e.label ? { width: e.label.length * 6.6 + 12, height: 18, labelpos: "c" } : {});
+  }
   dagre.layout(g);
   const out = new Map<string, { x: number; y: number }>();
   for (const id of ids) {
@@ -40,7 +50,7 @@ function runDagre(
 function layoutComponents(
   ids: string[],
   size: (id: string) => Box,
-  edges: { source: string; target: string }[],
+  edges: LayoutEdge[],
 ): Map<string, { x: number; y: number }> {
   const parent = new Map(ids.map((id) => [id, id]));
   const find = (x: string): string => {
@@ -95,6 +105,10 @@ export function layoutGraph(graph: FlowGraph): FlowGraph {
     }
   }
   const groupOf = (id: string) => byId.get(id)?.parentId ?? id;
+  const box = (id: string): Box => {
+    const n = byId.get(id);
+    return n ? sizeOf(n.data.ir) : NODE_SIZE;
+  };
 
   // 1. inside each group
   const sizes = new Map<string, Box>();
@@ -102,13 +116,12 @@ export function layoutGraph(graph: FlowGraph): FlowGraph {
   for (const [gid, kids] of children) {
     const ids = kids.map((k) => k.id);
     const inner = graph.edges.filter((e) => groupOf(e.source) === gid && groupOf(e.target) === gid && e.source !== gid);
-    const pos = runDagre(ids, () => NODE_SIZE, inner, "TB");
+    const pos = runDagre(ids, box, inner, "TB");
     let w = 0;
     let h = 0;
     for (const [id, p] of pos) {
-      w = Math.max(w, p.x + NODE_SIZE.width);
-      h = Math.max(h, p.y + NODE_SIZE.height);
-      placed.set(id, p);
+      w = Math.max(w, p.x + box(id).width);
+      h = Math.max(h, p.y + box(id).height);
     }
     for (const [id, p] of pos) placed.set(id, { x: p.x + GROUP_PAD.x, y: p.y + GROUP_PAD.top });
     sizes.set(gid, { width: w + GROUP_PAD.x * 2, height: h + GROUP_PAD.top + GROUP_PAD.bottom });
@@ -116,15 +129,15 @@ export function layoutGraph(graph: FlowGraph): FlowGraph {
 
   // 2. top level, groups as blocks; edges re-pointed at their group
   const top = graph.nodes.filter((n) => !n.parentId || !byId.has(n.parentId));
-  const topEdges = graph.edges.map((e) => ({ source: groupOf(e.source), target: groupOf(e.target) }));
-  const topPos = layoutComponents(top.map((n) => n.id), (id) => sizes.get(id) ?? NODE_SIZE, topEdges);
+  const topEdges = graph.edges.map((e) => ({ source: groupOf(e.source), target: groupOf(e.target), label: e.label }));
+  const topPos = layoutComponents(top.map((n) => n.id), (id) => sizes.get(id) ?? box(id), topEdges);
 
   // Only groups with children get a container size; everything else is a plain card.
   const nodes: FlowNode[] = graph.nodes.map((n) => {
     const isChild = Boolean(n.parentId && byId.has(n.parentId));
     const group = sizes.get(n.id);
     const position = (isChild ? placed.get(n.id) : topPos.get(n.id)) ?? { x: 0, y: 0 };
-    return { ...n, position, ...(group ?? NODE_SIZE) };
+    return { ...n, position, ...(group ?? box(n.id)) };
   });
   return { nodes, edges: graph.edges };
 }

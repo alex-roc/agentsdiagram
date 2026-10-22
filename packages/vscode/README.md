@@ -8,8 +8,12 @@ The analysis is static: it reads your Python source and never imports or runs it
 
 ## Features
 
-- Interactive diagram of agents, tools, toolsets, delegation and workflow edges.
-- Click a node to jump to its source; move the cursor in a `.py` file and the diagram follows.
+- Interactive diagram of agents, tools, toolsets, delegation and workflow edges, in your light
+  or dark theme.
+- Click a node to see its details and its neighbors; "Go to code" jumps to its source. Move the
+  cursor in a `.py` file and the diagram follows.
+- Search with `/`, filter node kinds from the legend, and open the Problems drawer from the
+  toolbar.
 - "Show in diagram" code lenses above agents and tools.
 - Diagnostics for things the analyzer cannot resolve statically.
 - Export to Mermaid: opens a Markdown document with a `mermaid` block ready for the built-in preview, or copy it from the diagram.

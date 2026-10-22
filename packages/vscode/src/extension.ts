@@ -86,10 +86,13 @@ function ensureStarted(): Promise<void> {
 }
 
 async function stopClient(): Promise<void> {
+  // a start still in flight would otherwise leave a second client (and duplicate code lenses) behind
+  const pending = starting;
+  starting = undefined;
+  if (pending) await pending.catch(() => undefined);
   panel.setBackend(undefined);
   const old = client;
   client = undefined;
-  starting = undefined;
   if (old) await old.stop().catch((err) => output.info(`stop failed: ${err}`));
 }
 

@@ -68,7 +68,11 @@ def main(argv: list[str] | None = None) -> int:
         try:
             from .lsp import serve
         except ImportError as exc:  # pragma: no cover - depends on the optional extra
-            print(f"agentsdiagram lsp needs the [lsp] extra: pip install 'agentsdiagram[lsp]' ({exc})", file=sys.stderr)
+            print(
+                f"agentsdiagram lsp needs the [lsp] extra: uvx --from 'agentsdiagram[lsp]' agentsdiagram lsp"
+                f" or pip install 'agentsdiagram[lsp]' ({exc})",
+                file=sys.stderr,
+            )
             return 2
         serve()
         return 0
@@ -122,6 +126,8 @@ def main(argv: list[str] | None = None) -> int:
     _write(text, args.output)
     if not project.nodes:
         print("agentsdiagram: no PydanticAI or smolagents agents found", file=sys.stderr)
+        if args.include:
+            print(f"  note: --include globs are relative to the project root ({project.root})", file=sys.stderr)
     return 0
 
 

@@ -14,4 +14,12 @@ export default defineConfig([
     workspaceFolder: fileURLToPath(new URL("../../tests/fixtures", import.meta.url)),
     mocha: { ui: "tdd", timeout: 120000 },
   },
+  // macOS screenshots of the panel on examples/ (manual: `pnpm test:visual`).
+  {
+    ...common,
+    label: "visual",
+    files: "dist/test/visual.test.js",
+    workspaceFolder: fileURLToPath(new URL("../../examples", import.meta.url)),
+    mocha: { ui: "tdd", timeout: 180000 },
+  },
 ]);

@@ -76,7 +76,45 @@ uv run pytest --snapshot-update   # after an intended output change
 pnpm build                        # viewer -> src/agentsdiagram/_static and packages/vscode/media
 pnpm schema                       # after changing ir.py: regenerate the schema and TS types
 pnpm --filter agentsdiagram test:e2e   # extension + real language server (needs uv)
+pnpm --filter agentsdiagram test:visual   # macOS, manual: screenshots of the panel on examples/
 ```
+
+`test:visual` opens `examples/` in a VS Code window, drives the panel (show a node, a real mouse
+click on "Go to code", cursor sync, light and dark themes, an unsaved edit) and saves one
+screenshot per step to `packages/vscode/.shots/` (ignored). It needs the Accessibility and Screen
+Recording permissions for the terminal. Helpers: `packages/vscode/scripts/window_shot.py` and
+`window_click.py` (uv scripts, pyobjc) capture and click one window even if others cover it.
+
+### Viewer
+
+`packages/viewer` is one React Flow app for both hosts. Design tokens live at the top of
+`styles.css`: a light and a dark set on `<html data-theme>`, and inside VS Code the editor's
+`--vscode-*` variables win, so the panel looks native in any theme. Icons are hand-drawn SVG
+paths (`icons.tsx`), no icon library. `model.ts` is pure (IR -> nodes, neighborhood, counts) and
+unit-tested; `layout.ts` runs dagre with per-kind node sizes and room for edge labels. Check UI
+changes in a browser on `examples/` (`agentsdiagram scan examples -f html`), light and dark,
+desktop and 390px wide.
 
 Fixtures live in `tests/fixtures` (their own project root). Oracle tests import them with the
 real libraries, so a fixture that stops importing is also a failing test.
+
+## Website
+
+`site/` is the landing page at <https://alex-roc.github.io/agentsdiagram/>: hand-written
+`index.html` + `style.css`, no build step. Its colour tokens mirror
+`packages/viewer/src/styles.css`, and it shares the viewer's `agentsdiagram.theme` key in
+`localStorage`, so the embedded demos follow the site's theme toggle.
+
+The live demos in `site/demo/` are generated, never committed (`.gitignore`):
+
+```bash
+pnpm --filter @agentsdiagram/viewer build   # only if src/agentsdiagram/_static/ is missing
+uv run agentsdiagram scan examples/support_desk -f html -o site/demo/support-desk.html --title "support_desk (PydanticAI)"
+uv run agentsdiagram scan examples/research_team -f html -o site/demo/research-team.html --title "research_team (smolagents)"
+python -m http.server 8000 -d site          # preview
+```
+
+`.github/workflows/pages.yml` does the same on every push to `main` that touches `site/`,
+`examples/`, `packages/viewer/` or `src/` (or by hand, *workflow_dispatch*) and deploys with
+`actions/deploy-pages`. One-time setup: repository Settings → Pages → Source: *GitHub Actions*.
+

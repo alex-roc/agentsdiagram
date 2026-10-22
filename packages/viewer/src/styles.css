@@ -1,152 +1,935 @@
-/* Theme: --vscode-* variables when hosted by VS Code, light/dark fallbacks otherwise. */
-:root {
-  --ad-bg: #ffffff;
-  --ad-fg: #1f2328;
-  --ad-muted: #656d76;
-  --ad-border: #d0d7de;
-  --ad-panel: #f6f8fa;
-  --ad-focus: #0969da;
-  --ad-btn-bg: #0969da;
-  --ad-btn-fg: #ffffff;
-  --ad-badge-bg: #ddf4ff;
-  --ad-badge-fg: #0550ae;
-  --ad-edge: #8c959f;
-  --ad-warn: #9a6700;
-  --ad-err: #cf222e;
-  --k-agent: #1a73e8; --k-tool: #188038; --k-toolset: #558b2f; --k-mcp_server: #e8710a;
-  --k-native_tool: #8430ce; --k-capability: #c2185b; --k-workflow: #f9a825;
-  --k-external_tool_source: #546e7a; --k-graph: #00838f; --k-graph_step: #00838f; --k-dynamic: #9e9e9e;
+/* agentsdiagram viewer.
+   Tokens: light and dark sets on <html data-theme>. Inside VS Code the editor's own --vscode-*
+   variables win for background, text, font and focus, so the panel looks native in any theme. */
+
+:root,
+:root[data-theme="light"] {
+  --canvas: #f5f6f8;
+  --surface: #ffffff;
+  --raised: #fbfbfc;
+  --line: #dde1e7;
+  --line-strong: #c4cad3;
+  --ink: #1b1f24;
+  --muted: #646d7a;
+  --accent: #5b5bd6;
+  --accent-ink: #ffffff;
+  --grid: #d3d8df;
+  --edge: #a3abb7;
+  --warn: #b26b00;
+  --err: #d1343b;
+  --shadow: 0 1px 2px rgb(27 31 36 / 6%), 0 2px 6px rgb(27 31 36 / 4%);
+  --k-agent: #5b5bd6;
+  --k-tool: #0f9f78;
+  --k-toolset: #5f8f14;
+  --k-mcp_server: #d9680f;
+  --k-native_tool: #9447d1;
+  --k-capability: #cf3f86;
+  --k-workflow: #b88600;
+  --k-external_tool_source: #5b6f86;
+  --k-graph: #0b93a8;
+  --k-graph_step: #0b93a8;
+  --k-dynamic: #858b95;
+  color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ad-bg: #1e1e1e;
-    --ad-fg: #d4d4d4;
-    --ad-muted: #9d9d9d;
-    --ad-border: #3c3c3c;
-    --ad-panel: #252526;
-    --ad-focus: #007fd4;
-    --ad-btn-bg: #0e639c;
-    --ad-btn-fg: #ffffff;
-    --ad-badge-bg: #4d4d4d;
-    --ad-badge-fg: #ffffff;
-    --ad-edge: #808080;
-    --ad-warn: #cca700;
-    --ad-err: #f48771;
-    --k-agent: #6cb0ff; --k-tool: #5fd07f; --k-toolset: #9ccc65; --k-mcp_server: #ffa04d;
-    --k-native_tool: #c58af9; --k-capability: #f06ca8; --k-workflow: #ffd54f;
-    --k-external_tool_source: #90a4ae; --k-graph: #4dd0e1; --k-graph_step: #4dd0e1; --k-dynamic: #bdbdbd;
+
+:root[data-theme="dark"] {
+  --canvas: #15171b;
+  --surface: #1e2127;
+  --raised: #23272e;
+  --line: #2f343d;
+  --line-strong: #414855;
+  --ink: #e5e8ec;
+  --muted: #8d96a5;
+  --accent: #9090f8;
+  --accent-ink: #15171b;
+  --grid: #2a2e36;
+  --edge: #5d6574;
+  --warn: #e3a53b;
+  --err: #f2777c;
+  --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 4px 12px rgb(0 0 0 / 18%);
+  --k-agent: #9090f8;
+  --k-tool: #3fd3a4;
+  --k-toolset: #a6d256;
+  --k-mcp_server: #ff9d57;
+  --k-native_tool: #c58cf6;
+  --k-capability: #f47fb6;
+  --k-workflow: #ecc045;
+  --k-external_tool_source: #9aabbf;
+  --k-graph: #4ccbe0;
+  --k-graph_step: #4ccbe0;
+  --k-dynamic: #9aa0aa;
+  color-scheme: dark;
+}
+
+/* Inside VS Code: follow the editor */
+body[class*="vscode-"] {
+  --canvas: var(--vscode-editor-background);
+  --ink: var(--vscode-editor-foreground);
+  --muted: var(--vscode-descriptionForeground);
+  --accent: var(--vscode-focusBorder);
+  --surface: color-mix(in srgb, var(--vscode-editor-foreground) 4%, var(--vscode-editor-background));
+  --raised: color-mix(in srgb, var(--vscode-editor-foreground) 7%, var(--vscode-editor-background));
+  --line: var(--vscode-widget-border, color-mix(in srgb, var(--vscode-editor-foreground) 14%, transparent));
+  --grid: color-mix(in srgb, var(--vscode-editor-foreground) 14%, transparent);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--vscode-font-family, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif);
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+code,
+pre,
+kbd,
+.mono {
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------- top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 10px 0 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  flex: none;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin-right: 6px;
+}
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  color: var(--accent-ink);
+  background: var(--accent);
+  flex: none;
+}
+.brand-name {
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+.search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 1 300px;
+  min-width: 140px;
+  height: 28px;
+  padding: 0 6px 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--vscode-input-background, var(--canvas));
+  color: var(--muted);
+}
+.search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--vscode-input-foreground, var(--ink));
+  font: inherit;
+}
+.search input::-webkit-search-cancel-button {
+  display: none;
+}
+.search kbd {
+  font-size: 11px;
+  line-height: 16px;
+  padding: 0 5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+}
+.count {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.spacer {
+  flex: 1;
+}
+.tbtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tbtn:hover {
+  background: var(--raised);
+  border-color: var(--line-strong);
+}
+.tbtn.icon {
+  width: 28px;
+  padding: 0;
+  justify-content: center;
+}
+.tbtn.on {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+.pcount {
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: center;
+}
+.pcount.err {
+  color: var(--err);
+  background: color-mix(in srgb, var(--err) 16%, transparent);
+}
+.pcount.warn {
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 16%, transparent);
+}
+
+/* ---------------------------------------------------------------- legend (also the filter) */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 7px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  flex: none;
+}
+.chip {
+  --k: var(--k-dynamic);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 8px 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+}
+.chip:hover {
+  border-color: var(--line-strong);
+}
+.chip:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.chip .swatch {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  color: var(--k);
+  background: color-mix(in srgb, var(--k) 16%, transparent);
+}
+.chip .n {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.chip.off {
+  color: var(--muted);
+  border-style: dashed;
+}
+.chip.off .swatch {
+  color: var(--muted);
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------- layout */
+.main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+.canvas {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+}
+.side {
+  width: clamp(260px, 34%, 340px);
+  overflow-y: auto;
+  border-left: 1px solid var(--line);
+  background: var(--surface);
+  flex: none;
+}
+@media (max-width: 680px) {
+  .main {
+    flex-direction: column;
+  }
+  .side {
+    width: auto;
+    max-width: none;
+    max-height: 50%;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .brand-name {
+    max-width: 120px;
+  }
+  .tbtn .label-long {
+    display: none;
+  }
+  .brand-name,
+  .react-flow__minimap {
+    display: none;
+  }
+  .legend {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .chip {
+    flex: none;
   }
 }
-html, body, #root { height: 100%; margin: 0; }
-body {
-  background: var(--vscode-editor-background, var(--ad-bg));
-  color: var(--vscode-editor-foreground, var(--ad-fg));
-  font-family: var(--vscode-font-family, system-ui, -apple-system, "Segoe UI", sans-serif);
-  font-size: var(--vscode-font-size, 13px);
+
+/* ---------------------------------------------------------------- side panels */
+.panel {
+  padding: 14px 16px 18px;
 }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-
-.viewer { --bd: var(--vscode-panel-border, var(--ad-border)); --fg: var(--vscode-editor-foreground, var(--ad-fg));
-  --muted: var(--vscode-descriptionForeground, var(--ad-muted)); --panel: var(--vscode-sideBar-background, var(--ad-panel));
-  --focus: var(--vscode-focusBorder, var(--ad-focus)); --bg: var(--vscode-editor-background, var(--ad-bg));
-  display: flex; flex-direction: column; height: 100%; }
-.toolbar { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-bottom: 1px solid var(--bd); flex-wrap: wrap; }
-.spacer { flex: 1; }
-.count { color: var(--muted); }
-.search { min-width: 180px; flex: 0 1 280px; padding: 4px 8px; color: var(--vscode-input-foreground, var(--fg));
-  background: var(--vscode-input-background, var(--bg)); border: 1px solid var(--vscode-input-border, var(--bd)); border-radius: 2px; font: inherit; }
-.search:focus, .btn:focus-visible, .link:focus-visible, .icon-btn:focus-visible, .chip:focus-within { outline: 1px solid var(--focus); outline-offset: 1px; }
-.btn { padding: 4px 12px; border: 1px solid transparent; border-radius: 2px; cursor: pointer; font: inherit;
-  color: var(--vscode-button-foreground, var(--ad-btn-fg)); background: var(--vscode-button-background, var(--ad-btn-bg)); }
-.btn:hover { background: var(--vscode-button-hoverBackground, var(--ad-btn-bg)); filter: brightness(1.1); }
-.btn.secondary { color: var(--vscode-button-secondaryForeground, var(--fg)); background: var(--vscode-button-secondaryBackground, transparent); border-color: var(--bd); }
-.icon-btn, .link { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; padding: 2px 6px; }
-.link { text-align: left; padding: 4px 0; width: 100%; }
-.link:hover { text-decoration: underline; }
-.filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 6px 8px; border: 0; border-bottom: 1px solid var(--bd); }
-.chip { display: inline-flex; gap: 4px; align-items: center; padding: 2px 8px; border-radius: 10px; border: 1px solid var(--k, var(--bd)); cursor: pointer; }
-.chip input { margin: 0; }
-.main { flex: 1; display: flex; min-height: 0; }
-.canvas { flex: 1; position: relative; min-width: 0; }
-.side { width: 320px; max-width: 45%; overflow-y: auto; border-left: 1px solid var(--bd); background: var(--panel); }
-@media (max-width: 640px) {
-  .main { flex-direction: column; }
-  .side { width: auto; max-width: none; max-height: 45%; border-left: 0; border-top: 1px solid var(--bd); }
+.panel + .panel {
+  border-top: 1px solid var(--line);
 }
-.panel { padding: 10px 12px; }
-.panel + .panel { border-top: 1px solid var(--bd); }
-.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.panel h2 { font-size: 1.15em; margin: 0; word-break: break-word; }
-.panel h3 { font-size: 1em; margin: 12px 0 6px; }
-dl { margin: 10px 0; }
-.d-row { margin-bottom: 8px; }
-dt { color: var(--muted); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.04em; }
-dd { margin: 2px 0 0; word-break: break-word; }
-pre { margin: 0; white-space: pre-wrap; font-family: var(--vscode-editor-font-family, ui-monospace, Menlo, monospace); }
-code { font-family: var(--vscode-editor-font-family, ui-monospace, Menlo, monospace); font-size: 0.95em; }
-.diag-list { list-style: none; padding: 0; margin: 0; }
-.diag-list li { padding: 3px 0 3px 8px; border-left: 3px solid var(--muted); margin-bottom: 4px; }
-.diag-list .sev-warning { border-color: var(--ad-warn); }
-.diag-list .sev-error { border-color: var(--ad-err); }
-.loc { color: var(--muted); }
-.overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none;
-  color: var(--muted); font-size: 1.1em; text-align: center; padding: 16px; }
-.overlay.error { color: var(--ad-err); }
-.banner { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 6; padding: 4px 12px; border-radius: 2px;
-  background: var(--ad-err); color: #fff; }
+.panel-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.panel-title {
+  flex: 1;
+  min-width: 0;
+}
+.panel h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  word-break: break-word;
+}
+.detail h2 {
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+}
+.panel-title p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.panel h3 {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  color: var(--muted);
+}
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  color: var(--muted);
+  flex: none;
+}
+.icon-btn:hover {
+  background: var(--raised);
+  color: var(--ink);
+}
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.btn.primary {
+  color: var(--vscode-button-foreground, var(--accent-ink));
+  background: var(--vscode-button-background, var(--accent));
+}
+.btn.primary:hover {
+  background: var(--vscode-button-hoverBackground, var(--accent));
+  filter: brightness(1.06);
+}
+.btn.block {
+  width: 100%;
+}
+.btn-label,
+.btn svg {
+  flex: none;
+  white-space: nowrap;
+}
+.btn-meta {
+  margin-left: auto;
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: 11px;
+  opacity: 0.8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+dl {
+  margin: 14px 0 0;
+}
+.d-row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--line);
+}
+dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+dd {
+  margin: 0;
+  min-width: 0;
+  word-break: break-word;
+}
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: 12px;
+}
+pre.quote {
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: var(--raised);
+}
+code {
+  font-size: 12px;
+}
+.pill {
+  display: inline-block;
+  margin: 0 4px 4px 0;
+  padding: 0 6px;
+  border-radius: 5px;
+  background: var(--raised);
+}
 
-/* React Flow theming */
-.react-flow { --xy-background-color: var(--bg); --xy-background-pattern-color: var(--bd);
-  --xy-controls-button-background-color: var(--panel); --xy-controls-button-background-color-hover: var(--bd);
-  --xy-controls-button-color: var(--fg); --xy-controls-button-border-color: var(--bd);
-  --xy-edge-label-background-color: var(--bg); --xy-edge-label-color: var(--muted);
-  --xy-node-boxshadow-selected: none; --xy-attribution-background-color: transparent; }
-.react-flow__edge-textbg { fill: var(--bg); }
-.react-flow__edge-text { fill: var(--muted); font-size: 11px; }
-.react-flow__handle { opacity: 0; pointer-events: none; }
+.diag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.diag-list li {
+  --sev: var(--muted);
+  position: relative;
+  border-radius: 6px;
+}
+.diag-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--sev);
+}
+.diag-list .sev-warning {
+  --sev: var(--warn);
+}
+.diag-list .sev-error {
+  --sev: var(--err);
+}
+.detail .diag-list li {
+  padding: 6px 8px 6px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.diag-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  padding: 7px 8px 7px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+.diag-btn:hover {
+  background: var(--raised);
+}
+.diag-meta {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 0;
+}
+.diag-code {
+  color: var(--sev);
+  font-size: 11px;
+  font-weight: 600;
+}
+.loc {
+  color: var(--muted);
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-/* Edges */
-.edge .react-flow__edge-path { stroke: var(--ad-edge); stroke-width: 1.5; }
-.edge-wraps .react-flow__edge-path { stroke-dasharray: 5 4; }
-.edge-provides .react-flow__edge-path { stroke: var(--k-toolset); }
-.edge-runs .react-flow__edge-path { stroke: var(--k-workflow); }
-.edge-transitions .react-flow__edge-path { stroke: var(--k-graph); }
-.edge-delegates_to .react-flow__edge-path, .edge-manages .react-flow__edge-path { stroke: var(--k-agent); stroke-width: 3; }
-.edge-manages .react-flow__edge-path { stroke: var(--k-capability); }
-.edge.touched .react-flow__edge-path { stroke: var(--focus); stroke-width: 3; }
+/* ---------------------------------------------------------------- canvas states */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--muted);
+  pointer-events: none;
+}
+.overlay strong {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+.overlay span {
+  max-width: 46ch;
+}
+.overlay.error strong {
+  color: var(--err);
+}
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.banner {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  max-width: 80%;
+  padding: 6px 12px;
+  border: 1px solid color-mix(in srgb, var(--err) 40%, transparent);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--err);
+  box-shadow: var(--shadow);
+}
 
-/* Nodes */
-.ad-node { --k: var(--k-dynamic); box-sizing: border-box; width: 100%; height: 100%; display: flex; gap: 8px; align-items: center;
-  padding: 6px 10px; background: color-mix(in srgb, var(--k) 14%, var(--bg)); border: 1.5px solid var(--k);
-  border-radius: 6px; color: var(--fg); overflow: hidden; }
-.ad-icon { font-size: 18px; flex: none; }
-.ad-body { min-width: 0; }
-.ad-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ad-sub, .ad-status { font-size: 0.85em; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ad-status { font-style: italic; }
-.ad-badges { display: flex; gap: 3px; flex-wrap: nowrap; overflow: hidden; }
-.ad-badge { display: inline-block; font-size: 0.78em; padding: 0 6px; border-radius: 8px; margin-right: 3px; white-space: nowrap;
-  background: var(--vscode-badge-background, var(--ad-badge-bg)); color: var(--vscode-badge-foreground, var(--ad-badge-fg)); }
-.kind-agent { --k: var(--k-agent); border-width: 2.5px; border-radius: 8px; }
-.kind-tool { --k: var(--k-tool); border-radius: 24px; }
-.kind-toolset { --k: var(--k-toolset); border-radius: 4px; box-shadow: 4px 4px 0 -1px var(--bg), 4px 4px 0 0 var(--k); }
-.kind-mcp_server { --k: var(--k-mcp_server); border-radius: 14px / 22px; border-style: double; border-width: 4px; }
-.kind-native_tool { --k: var(--k-native_tool); border-radius: 2px 18px; }
-.kind-capability { --k: var(--k-capability); border-radius: 18px 2px; }
-.kind-workflow { --k: var(--k-workflow); border-radius: 0; border-left-width: 6px; }
-.kind-external_tool_source { --k: var(--k-external_tool_source); border-radius: 14px / 22px; border-style: double; border-width: 4px; }
-.kind-graph_step { --k: var(--k-graph_step); border-radius: 24px; }
-.kind-graph_step.terminal { border-radius: 50%; justify-content: center; font-size: 0.85em; text-transform: uppercase; }
-.kind-graph_step.terminal .ad-icon { display: none; }
-.kind-dynamic { --k: var(--k-dynamic); border-style: dashed; }
-.status-partial, .status-dynamic { border-style: dotted; border-width: 2px; }
-.status-planned { border-style: dashed; }
-.status-stale { opacity: 0.5; }
-.ad-node.dim, .ad-group.dim { opacity: 0.25; }
-.ad-node.match, .ad-group.match { box-shadow: 0 0 0 3px #f9a825; }
-.ad-node.selected, .ad-group.selected { box-shadow: 0 0 0 2px var(--focus); }
+/* ---------------------------------------------------------------- React Flow */
+.react-flow {
+  --xy-background-color: var(--canvas);
+  --xy-background-pattern-color: var(--grid);
+  --xy-controls-button-background-color: var(--surface);
+  --xy-controls-button-background-color-hover: var(--raised);
+  --xy-controls-button-color: var(--ink);
+  --xy-controls-button-color-hover: var(--ink);
+  --xy-controls-button-border-color: var(--line);
+  --xy-controls-box-shadow: var(--shadow);
+  --xy-minimap-background-color: var(--surface);
+  --xy-minimap-mask-background-color: color-mix(in srgb, var(--canvas) 70%, transparent);
+  --xy-edge-label-background-color: var(--canvas);
+  --xy-edge-label-color: var(--muted);
+  --xy-node-boxshadow-selected: none;
+  --xy-attribution-background-color: transparent;
+}
+.react-flow__controls {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.react-flow__controls-button {
+  width: 28px;
+  height: 28px;
+}
+.react-flow__minimap {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.react-flow__minimap-node {
+  fill: var(--k, var(--edge));
+  stroke: none;
+}
+.react-flow__edge-textbg {
+  fill: var(--canvas);
+}
+.react-flow__edge-text {
+  fill: var(--muted);
+  font-size: 11px;
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+}
+.react-flow__handle {
+  opacity: 0;
+  pointer-events: none;
+}
+.react-flow__node {
+  cursor: pointer;
+}
 
-.ad-group { box-sizing: border-box; width: 100%; height: 100%; border: 1.5px dashed var(--k-graph); border-radius: 10px;
-  background: color-mix(in srgb, var(--k-graph) 6%, transparent); }
-.ad-group-title { padding: 8px 12px; font-weight: 600; color: var(--k-graph); }
-.ad-group-fw { margin-left: 8px; font-weight: 400; font-size: 0.85em; color: var(--muted); }
+/* Edges: color says what the relation is, weight says how much it matters */
+.edge .react-flow__edge-path {
+  stroke: var(--edge);
+  stroke-width: 1.4;
+  transition: opacity 0.15s, stroke 0.15s;
+}
+.edge-wraps .react-flow__edge-path {
+  stroke-dasharray: 4 4;
+}
+.edge-provides .react-flow__edge-path {
+  stroke: color-mix(in srgb, var(--k-toolset) 70%, var(--edge));
+}
+.edge-runs .react-flow__edge-path {
+  stroke: var(--k-workflow);
+  stroke-width: 1.8;
+}
+.edge-transitions .react-flow__edge-path {
+  stroke: var(--k-graph);
+}
+.edge-delegates_to .react-flow__edge-path,
+.edge-manages .react-flow__edge-path {
+  stroke: var(--k-agent);
+  stroke-width: 2.2;
+}
+.edge.touched .react-flow__edge-path {
+  stroke: var(--accent);
+  stroke-width: 2.4;
+}
+.edge.faded {
+  opacity: 0.18;
+}
+.react-flow__edge.faded .react-flow__edge-textwrapper {
+  opacity: 0.3;
+}
+
+/* ---------------------------------------------------------------- nodes */
+.kind-agent { --k: var(--k-agent); }
+.kind-tool { --k: var(--k-tool); }
+.kind-toolset { --k: var(--k-toolset); }
+.kind-mcp_server { --k: var(--k-mcp_server); }
+.kind-native_tool { --k: var(--k-native_tool); }
+.kind-capability { --k: var(--k-capability); }
+.kind-workflow { --k: var(--k-workflow); }
+.kind-external_tool_source { --k: var(--k-external_tool_source); }
+.kind-graph { --k: var(--k-graph); }
+.kind-graph_step { --k: var(--k-graph_step); }
+.kind-dynamic { --k: var(--k-dynamic); }
+
+.ad-node {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 0 12px 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  transition: opacity 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.ad-node:hover {
+  border-color: color-mix(in srgb, var(--k) 55%, var(--line));
+}
+.ad-tile {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  color: var(--k);
+  background: color-mix(in srgb, var(--k) 14%, transparent);
+  flex: none;
+}
+.ad-body {
+  min-width: 0;
+  flex: 1;
+}
+.ad-title {
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ad-sub {
+  margin-top: 1px;
+  font-size: 11.5px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ad-badges {
+  display: flex;
+  gap: 4px;
+  margin-top: 3px;
+  overflow: hidden;
+}
+.ad-badge {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 5px;
+  font-size: 10.5px;
+  line-height: 16px;
+  white-space: nowrap;
+  color: var(--muted);
+  background: var(--raised);
+  border: 1px solid var(--line);
+  margin-right: 4px;
+}
+.ad-badges .ad-badge {
+  margin-right: 0;
+}
+.ad-status {
+  font-size: 10.5px;
+  line-height: 16px;
+  padding: 0 6px;
+  border-radius: 5px;
+  color: var(--muted);
+  border: 1px dashed var(--line-strong);
+}
+.ad-node .ad-status {
+  position: absolute;
+  top: -9px;
+  right: 10px;
+  background: var(--surface);
+}
+.ad-status.s-stale {
+  color: var(--warn);
+  border-color: var(--warn);
+}
+
+/* Agents: the protagonists */
+.ad-node.kind-agent {
+  border-color: color-mix(in srgb, var(--k) 45%, var(--line));
+  border-radius: 11px;
+  padding-left: 10px;
+}
+.ad-node.kind-agent .ad-tile {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  color: var(--accent-ink);
+  background: var(--k);
+}
+.ad-node.kind-agent .ad-title {
+  font-size: 13.5px;
+}
+.ad-model {
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: 11px;
+}
+body[class*="vscode-"] .ad-node.kind-agent .ad-tile {
+  color: var(--vscode-editor-background);
+}
+
+/* Shapes that carry meaning */
+.ad-node.kind-tool,
+.ad-node.kind-graph_step {
+  border-radius: 26px;
+}
+.ad-node.kind-toolset {
+  box-shadow: var(--shadow), 3px 3px 0 -1px var(--surface), 3px 3px 0 0 var(--line-strong);
+}
+.ad-node.kind-workflow {
+  border-left: 3px solid var(--k);
+}
+.ad-node.kind-dynamic,
+.ad-node.status-dynamic,
+.ad-node.status-partial {
+  border-style: dashed;
+  border-color: var(--line-strong);
+  box-shadow: none;
+  background: transparent;
+}
+.ad-node.status-planned {
+  border-style: dashed;
+}
+.ad-node.status-stale {
+  opacity: 0.55;
+}
+
+.ad-terminal {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--k-graph);
+  border: 1px solid color-mix(in srgb, var(--k-graph) 50%, transparent);
+  background: color-mix(in srgb, var(--k-graph) 12%, var(--surface));
+}
+
+/* State */
+.ad-node.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent), var(--shadow);
+}
+.ad-node.match {
+  border-color: var(--k-workflow);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--k-workflow) 35%, transparent);
+}
+.ad-node.dim,
+.ad-group.dim,
+.ad-terminal.dim {
+  opacity: 0.22;
+}
+
+.ad-group {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed color-mix(in srgb, var(--k-graph) 55%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--k-graph) 5%, transparent);
+  transition: opacity 0.15s;
+}
+.ad-group.selected {
+  border-style: solid;
+  border-color: var(--accent);
+}
+.ad-group-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
+  color: var(--k-graph);
+}
+.ad-group-name {
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+  font-weight: 600;
+  color: var(--ink);
+}
+.ad-group-fw {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+.react-flow__minimap-node.kind-graph {
+  fill-opacity: 0.18;
+}
+
+/* Problem marker: a dot on the top-left corner of the card */
+.ad-problem {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--canvas);
+}
+.ad-problem.p-error {
+  background: var(--err);
+}
+.ad-problem.p-warning {
+  background: var(--warn);
+}
