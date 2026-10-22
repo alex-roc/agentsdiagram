@@ -65,6 +65,10 @@ jobs:
     needs: [build, pypi]
     runs-on: ubuntu-latest
     environment: release
+    env:
+      # step `if:` cannot read step-level env, so the secrets are exposed at job level
+      OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      VSCE_PAT: ${{ secrets.VSCE_PAT }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -75,8 +79,6 @@ jobs:
         with:
           node-version: 24
       - name: Open VSX
-        env:
-          OVSX_PAT: ${{ secrets.OVSX_PAT }}
         if: env.OVSX_PAT != ''
         run: npx --yes ovsx@1.3.0 publish vsix/*.vsix -p "$OVSX_PAT"
       - name: Azure login (Marketplace via Entra ID)
@@ -90,8 +92,6 @@ jobs:
         if: vars.AZURE_CLIENT_ID != ''
         run: npx --yes @vscode/vsce@4.0.0 publish --packagePath vsix/*.vsix --azure-credential
       - name: VS Code Marketplace (PAT, until 2026-12-01)
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
         if: vars.AZURE_CLIENT_ID == '' && env.VSCE_PAT != ''
         run: npx --yes @vscode/vsce@4.0.0 publish --packagePath vsix/*.vsix -p "$VSCE_PAT"
 
