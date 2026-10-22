@@ -1,0 +1,4 @@
+# Separate project root for the test fixtures (see tests/conftest.py).
+[project]
+name = "fixtures"
+version = "0"

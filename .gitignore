@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+# viewer bundle (built by pnpm, shipped via hatch `artifacts`)
+src/agentsdiagram/_static/
+# Node
+node_modules/
+packages/*/dist/
+packages/vscode/out/
+*.vsix
+# local
+.DS_Store
+CLAUDE.md
+.claude/

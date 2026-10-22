@@ -1,0 +1,4000 @@
+{
+  "ir_version": "1",
+  "tool_version": "0.1.0",
+  "root": "tests/fixtures",
+  "frameworks": [
+    "pydantic_ai",
+    "smolagents"
+  ],
+  "files": [
+    {
+      "path": "pai/base_nodes.py",
+      "module": "pai.base_nodes",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "03e22c54466b44903167304519bab096a92ef8f16fcb077fdcdf5b5282fe56a2"
+    },
+    {
+      "path": "pai/basic_tools.py",
+      "module": "pai.basic_tools",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "87f547ca52377f4d9045942b9a105c2de34bfe3b3a0efd0faa34c776902e58bd"
+    },
+    {
+      "path": "pai/dynamic.py",
+      "module": "pai.dynamic",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "e90c25f1c8381d2ce588f9cb42911120be2081ca3bbfd479d19a1e265e602ae9"
+    },
+    {
+      "path": "pai/graph_builder.py",
+      "module": "pai.graph_builder",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "ef64c3caca6b8b70cbba2f23b2a17aaaac9bd7cc423f83fcac544b45e4e9b988"
+    },
+    {
+      "path": "pai/multi/agents.py",
+      "module": "pai.multi.agents",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "ecd04a233d03dc598b764b1446a9a3b399c19b89248057771af0fe50dce08104"
+    },
+    {
+      "path": "pai/multi/orchestrator.py",
+      "module": "pai.multi.orchestrator",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "99e10b8b402742e6eef8190c0c19f795354ac312df7f711ab98bdafc50adb742"
+    },
+    {
+      "path": "pai/spec.py",
+      "module": "pai.spec",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "f34fcf1031ead9b74f193240c6f0f6015ffca65f991745cc8c4a21e1df8dff35"
+    },
+    {
+      "path": "pai/toolsets_mcp.py",
+      "module": "pai.toolsets_mcp",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "5071168ec5f67560ee158aac2285a9ac1d970d4e86147e2a33f0c8c51f2461b3"
+    },
+    {
+      "path": "pai/v1_api.py",
+      "module": "pai.v1_api",
+      "frameworks": [
+        "pydantic_ai"
+      ],
+      "status": "ok",
+      "sha256": "6d703c8d13651a8d98e9ed9f85d0e612dcdd7d48f1a7264394cb9d1b4b94cfca"
+    },
+    {
+      "path": "smol/managed.py",
+      "module": "smol.managed",
+      "frameworks": [
+        "smolagents"
+      ],
+      "status": "ok",
+      "sha256": "bbeaecbcd6d0c6e76e6358ef22abd0b277f97a6ab7e74e936bf4b566ac825bab"
+    },
+    {
+      "path": "smol/managed_without_name.py",
+      "module": "smol.managed_without_name",
+      "frameworks": [
+        "smolagents"
+      ],
+      "status": "ok",
+      "sha256": "73740d0f39633ca215b27780915417426d80a44282eb93e6ff251a8e377ee215"
+    },
+    {
+      "path": "smol/mcp.py",
+      "module": "smol.mcp",
+      "frameworks": [
+        "smolagents"
+      ],
+      "status": "ok",
+      "sha256": "ae19de6305584d7929f332c1f3facf77ea6c79c38b49a8b40ba13b1ba25a001d"
+    },
+    {
+      "path": "smol/tool_class.py",
+      "module": "smol.tool_class",
+      "frameworks": [
+        "smolagents"
+      ],
+      "status": "ok",
+      "sha256": "94af65c1da43afae8c748ac1c6f8ef50254fd3681c0d40f69f98757d4e967633"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "pydantic_ai:agent:pai.basic_tools.assistant",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "assistant",
+      "status": "resolved",
+      "source": {
+        "file": "pai/basic_tools.py",
+        "range": {
+          "start": {
+            "line": 18,
+            "column": 12
+          },
+          "end": {
+            "line": 25,
+            "column": 1
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 18,
+            "column": 0
+          },
+          "end": {
+            "line": 18,
+            "column": 9
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "openai:gpt-5",
+        "instructions": "You are a helpful travel assistant.",
+        "dynamic_instructions": [
+          "add_city"
+        ],
+        "description": null,
+        "output_type": "str",
+        "deps_type": "Deps",
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "output_validator"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.dynamic.agent",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "agent",
+      "status": "partial",
+      "source": {
+        "file": "pai/dynamic.py",
+        "range": {
+          "start": {
+            "line": 10,
+            "column": 8
+          },
+          "end": {
+            "line": 10,
+            "column": 17
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 10,
+            "column": 0
+          },
+          "end": {
+            "line": 10,
+            "column": 5
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "openai:gpt-5",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.graph_builder.summarizer",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "summarizer",
+      "status": "resolved",
+      "source": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 8,
+            "column": 13
+          },
+          "end": {
+            "line": 8,
+            "column": 58
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 8,
+            "column": 0
+          },
+          "end": {
+            "line": 8,
+            "column": 10
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "openai:gpt-5-mini",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.multi.agents.researcher",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "researcher",
+      "status": "resolved",
+      "source": {
+        "file": "pai/multi/agents.py",
+        "range": {
+          "start": {
+            "line": 5,
+            "column": 13
+          },
+          "end": {
+            "line": 5,
+            "column": 86
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 5,
+            "column": 0
+          },
+          "end": {
+            "line": 5,
+            "column": 10
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "openai:gpt-5-mini",
+        "instructions": "Find facts.",
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.multi.agents.writer",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "writer",
+      "status": "resolved",
+      "source": {
+        "file": "pai/multi/agents.py",
+        "range": {
+          "start": {
+            "line": 6,
+            "column": 9
+          },
+          "end": {
+            "line": 6,
+            "column": 83
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 6,
+            "column": 0
+          },
+          "end": {
+            "line": 6,
+            "column": 6
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "openai:gpt-5",
+        "instructions": "Write a short report.",
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.multi.orchestrator.lead",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "lead",
+      "status": "resolved",
+      "source": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 15,
+            "column": 7
+          },
+          "end": {
+            "line": 19,
+            "column": 1
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 15,
+            "column": 0
+          },
+          "end": {
+            "line": 15,
+            "column": 4
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "openai:gpt-5",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.multi.orchestrator.reviewer",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "reviewer",
+      "status": "partial",
+      "source": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 13,
+            "column": 11
+          },
+          "end": {
+            "line": 13,
+            "column": 40
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 13,
+            "column": 0
+          },
+          "end": {
+            "line": 13,
+            "column": 8
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "model",
+        "instructions": "Review the report critically.",
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.spec.spec_agent",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "spec_agent",
+      "status": "resolved",
+      "source": {
+        "file": "pai/spec.py",
+        "range": {
+          "start": {
+            "line": 5,
+            "column": 13
+          },
+          "end": {
+            "line": 5,
+            "column": 42
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 5,
+            "column": 0
+          },
+          "end": {
+            "line": 5,
+            "column": 10
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent (spec)",
+        "model": "anthropic:claude-sonnet-5-5",
+        "instructions": "You answer questions about the docs.",
+        "dynamic_instructions": [],
+        "description": "An agent defined in YAML",
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "Thinking"
+        ],
+        "extra": {
+          "spec": "agent.yaml"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.toolsets_mcp.analyst",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "analyst",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 38,
+            "column": 10
+          },
+          "end": {
+            "line": 48,
+            "column": 1
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 38,
+            "column": 0
+          },
+          "end": {
+            "line": 38,
+            "column": 7
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "anthropic:claude-sonnet-5-5",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "Thinking"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.v1_api.legacy",
+      "kind": "agent",
+      "framework": "pydantic_ai",
+      "name": "legacy",
+      "status": "resolved",
+      "source": {
+        "file": "pai/v1_api.py",
+        "range": {
+          "start": {
+            "line": 7,
+            "column": 9
+          },
+          "end": {
+            "line": 7,
+            "column": 53
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 7,
+            "column": 0
+          },
+          "end": {
+            "line": 7,
+            "column": 6
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "Agent",
+        "model": "openai:gpt-4o",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1",
+      "kind": "capability",
+      "framework": "pydantic_ai",
+      "name": "SubAgents",
+      "status": "resolved",
+      "source": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 18,
+            "column": 18
+          },
+          "end": {
+            "line": 18,
+            "column": 73
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "tool_name": "delegate_task"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:capability:pai.toolsets_mcp.research",
+      "kind": "capability",
+      "framework": "pydantic_ai",
+      "name": "research",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 27,
+            "column": 11
+          },
+          "end": {
+            "line": 27,
+            "column": 77
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 27,
+            "column": 0
+          },
+          "end": {
+            "line": 27,
+            "column": 8
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": "Look things up on the web",
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:graph:pai.base_nodes.<graph>",
+      "kind": "graph",
+      "framework": "pydantic_ai",
+      "name": "base_nodes graph",
+      "status": "resolved",
+      "source": {
+        "file": "pai/base_nodes.py",
+        "range": {
+          "start": {
+            "line": 11,
+            "column": 0
+          },
+          "end": {
+            "line": 15,
+            "column": 22
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "style": "BaseNode"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:graph:pai.graph_builder.build.<locals>.g",
+      "kind": "graph",
+      "framework": "pydantic_ai",
+      "name": "build",
+      "status": "resolved",
+      "source": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 17,
+            "column": 8
+          },
+          "end": {
+            "line": 17,
+            "column": 55
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 17,
+            "column": 4
+          },
+          "end": {
+            "line": 17,
+            "column": 5
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "state_type": "State",
+          "output_type": "str"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "end",
+      "status": "resolved",
+      "source": {
+        "file": "pai/base_nodes.py",
+        "range": {
+          "start": {
+            "line": 11,
+            "column": 0
+          },
+          "end": {
+            "line": 15,
+            "column": 22
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "role": "end"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.base_nodes.Ask",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "Ask",
+      "status": "resolved",
+      "source": {
+        "file": "pai/base_nodes.py",
+        "range": {
+          "start": {
+            "line": 11,
+            "column": 0
+          },
+          "end": {
+            "line": 15,
+            "column": 22
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 11,
+            "column": 6
+          },
+          "end": {
+            "line": 11,
+            "column": 9
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Ask a question.",
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.base_nodes.Check",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "Check",
+      "status": "resolved",
+      "source": {
+        "file": "pai/base_nodes.py",
+        "range": {
+          "start": {
+            "line": 19,
+            "column": 0
+          },
+          "end": {
+            "line": 21,
+            "column": 24
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 19,
+            "column": 6
+          },
+          "end": {
+            "line": 19,
+            "column": 11
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "fetch",
+      "status": "resolved",
+      "source": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 20,
+            "column": 4
+          },
+          "end": {
+            "line": 22,
+            "column": 21
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 20,
+            "column": 14
+          },
+          "end": {
+            "line": 20,
+            "column": 19
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Fetch the document.",
+        "signature": "async def fetch(ctx: StepContext[State, None, None]) -> str",
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "decision",
+      "status": "resolved",
+      "source": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 36,
+            "column": 12
+          },
+          "end": {
+            "line": 38,
+            "column": 42
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "role": "decision"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "end",
+      "status": "resolved",
+      "source": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 17,
+            "column": 8
+          },
+          "end": {
+            "line": 17,
+            "column": 55
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "role": "end"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "start",
+      "status": "resolved",
+      "source": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 17,
+            "column": 8
+          },
+          "end": {
+            "line": 17,
+            "column": 55
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "role": "start"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "skip",
+      "status": "resolved",
+      "source": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 30,
+            "column": 4
+          },
+          "end": {
+            "line": 31,
+            "column": 25
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 30,
+            "column": 14
+          },
+          "end": {
+            "line": 30,
+            "column": 18
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": "async def skip(ctx: StepContext[State, None, str]) -> str",
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize",
+      "kind": "graph_step",
+      "framework": "pydantic_ai",
+      "name": "summarize",
+      "status": "resolved",
+      "source": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 25,
+            "column": 4
+          },
+          "end": {
+            "line": 27,
+            "column": 56
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 25,
+            "column": 14
+          },
+          "end": {
+            "line": 25,
+            "column": 23
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Summarize with an agent.",
+        "signature": "async def summarize(ctx: StepContext[State, None, str]) -> str",
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:mcp_server:pai.spec.spec_agent.<MCP>https://docs.example.com/mcp",
+      "kind": "mcp_server",
+      "framework": "pydantic_ai",
+      "name": "MCP docs.example.com",
+      "status": "resolved",
+      "source": {
+        "file": "pai/spec.py",
+        "range": {
+          "start": {
+            "line": 5,
+            "column": 13
+          },
+          "end": {
+            "line": 5,
+            "column": 42
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": "https://docs.example.com/mcp",
+        "command": null,
+        "badges": [
+          "capability"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:mcp_server:pai.toolsets_mcp.<MCP>#1",
+      "kind": "mcp_server",
+      "framework": "pydantic_ai",
+      "name": "MCP mcp.example.com",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 45,
+            "column": 8
+          },
+          "end": {
+            "line": 45,
+            "column": 46
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": "https://mcp.example.com/mcp",
+        "command": null,
+        "badges": [
+          "capability"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:mcp_server:pai.toolsets_mcp.docs",
+      "kind": "mcp_server",
+      "framework": "pydantic_ai",
+      "name": "MCP docs.example.com",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 25,
+            "column": 7
+          },
+          "end": {
+            "line": 25,
+            "column": 49
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 25,
+            "column": 0
+          },
+          "end": {
+            "line": 25,
+            "column": 4
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": "https://docs.example.com/mcp",
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:mcp_server:pai.toolsets_mcp.files",
+      "kind": "mcp_server",
+      "framework": "pydantic_ai",
+      "name": "files",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 24,
+            "column": 8
+          },
+          "end": {
+            "line": 24,
+            "column": 101
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 24,
+            "column": 0
+          },
+          "end": {
+            "line": 24,
+            "column": 5
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": "uvx mcp-server-filesystem /tmp",
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:mcp_server:pai.v1_api.server",
+      "kind": "mcp_server",
+      "framework": "pydantic_ai",
+      "name": "MCP python",
+      "status": "resolved",
+      "source": {
+        "file": "pai/v1_api.py",
+        "range": {
+          "start": {
+            "line": 6,
+            "column": 9
+          },
+          "end": {
+            "line": 6,
+            "column": 59
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 6,
+            "column": 0
+          },
+          "end": {
+            "line": 6,
+            "column": 6
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": "python -m my_server",
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:native_tool:pai.toolsets_mcp.<WebFetch>#1",
+      "kind": "native_tool",
+      "framework": "pydantic_ai",
+      "name": "WebFetch",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 44,
+            "column": 8
+          },
+          "end": {
+            "line": 44,
+            "column": 18
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "native-or-local"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:native_tool:pai.toolsets_mcp.<WebSearchTool>#1",
+      "kind": "native_tool",
+      "framework": "pydantic_ai",
+      "name": "WebSearchTool",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 43,
+            "column": 19
+          },
+          "end": {
+            "line": 43,
+            "column": 34
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "native"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:tool:pai.basic_tools.<Tool>#1",
+      "kind": "tool",
+      "framework": "pydantic_ai",
+      "name": "convert_currency",
+      "status": "resolved",
+      "source": {
+        "file": "pai/basic_tools.py",
+        "range": {
+          "start": {
+            "line": 24,
+            "column": 11
+          },
+          "end": {
+            "line": 24,
+            "column": 74
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Convert an amount of USD to another currency.",
+        "signature": "def convert_currency(amount: float, to: str) -> float",
+        "takes_ctx": false,
+        "url": null,
+        "command": null,
+        "badges": [
+          "requires_approval"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:tool:pai.basic_tools.roll_dice",
+      "kind": "tool",
+      "framework": "pydantic_ai",
+      "name": "roll",
+      "status": "resolved",
+      "source": {
+        "file": "pai/basic_tools.py",
+        "range": {
+          "start": {
+            "line": 35,
+            "column": 0
+          },
+          "end": {
+            "line": 37,
+            "column": 12
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 35,
+            "column": 4
+          },
+          "end": {
+            "line": 35,
+            "column": 13
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Roll a six-sided die.",
+        "signature": "def roll_dice() -> int",
+        "takes_ctx": false,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:tool:pai.basic_tools.weather",
+      "kind": "tool",
+      "framework": "pydantic_ai",
+      "name": "weather",
+      "status": "resolved",
+      "source": {
+        "file": "pai/basic_tools.py",
+        "range": {
+          "start": {
+            "line": 29,
+            "column": 0
+          },
+          "end": {
+            "line": 31,
+            "column": 47
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 29,
+            "column": 10
+          },
+          "end": {
+            "line": 29,
+            "column": 17
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Weather forecast for the user's city.",
+        "signature": "async def weather(ctx: RunContext[Deps], day: str) -> str",
+        "takes_ctx": true,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:tool:pai.multi.orchestrator.research",
+      "kind": "tool",
+      "framework": "pydantic_ai",
+      "name": "research",
+      "status": "resolved",
+      "source": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 23,
+            "column": 0
+          },
+          "end": {
+            "line": 26,
+            "column": 24
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 23,
+            "column": 10
+          },
+          "end": {
+            "line": 23,
+            "column": 18
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Delegate research to the researcher agent.",
+        "signature": "async def research(ctx: RunContext[None], topic: str) -> str",
+        "takes_ctx": true,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:tool:pai.toolsets_mcp.add",
+      "kind": "tool",
+      "framework": "pydantic_ai",
+      "name": "add",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 12,
+            "column": 0
+          },
+          "end": {
+            "line": 14,
+            "column": 16
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 12,
+            "column": 4
+          },
+          "end": {
+            "line": 12,
+            "column": 7
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Add two numbers.",
+        "signature": "def add(a: int, b: int) -> int",
+        "takes_ctx": false,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:tool:pai.toolsets_mcp.cite",
+      "kind": "tool",
+      "framework": "pydantic_ai",
+      "name": "cite",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 31,
+            "column": 0
+          },
+          "end": {
+            "line": 33,
+            "column": 14
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 31,
+            "column": 4
+          },
+          "end": {
+            "line": 31,
+            "column": 8
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Format a citation.",
+        "signature": "def cite(url: str) -> str",
+        "takes_ctx": false,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:tool:pai.toolsets_mcp.multiply",
+      "kind": "tool",
+      "framework": "pydantic_ai",
+      "name": "multiply",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 17,
+            "column": 0
+          },
+          "end": {
+            "line": 19,
+            "column": 16
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 17,
+            "column": 4
+          },
+          "end": {
+            "line": 17,
+            "column": 12
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Multiply two numbers.",
+        "signature": "def multiply(a: int, b: int) -> int",
+        "takes_ctx": false,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "pydantic_ai:toolset:pai.toolsets_mcp.math",
+      "kind": "toolset",
+      "framework": "pydantic_ai",
+      "name": "math",
+      "status": "resolved",
+      "source": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 8,
+            "column": 7
+          },
+          "end": {
+            "line": 8,
+            "column": 33
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 8,
+            "column": 0
+          },
+          "end": {
+            "line": 8,
+            "column": 4
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "class": "FunctionToolset"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:workflow:pai.multi.orchestrator.pipeline",
+      "kind": "workflow",
+      "framework": "pydantic_ai",
+      "name": "pipeline",
+      "status": "resolved",
+      "source": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 29,
+            "column": 0
+          },
+          "end": {
+            "line": 33,
+            "column": 24
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 29,
+            "column": 10
+          },
+          "end": {
+            "line": 29,
+            "column": 18
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Research, then write: a hand-off between two agents.",
+        "signature": "async def pipeline(topic: str) -> str",
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    },
+    {
+      "id": "smolagents:agent:smol.managed.manager",
+      "kind": "agent",
+      "framework": "smolagents",
+      "name": "manager",
+      "status": "resolved",
+      "source": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 26,
+            "column": 10
+          },
+          "end": {
+            "line": 32,
+            "column": 1
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 26,
+            "column": 0
+          },
+          "end": {
+            "line": 26,
+            "column": 7
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "CodeAgent",
+        "model": "InferenceClientModel('Qwen/Qwen3-Next-80B-A3B-Thinking')",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "planning_interval": "3",
+          "additional_authorized_imports": "[\"time\", \"numpy\"]",
+          "explicit_name": false
+        }
+      }
+    },
+    {
+      "id": "smolagents:agent:smol.managed.web_agent",
+      "kind": "agent",
+      "framework": "smolagents",
+      "name": "web_agent",
+      "status": "resolved",
+      "source": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 18,
+            "column": 12
+          },
+          "end": {
+            "line": 24,
+            "column": 1
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 18,
+            "column": 0
+          },
+          "end": {
+            "line": 18,
+            "column": 9
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "ToolCallingAgent",
+        "model": "InferenceClientModel('Qwen/Qwen3-Next-80B-A3B-Thinking')",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": "Browses the web for you.",
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "max_steps": "10",
+          "explicit_name": true
+        }
+      }
+    },
+    {
+      "id": "smolagents:agent:smol.managed_without_name.boss",
+      "kind": "agent",
+      "framework": "smolagents",
+      "name": "boss",
+      "status": "resolved",
+      "source": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 14,
+            "column": 7
+          },
+          "end": {
+            "line": 14,
+            "column": 86
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 14,
+            "column": 0
+          },
+          "end": {
+            "line": 14,
+            "column": 4
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "CodeAgent",
+        "model": "InferenceClientModel(…)",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "executor_type": "wasm",
+          "explicit_name": false
+        }
+      }
+    },
+    {
+      "id": "smolagents:agent:smol.managed_without_name.helper",
+      "kind": "agent",
+      "framework": "smolagents",
+      "name": "helper",
+      "status": "resolved",
+      "source": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 13,
+            "column": 9
+          },
+          "end": {
+            "line": 13,
+            "column": 56
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 13,
+            "column": 0
+          },
+          "end": {
+            "line": 13,
+            "column": 6
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "ToolCallingAgent",
+        "model": "InferenceClientModel(…)",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "explicit_name": false
+        }
+      }
+    },
+    {
+      "id": "smolagents:agent:smol.mcp.agent",
+      "kind": "agent",
+      "framework": "smolagents",
+      "name": "agent",
+      "status": "resolved",
+      "source": {
+        "file": "smol/mcp.py",
+        "range": {
+          "start": {
+            "line": 9,
+            "column": 12
+          },
+          "end": {
+            "line": 9,
+            "column": 78
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 9,
+            "column": 4
+          },
+          "end": {
+            "line": 9,
+            "column": 9
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "CodeAgent",
+        "model": "InferenceClientModel(…)",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "explicit_name": false
+        }
+      }
+    },
+    {
+      "id": "smolagents:agent:smol.mcp.http_agent",
+      "kind": "agent",
+      "framework": "smolagents",
+      "name": "http_agent",
+      "status": "resolved",
+      "source": {
+        "file": "smol/mcp.py",
+        "range": {
+          "start": {
+            "line": 12,
+            "column": 17
+          },
+          "end": {
+            "line": 12,
+            "column": 69
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 12,
+            "column": 4
+          },
+          "end": {
+            "line": 12,
+            "column": 14
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "CodeAgent",
+        "model": "InferenceClientModel(…)",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {
+          "explicit_name": false
+        }
+      }
+    },
+    {
+      "id": "smolagents:agent:smol.tool_class.agent",
+      "kind": "agent",
+      "framework": "smolagents",
+      "name": "agent",
+      "status": "resolved",
+      "source": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 16,
+            "column": 8
+          },
+          "end": {
+            "line": 20,
+            "column": 1
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 16,
+            "column": 0
+          },
+          "end": {
+            "line": 16,
+            "column": 5
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": "ToolCallingAgent",
+        "model": "OpenAIModel('gpt-5')",
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "add_base_tools"
+        ],
+        "extra": {
+          "explicit_name": false
+        }
+      }
+    },
+    {
+      "id": "smolagents:mcp_server:smol.mcp.collection",
+      "kind": "mcp_server",
+      "framework": "smolagents",
+      "name": "MCP uvx",
+      "status": "resolved",
+      "source": {
+        "file": "smol/mcp.py",
+        "range": {
+          "start": {
+            "line": 8,
+            "column": 5
+          },
+          "end": {
+            "line": 8,
+            "column": 60
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 8,
+            "column": 64
+          },
+          "end": {
+            "line": 8,
+            "column": 74
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": "uvx pubmedmcp@0.1.3",
+        "badges": [],
+        "extra": {
+          "class": "ToolCollection.from_mcp"
+        }
+      }
+    },
+    {
+      "id": "smolagents:mcp_server:smol.mcp.tools",
+      "kind": "mcp_server",
+      "framework": "smolagents",
+      "name": "MCP 127.0.0.1:8000",
+      "status": "resolved",
+      "source": {
+        "file": "smol/mcp.py",
+        "range": {
+          "start": {
+            "line": 11,
+            "column": 5
+          },
+          "end": {
+            "line": 11,
+            "column": 84
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 11,
+            "column": 88
+          },
+          "end": {
+            "line": 11,
+            "column": 93
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": "http://127.0.0.1:8000/mcp",
+        "command": null,
+        "badges": [],
+        "extra": {
+          "class": "MCPClient"
+        }
+      }
+    },
+    {
+      "id": "smolagents:tool:smol.managed.<VisitWebpageTool>#1",
+      "kind": "tool",
+      "framework": "smolagents",
+      "name": "visit_webpage",
+      "status": "resolved",
+      "source": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 19,
+            "column": 28
+          },
+          "end": {
+            "line": 19,
+            "column": 46
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "default"
+        ],
+        "extra": {
+          "class": "VisitWebpageTool"
+        }
+      }
+    },
+    {
+      "id": "smolagents:tool:smol.managed.<WebSearchTool>#1",
+      "kind": "tool",
+      "framework": "smolagents",
+      "name": "web_search",
+      "status": "resolved",
+      "source": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 19,
+            "column": 11
+          },
+          "end": {
+            "line": 19,
+            "column": 26
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "default"
+        ],
+        "extra": {
+          "class": "WebSearchTool"
+        }
+      }
+    },
+    {
+      "id": "smolagents:tool:smol.managed.get_weather",
+      "kind": "tool",
+      "framework": "smolagents",
+      "name": "get_weather",
+      "status": "resolved",
+      "source": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 9,
+            "column": 0
+          },
+          "end": {
+            "line": 15,
+            "column": 18
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 9,
+            "column": 4
+          },
+          "end": {
+            "line": 9,
+            "column": 15
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": "Get the weather for a city. Args: city: The city name.",
+        "signature": "def get_weather(city: str) -> str",
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "@tool"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "smolagents:tool:smol.managed_without_name.bad_tool",
+      "kind": "tool",
+      "framework": "smolagents",
+      "name": "bad_tool",
+      "status": "resolved",
+      "source": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 9,
+            "column": 0
+          },
+          "end": {
+            "line": 10,
+            "column": 12
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 9,
+            "column": 4
+          },
+          "end": {
+            "line": 9,
+            "column": 12
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": "def bad_tool(x)",
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "@tool"
+        ],
+        "extra": {}
+      }
+    },
+    {
+      "id": "smolagents:tool:smol.tool_class.StockPrice",
+      "kind": "tool",
+      "framework": "smolagents",
+      "name": "stock_price",
+      "status": "resolved",
+      "source": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 6,
+            "column": 0
+          },
+          "end": {
+            "line": 13,
+            "column": 18
+          }
+        },
+        "name_range": {
+          "start": {
+            "line": 6,
+            "column": 6
+          },
+          "end": {
+            "line": 6,
+            "column": 16
+          }
+        }
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": "Latest price of a stock.",
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": "def forward(self, symbol: str) -> float",
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "Tool subclass"
+        ],
+        "extra": {
+          "class": "StockPrice",
+          "inputs": "{\"symbol\": {\"type\": \"string\", \"description\": \"Ticker symbol\"}}",
+          "output_type": "number"
+        }
+      }
+    },
+    {
+      "id": "smolagents:tool:smol.tool_class.agent.<base>.python_interpreter",
+      "kind": "tool",
+      "framework": "smolagents",
+      "name": "python_interpreter",
+      "status": "resolved",
+      "source": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 16,
+            "column": 8
+          },
+          "end": {
+            "line": 20,
+            "column": 1
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "base"
+        ],
+        "extra": {
+          "class": "PythonInterpreterTool"
+        }
+      }
+    },
+    {
+      "id": "smolagents:tool:smol.tool_class.agent.<base>.visit_webpage",
+      "kind": "tool",
+      "framework": "smolagents",
+      "name": "visit_webpage",
+      "status": "resolved",
+      "source": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 16,
+            "column": 8
+          },
+          "end": {
+            "line": 20,
+            "column": 1
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "base"
+        ],
+        "extra": {
+          "class": "VisitWebpageTool"
+        }
+      }
+    },
+    {
+      "id": "smolagents:tool:smol.tool_class.agent.<base>.web_search",
+      "kind": "tool",
+      "framework": "smolagents",
+      "name": "web_search",
+      "status": "resolved",
+      "source": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 16,
+            "column": 8
+          },
+          "end": {
+            "line": 20,
+            "column": 1
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [
+          "base"
+        ],
+        "extra": {
+          "class": "DuckDuckGoSearchTool"
+        }
+      }
+    },
+    {
+      "id": "pydantic_ai:agent:pai.dynamic.agent~dynamic#1",
+      "kind": "dynamic",
+      "framework": "pydantic_ai",
+      "name": "extra_toolsets",
+      "status": "dynamic",
+      "source": {
+        "file": "pai/dynamic.py",
+        "range": {
+          "start": {
+            "line": 7,
+            "column": 42
+          },
+          "end": {
+            "line": 7,
+            "column": 56
+          }
+        },
+        "name_range": null
+      },
+      "attrs": {
+        "agent_class": null,
+        "model": null,
+        "instructions": null,
+        "dynamic_instructions": [],
+        "description": null,
+        "output_type": null,
+        "deps_type": null,
+        "docstring": null,
+        "signature": null,
+        "takes_ctx": null,
+        "url": null,
+        "command": null,
+        "badges": [],
+        "extra": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "contains:pydantic_ai:graph:pai.base_nodes.<graph>->pydantic_ai:graph_step:pai.base_nodes.Ask",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.base_nodes.<graph>",
+      "target": "pydantic_ai:graph_step:pai.base_nodes.Ask",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "contains:pydantic_ai:graph:pai.base_nodes.<graph>->pydantic_ai:graph_step:pai.base_nodes.Check",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.base_nodes.<graph>",
+      "target": "pydantic_ai:graph_step:pai.base_nodes.Check",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.base_nodes.Ask->pydantic_ai:graph_step:pai.base_nodes.Check",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.base_nodes.Ask",
+      "target": "pydantic_ai:graph_step:pai.base_nodes.Check",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/base_nodes.py",
+        "range": {
+          "start": {
+            "line": 14,
+            "column": 49
+          },
+          "end": {
+            "line": 14,
+            "column": 54
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.base_nodes.Check->pydantic_ai:graph_step:pai.base_nodes.Ask",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.base_nodes.Check",
+      "target": "pydantic_ai:graph_step:pai.base_nodes.Ask",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/base_nodes.py",
+        "range": {
+          "start": {
+            "line": 20,
+            "column": 49
+          },
+          "end": {
+            "line": 20,
+            "column": 63
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "contains:pydantic_ai:graph:pai.base_nodes.<graph>->pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.base_nodes.<graph>",
+      "target": "pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.base_nodes.Check->pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.base_nodes.Check",
+      "target": "pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/base_nodes.py",
+        "range": {
+          "start": {
+            "line": 20,
+            "column": 49
+          },
+          "end": {
+            "line": 20,
+            "column": 63
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.basic_tools.assistant->pydantic_ai:tool:pai.basic_tools.<Tool>#1",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.basic_tools.assistant",
+      "target": "pydantic_ai:tool:pai.basic_tools.<Tool>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/basic_tools.py",
+        "range": {
+          "start": {
+            "line": 24,
+            "column": 11
+          },
+          "end": {
+            "line": 24,
+            "column": 74
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.basic_tools.assistant->pydantic_ai:tool:pai.basic_tools.weather",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.basic_tools.assistant",
+      "target": "pydantic_ai:tool:pai.basic_tools.weather",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/basic_tools.py",
+        "range": {
+          "start": {
+            "line": 28,
+            "column": 0
+          },
+          "end": {
+            "line": 28,
+            "column": 15
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.basic_tools.assistant->pydantic_ai:tool:pai.basic_tools.roll_dice",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.basic_tools.assistant",
+      "target": "pydantic_ai:tool:pai.basic_tools.roll_dice",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/basic_tools.py",
+        "range": {
+          "start": {
+            "line": 34,
+            "column": 0
+          },
+          "end": {
+            "line": 34,
+            "column": 34
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.dynamic.agent->pydantic_ai:agent:pai.dynamic.agent~dynamic#1",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.dynamic.agent",
+      "target": "pydantic_ai:agent:pai.dynamic.agent~dynamic#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/dynamic.py",
+        "range": {
+          "start": {
+            "line": 7,
+            "column": 42
+          },
+          "end": {
+            "line": 7,
+            "column": 56
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.graph_builder.build.<locals>.g",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.graph_builder.build.<locals>.g",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.graph_builder.build.<locals>.g",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.graph_builder.build.<locals>.g",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 34,
+            "column": 8
+          },
+          "end": {
+            "line": 34,
+            "column": 43
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.graph_builder.build.<locals>.g",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize",
+      "label": "long",
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 36,
+            "column": 12
+          },
+          "end": {
+            "line": 37,
+            "column": 93
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip",
+      "label": "str",
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 36,
+            "column": 12
+          },
+          "end": {
+            "line": 38,
+            "column": 42
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 35,
+            "column": 8
+          },
+          "end": {
+            "line": 39,
+            "column": 9
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>",
+      "kind": "contains",
+      "source": "pydantic_ai:graph:pai.graph_builder.build.<locals>.g",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": null
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 40,
+            "column": 8
+          },
+          "end": {
+            "line": 40,
+            "column": 51
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>",
+      "kind": "transitions",
+      "source": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip",
+      "target": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 40,
+            "column": 8
+          },
+          "end": {
+            "line": 40,
+            "column": 51
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "delegates_to:pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1->pydantic_ai:agent:pai.multi.orchestrator.reviewer",
+      "kind": "delegates_to",
+      "source": "pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1",
+      "target": "pydantic_ai:agent:pai.multi.orchestrator.reviewer",
+      "label": "reviewer",
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 18,
+            "column": 36
+          },
+          "end": {
+            "line": 18,
+            "column": 71
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.multi.orchestrator.lead->pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.multi.orchestrator.lead",
+      "target": "pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 18,
+            "column": 18
+          },
+          "end": {
+            "line": 18,
+            "column": 73
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.multi.orchestrator.lead->pydantic_ai:tool:pai.multi.orchestrator.research",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.multi.orchestrator.lead",
+      "target": "pydantic_ai:tool:pai.multi.orchestrator.research",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 22,
+            "column": 0
+          },
+          "end": {
+            "line": 22,
+            "column": 10
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.spec.spec_agent->pydantic_ai:mcp_server:pai.spec.spec_agent.<MCP>https://docs.example.com/mcp",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.spec.spec_agent",
+      "target": "pydantic_ai:mcp_server:pai.spec.spec_agent.<MCP>https://docs.example.com/mcp",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/spec.py",
+        "range": {
+          "start": {
+            "line": 5,
+            "column": 13
+          },
+          "end": {
+            "line": 5,
+            "column": 42
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:toolset:pai.toolsets_mcp.math",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.toolsets_mcp.analyst",
+      "target": "pydantic_ai:toolset:pai.toolsets_mcp.math",
+      "label": null,
+      "order": null,
+      "wrappers": [
+        "prefixed(\"math\")"
+      ],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 40,
+            "column": 13
+          },
+          "end": {
+            "line": 40,
+            "column": 60
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:mcp_server:pai.toolsets_mcp.files",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.toolsets_mcp.analyst",
+      "target": "pydantic_ai:mcp_server:pai.toolsets_mcp.files",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 40,
+            "column": 13
+          },
+          "end": {
+            "line": 40,
+            "column": 60
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:mcp_server:pai.toolsets_mcp.docs",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.toolsets_mcp.analyst",
+      "target": "pydantic_ai:mcp_server:pai.toolsets_mcp.docs",
+      "label": null,
+      "order": null,
+      "wrappers": [
+        "filtered(lambda ctx, t: True)"
+      ],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 40,
+            "column": 13
+          },
+          "end": {
+            "line": 40,
+            "column": 60
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:capability:pai.toolsets_mcp.research",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.toolsets_mcp.analyst",
+      "target": "pydantic_ai:capability:pai.toolsets_mcp.research",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 42,
+            "column": 8
+          },
+          "end": {
+            "line": 42,
+            "column": 16
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:native_tool:pai.toolsets_mcp.<WebSearchTool>#1",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.toolsets_mcp.analyst",
+      "target": "pydantic_ai:native_tool:pai.toolsets_mcp.<WebSearchTool>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 43,
+            "column": 8
+          },
+          "end": {
+            "line": 43,
+            "column": 35
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:native_tool:pai.toolsets_mcp.<WebFetch>#1",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.toolsets_mcp.analyst",
+      "target": "pydantic_ai:native_tool:pai.toolsets_mcp.<WebFetch>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 44,
+            "column": 8
+          },
+          "end": {
+            "line": 44,
+            "column": 18
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:mcp_server:pai.toolsets_mcp.<MCP>#1",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.toolsets_mcp.analyst",
+      "target": "pydantic_ai:mcp_server:pai.toolsets_mcp.<MCP>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 45,
+            "column": 8
+          },
+          "end": {
+            "line": 45,
+            "column": 46
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "provides:pydantic_ai:toolset:pai.toolsets_mcp.math->pydantic_ai:tool:pai.toolsets_mcp.add",
+      "kind": "provides",
+      "source": "pydantic_ai:toolset:pai.toolsets_mcp.math",
+      "target": "pydantic_ai:tool:pai.toolsets_mcp.add",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 11,
+            "column": 0
+          },
+          "end": {
+            "line": 11,
+            "column": 16
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "provides:pydantic_ai:capability:pai.toolsets_mcp.research->pydantic_ai:tool:pai.toolsets_mcp.cite",
+      "kind": "provides",
+      "source": "pydantic_ai:capability:pai.toolsets_mcp.research",
+      "target": "pydantic_ai:tool:pai.toolsets_mcp.cite",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 30,
+            "column": 0
+          },
+          "end": {
+            "line": 30,
+            "column": 20
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "provides:pydantic_ai:toolset:pai.toolsets_mcp.math->pydantic_ai:tool:pai.toolsets_mcp.multiply",
+      "kind": "provides",
+      "source": "pydantic_ai:toolset:pai.toolsets_mcp.math",
+      "target": "pydantic_ai:tool:pai.toolsets_mcp.multiply",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/toolsets_mcp.py",
+        "range": {
+          "start": {
+            "line": 22,
+            "column": 0
+          },
+          "end": {
+            "line": 22,
+            "column": 27
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:pydantic_ai:agent:pai.v1_api.legacy->pydantic_ai:mcp_server:pai.v1_api.server",
+      "kind": "uses",
+      "source": "pydantic_ai:agent:pai.v1_api.legacy",
+      "target": "pydantic_ai:mcp_server:pai.v1_api.server",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/v1_api.py",
+        "range": {
+          "start": {
+            "line": 7,
+            "column": 45
+          },
+          "end": {
+            "line": 7,
+            "column": 51
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.managed.web_agent->smolagents:tool:smol.managed.<WebSearchTool>#1",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.managed.web_agent",
+      "target": "smolagents:tool:smol.managed.<WebSearchTool>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 19,
+            "column": 11
+          },
+          "end": {
+            "line": 19,
+            "column": 26
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.managed.web_agent->smolagents:tool:smol.managed.<VisitWebpageTool>#1",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.managed.web_agent",
+      "target": "smolagents:tool:smol.managed.<VisitWebpageTool>#1",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 19,
+            "column": 28
+          },
+          "end": {
+            "line": 19,
+            "column": 46
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.managed.manager->smolagents:tool:smol.managed.get_weather",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.managed.manager",
+      "target": "smolagents:tool:smol.managed.get_weather",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 27,
+            "column": 11
+          },
+          "end": {
+            "line": 27,
+            "column": 22
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "manages:smolagents:agent:smol.managed.manager->smolagents:agent:smol.managed.web_agent",
+      "kind": "manages",
+      "source": "smolagents:agent:smol.managed.manager",
+      "target": "smolagents:agent:smol.managed.web_agent",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/managed.py",
+        "range": {
+          "start": {
+            "line": 29,
+            "column": 20
+          },
+          "end": {
+            "line": 29,
+            "column": 29
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.managed_without_name.helper->smolagents:tool:smol.managed_without_name.bad_tool",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.managed_without_name.helper",
+      "target": "smolagents:tool:smol.managed_without_name.bad_tool",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 13,
+            "column": 33
+          },
+          "end": {
+            "line": 13,
+            "column": 41
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "manages:smolagents:agent:smol.managed_without_name.boss->smolagents:agent:smol.managed_without_name.helper",
+      "kind": "manages",
+      "source": "smolagents:agent:smol.managed_without_name.boss",
+      "target": "smolagents:agent:smol.managed_without_name.helper",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 14,
+            "column": 56
+          },
+          "end": {
+            "line": 14,
+            "column": 62
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.mcp.agent->smolagents:mcp_server:smol.mcp.collection",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.mcp.agent",
+      "target": "smolagents:mcp_server:smol.mcp.collection",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/mcp.py",
+        "range": {
+          "start": {
+            "line": 9,
+            "column": 30
+          },
+          "end": {
+            "line": 9,
+            "column": 46
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.mcp.http_agent->smolagents:mcp_server:smol.mcp.tools",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.mcp.http_agent",
+      "target": "smolagents:mcp_server:smol.mcp.tools",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/mcp.py",
+        "range": {
+          "start": {
+            "line": 12,
+            "column": 33
+          },
+          "end": {
+            "line": 12,
+            "column": 38
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.tool_class.agent->smolagents:tool:smol.tool_class.agent.<base>.web_search",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.tool_class.agent",
+      "target": "smolagents:tool:smol.tool_class.agent.<base>.web_search",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 19,
+            "column": 19
+          },
+          "end": {
+            "line": 19,
+            "column": 23
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.tool_class.agent->smolagents:tool:smol.tool_class.agent.<base>.visit_webpage",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.tool_class.agent",
+      "target": "smolagents:tool:smol.tool_class.agent.<base>.visit_webpage",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 19,
+            "column": 19
+          },
+          "end": {
+            "line": 19,
+            "column": 23
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.tool_class.agent->smolagents:tool:smol.tool_class.agent.<base>.python_interpreter",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.tool_class.agent",
+      "target": "smolagents:tool:smol.tool_class.agent.<base>.python_interpreter",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 19,
+            "column": 19
+          },
+          "end": {
+            "line": 19,
+            "column": 23
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "uses:smolagents:agent:smol.tool_class.agent->smolagents:tool:smol.tool_class.StockPrice",
+      "kind": "uses",
+      "source": "smolagents:agent:smol.tool_class.agent",
+      "target": "smolagents:tool:smol.tool_class.StockPrice",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "smol/tool_class.py",
+        "range": {
+          "start": {
+            "line": 17,
+            "column": 11
+          },
+          "end": {
+            "line": 17,
+            "column": 23
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "runs:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize->pydantic_ai:agent:pai.graph_builder.summarizer",
+      "kind": "runs",
+      "source": "pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize",
+      "target": "pydantic_ai:agent:pai.graph_builder.summarizer",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/graph_builder.py",
+        "range": {
+          "start": {
+            "line": 27,
+            "column": 22
+          },
+          "end": {
+            "line": 27,
+            "column": 48
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "delegates_to:pydantic_ai:tool:pai.multi.orchestrator.research->pydantic_ai:agent:pai.multi.agents.researcher",
+      "kind": "delegates_to",
+      "source": "pydantic_ai:tool:pai.multi.orchestrator.research",
+      "target": "pydantic_ai:agent:pai.multi.agents.researcher",
+      "label": null,
+      "order": null,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 25,
+            "column": 19
+          },
+          "end": {
+            "line": 25,
+            "column": 57
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "runs:pydantic_ai:workflow:pai.multi.orchestrator.pipeline->pydantic_ai:agent:pai.multi.agents.researcher#1",
+      "kind": "runs",
+      "source": "pydantic_ai:workflow:pai.multi.orchestrator.pipeline",
+      "target": "pydantic_ai:agent:pai.multi.agents.researcher",
+      "label": null,
+      "order": 1,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 31,
+            "column": 18
+          },
+          "end": {
+            "line": 31,
+            "column": 39
+          }
+        },
+        "name_range": null
+      }
+    },
+    {
+      "id": "runs:pydantic_ai:workflow:pai.multi.orchestrator.pipeline->pydantic_ai:agent:pai.multi.agents.writer#2",
+      "kind": "runs",
+      "source": "pydantic_ai:workflow:pai.multi.orchestrator.pipeline",
+      "target": "pydantic_ai:agent:pai.multi.agents.writer",
+      "label": null,
+      "order": 2,
+      "wrappers": [],
+      "ref": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 32,
+            "column": 19
+          },
+          "end": {
+            "line": 32,
+            "column": 43
+          }
+        },
+        "name_range": null
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "code": "AD001",
+      "severity": "info",
+      "message": "`extra_toolsets` cannot be resolved statically; shown as a dynamic node.",
+      "ref": {
+        "file": "pai/dynamic.py",
+        "range": {
+          "start": {
+            "line": 7,
+            "column": 42
+          },
+          "end": {
+            "line": 7,
+            "column": 56
+          }
+        },
+        "name_range": null
+      },
+      "node_id": "pydantic_ai:agent:pai.dynamic.agent~dynamic#1"
+    },
+    {
+      "code": "AD301",
+      "severity": "info",
+      "message": "Agent `build()` is created inside a function; its arguments may vary at runtime.",
+      "ref": {
+        "file": "pai/dynamic.py",
+        "range": {
+          "start": {
+            "line": 7,
+            "column": 11
+          },
+          "end": {
+            "line": 7,
+            "column": 57
+          }
+        },
+        "name_range": null
+      },
+      "node_id": null
+    },
+    {
+      "code": "AD301",
+      "severity": "info",
+      "message": "Agent `make_reviewer()` is created inside a function; its arguments may vary at runtime.",
+      "ref": {
+        "file": "pai/multi/orchestrator.py",
+        "range": {
+          "start": {
+            "line": 10,
+            "column": 11
+          },
+          "end": {
+            "line": 10,
+            "column": 69
+          }
+        },
+        "name_range": null
+      },
+      "node_id": null
+    },
+    {
+      "code": "AD000",
+      "severity": "error",
+      "message": "Syntax error: parser error: error at 4:0: expected one of !=, %, &, (, *, **, +, ,, -, ., /, //, <, <<, <=, ==, >, >=, >>, @, ASYNC, STRING, [, ^, and, f\", for, if, in, is, not, or, t\", |",
+      "ref": {
+        "file": "pai/syntax_error.py",
+        "range": {
+          "start": {
+            "line": 3,
+            "column": 0
+          },
+          "end": {
+            "line": 3,
+            "column": 0
+          }
+        },
+        "name_range": null
+      },
+      "node_id": null
+    },
+    {
+      "code": "AD101",
+      "severity": "warning",
+      "message": "`MCPServerStdio` is PydanticAI v1 API; use `MCPToolset` in v2.",
+      "ref": {
+        "file": "pai/v1_api.py",
+        "range": {
+          "start": {
+            "line": 6,
+            "column": 9
+          },
+          "end": {
+            "line": 6,
+            "column": 59
+          }
+        },
+        "name_range": null
+      },
+      "node_id": "pydantic_ai:mcp_server:pai.v1_api.server"
+    },
+    {
+      "code": "AD101",
+      "severity": "warning",
+      "message": "`mcp_servers=` is PydanticAI v1 API; in v2 use toolsets=[...].",
+      "ref": {
+        "file": "pai/v1_api.py",
+        "range": {
+          "start": {
+            "line": 7,
+            "column": 9
+          },
+          "end": {
+            "line": 7,
+            "column": 53
+          }
+        },
+        "name_range": null
+      },
+      "node_id": "pydantic_ai:agent:pai.v1_api.legacy"
+    },
+    {
+      "code": "AD203",
+      "severity": "warning",
+      "message": "@tool `bad_tool` needs type hints (parameters x missing).",
+      "ref": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 9,
+            "column": 4
+          },
+          "end": {
+            "line": 9,
+            "column": 12
+          }
+        },
+        "name_range": null
+      },
+      "node_id": null
+    },
+    {
+      "code": "AD203",
+      "severity": "warning",
+      "message": "@tool `bad_tool` needs a docstring with an `Args:` section.",
+      "ref": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 9,
+            "column": 4
+          },
+          "end": {
+            "line": 9,
+            "column": 12
+          }
+        },
+        "name_range": null
+      },
+      "node_id": null
+    },
+    {
+      "code": "AD201",
+      "severity": "error",
+      "message": "Managed agent `helper` needs both `name=` and `description=`.",
+      "ref": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 14,
+            "column": 56
+          },
+          "end": {
+            "line": 14,
+            "column": 62
+          }
+        },
+        "name_range": null
+      },
+      "node_id": "smolagents:agent:smol.managed_without_name.helper"
+    },
+    {
+      "code": "AD204",
+      "severity": "error",
+      "message": "executor_type='wasm' was removed in smolagents 1.26.",
+      "ref": {
+        "file": "smol/managed_without_name.py",
+        "range": {
+          "start": {
+            "line": 14,
+            "column": 7
+          },
+          "end": {
+            "line": 14,
+            "column": 86
+          }
+        },
+        "name_range": null
+      },
+      "node_id": "smolagents:agent:smol.managed_without_name.boss"
+    }
+  ]
+}

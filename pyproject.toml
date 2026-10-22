@@ -1,0 +1,95 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentsdiagram"
+dynamic = ["version"]
+description = "See your AI agents: static diagrams of agents, tools and flows for PydanticAI and smolagents — CLI and VS Code extension."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Alex Ojeda Copa" }]
+keywords = ["agents", "pydantic-ai", "smolagents", "visualization", "static-analysis", "diagram", "mermaid", "llm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "libcst>=1.9",
+    "pydantic>=2.7",
+    "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+lsp = ["pygls>=2.1"]
+
+[project.scripts]
+agentsdiagram = "agentsdiagram.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/alex-roc/agentsdiagram"
+Repository = "https://github.com/alex-roc/agentsdiagram"
+Issues = "https://github.com/alex-roc/agentsdiagram/issues"
+Changelog = "https://github.com/alex-roc/agentsdiagram/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "syrupy>=4.8",
+    "pytest-lsp>=1.0",
+    "ruff>=0.13",
+    "pyright>=1.1.400",
+    "pygls>=2.1",
+]
+oracle = [
+    "pydantic-ai-slim[mcp,spec]>=2.59",
+    "pydantic-ai-harness>=0.59",
+    "smolagents>=1.26",
+]
+
+[tool.uv]
+default-groups = ["dev", "oracle"]
+
+[tool.hatch.version]
+path = "src/agentsdiagram/__init__.py"
+
+[tool.hatch.build]
+# The viewer bundle is built by pnpm (packages/viewer) into _static/ and is gitignored;
+# `artifacts` keeps it in both sdist and wheel. CI asserts it is present in the wheel.
+artifacts = ["src/agentsdiagram/_static/**"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agentsdiagram"]
+
+[tool.hatch.build.targets.sdist]
+exclude = ["/packages/*/node_modules", "/packages/*/dist", "/node_modules", "/.github"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["tests/fixtures"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["oracle: compares the static IR against the real libraries (imports fixtures)"]
+
+[tool.pyright]
+include = ["src"]
+pythonVersion = "3.11"
+
+[tool.agentsdiagram]
+exclude = ["tests/fixtures/**"]

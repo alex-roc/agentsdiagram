@@ -1,0 +1,534 @@
+{
+  "$defs": {
+    "Diagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ],
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "message",
+        "ref",
+        "node_id"
+      ],
+      "title": "Diagnostic",
+      "type": "object"
+    },
+    "Edge": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "uses",
+            "provides",
+            "wraps",
+            "delegates_to",
+            "manages",
+            "runs",
+            "contains",
+            "transitions"
+          ],
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "order": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Call order for `runs` edges"
+        },
+        "wrappers": {
+          "description": "Toolset wrappers applied on this edge, e.g. prefixed('x')",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Where this relation is written"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "source",
+        "target",
+        "label",
+        "order",
+        "wrappers",
+        "ref"
+      ],
+      "title": "Edge",
+      "type": "object"
+    },
+    "FileInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "frameworks": {
+          "items": {
+            "enum": [
+              "pydantic_ai",
+              "smolagents"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "status": {
+          "default": "ok",
+          "enum": [
+            "ok",
+            "stale",
+            "error"
+          ],
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "module",
+        "frameworks",
+        "status",
+        "sha256"
+      ],
+      "title": "FileInfo",
+      "type": "object"
+    },
+    "Node": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "agent",
+            "tool",
+            "toolset",
+            "mcp_server",
+            "native_tool",
+            "capability",
+            "workflow",
+            "external_tool_source",
+            "graph",
+            "graph_step",
+            "dynamic"
+          ],
+          "type": "string"
+        },
+        "framework": {
+          "enum": [
+            "pydantic_ai",
+            "smolagents"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "default": "resolved",
+          "enum": [
+            "resolved",
+            "partial",
+            "dynamic",
+            "planned",
+            "stale"
+          ],
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "attrs": {
+          "$ref": "#/$defs/NodeAttrs"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "framework",
+        "name",
+        "status",
+        "source",
+        "attrs"
+      ],
+      "title": "Node",
+      "type": "object"
+    },
+    "NodeAttrs": {
+      "additionalProperties": false,
+      "description": "Typed attributes that are stable across library versions. Everything else goes to ``extra``.",
+      "properties": {
+        "agent_class": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "instructions": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dynamic_instructions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "output_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "deps_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "docstring": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "signature": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "takes_ctx": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "command": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "badges": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "extra": {
+          "additionalProperties": true,
+          "type": "object"
+        }
+      },
+      "required": [
+        "agent_class",
+        "model",
+        "instructions",
+        "dynamic_instructions",
+        "description",
+        "output_type",
+        "deps_type",
+        "docstring",
+        "signature",
+        "takes_ctx",
+        "url",
+        "command",
+        "badges",
+        "extra"
+      ],
+      "title": "NodeAttrs",
+      "type": "object"
+    },
+    "Position": {
+      "additionalProperties": false,
+      "properties": {
+        "line": {
+          "description": "1-based line",
+          "type": "integer"
+        },
+        "column": {
+          "description": "0-based column, in code points",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "line",
+        "column"
+      ],
+      "title": "Position",
+      "type": "object"
+    },
+    "Range": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/Position"
+        },
+        "end": {
+          "$ref": "#/$defs/Position"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Range",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "file": {
+          "description": "POSIX path relative to the project root",
+          "type": "string"
+        },
+        "range": {
+          "$ref": "#/$defs/Range"
+        },
+        "name_range": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Range"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Range of the identifier (variable, function or class name)"
+        }
+      },
+      "required": [
+        "file",
+        "range",
+        "name_range"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "ir_version": {
+      "default": "1",
+      "type": "string"
+    },
+    "tool_version": {
+      "type": "string"
+    },
+    "root": {
+      "type": "string"
+    },
+    "frameworks": {
+      "items": {
+        "enum": [
+          "pydantic_ai",
+          "smolagents"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/FileInfo"
+      },
+      "type": "array"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/Node"
+      },
+      "type": "array"
+    },
+    "edges": {
+      "items": {
+        "$ref": "#/$defs/Edge"
+      },
+      "type": "array"
+    },
+    "diagnostics": {
+      "items": {
+        "$ref": "#/$defs/Diagnostic"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "ir_version",
+    "tool_version",
+    "root",
+    "frameworks",
+    "files",
+    "nodes",
+    "edges",
+    "diagnostics"
+  ],
+  "title": "Project",
+  "type": "object"
+}

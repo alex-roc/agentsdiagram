@@ -1,0 +1,8 @@
+name: spec_agent
+model: anthropic:claude-sonnet-5-5
+description: An agent defined in YAML
+instructions: You answer questions about the docs.
+capabilities:
+  - Thinking
+  - MCP:
+      url: https://docs.example.com/mcp

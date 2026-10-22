@@ -1,0 +1,16 @@
+{
+  "name": "@agentsdiagram/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "description": "IR types (generated from the Python JSON Schema) and the viewer/extension message protocol",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "generate": "json2ts -i ir.schema.json -o src/ir.ts --bannerComment \"/* Generated from ir.schema.json by json-schema-to-typescript. Do not edit: run \\`pnpm schema\\` at the repo root. */\" --unreachableDefinitions --additionalProperties false",
+    "check": "pnpm run generate && git diff --exit-code -- src/ir.ts"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.4"
+  }
+}
