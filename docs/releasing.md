@@ -18,7 +18,7 @@ and the `.vsix`, then publishes PyPI → Open VSX + Marketplace → GitHub relea
 |---|---|
 | PyPI | trusted publishing active (`release.yml`, environment `release`) |
 | VS Code Marketplace | publisher `alex-roc`; CI publishes with Microsoft Entra ID (no PAT) since 0.1.1 |
-| Open VSX | namespace `alex-roc` created, ownership claim [EclipseFdn/open-vsx.org#14573](https://github.com/EclipseFdn/open-vsx.org/issues/14573); v0.1.0 published with `OVSX_PAT` but inactive until the claim is approved |
+| Open VSX | namespace `alex-roc` verified (claim [EclipseFdn/open-vsx.org#14573](https://github.com/EclipseFdn/open-vsx.org/issues/14573) granted); published with `OVSX_PAT`. 0.1.0 and 0.1.1 stayed inactive (published before the claim) |
 
 After the claim is approved: register a Trusted Publisher in Open VSX (Settings → Trusted
 Publishers, namespace `alex-roc`, repo `alex-roc/agentsdiagram`, workflow `release.yml`,

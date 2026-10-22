@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 — 2026-10-22
+
+- First active release on Open VSX (namespace `alex-roc` verified).
+- CI: GitHub Actions updated to their Node 24 versions.
+
 ## 0.1.1 — 2026-10-22
 
 - Releases are now fully automated: PyPI (trusted publishing), VS Code Marketplace (Microsoft
