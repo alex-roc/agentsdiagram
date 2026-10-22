@@ -27,6 +27,6 @@ manager = CodeAgent(
     tools=[get_weather],
     model=model,
     managed_agents=[web_agent],
-    additional_authorized_imports=["time", "numpy"],
+    additional_authorized_imports=["time", "json"],
     planning_interval=3,
 )

@@ -118,7 +118,12 @@ class Analyzer:
                 if previous is None:
                     self.file_status[rel] = "error"
                     self.diagnostics.append(
-                        Diagnostic(code="AD000", severity="error", message=f"Syntax error: {exc.message}", ref=where)
+                        Diagnostic(
+                            code="AD000",
+                            severity="error",
+                            message=f"Syntax error: {shorten(exc.message, 120)}",
+                            ref=where,
+                        )
                     )
                     self.modules[name] = None
                     return None
@@ -128,7 +133,7 @@ class Analyzer:
                     Diagnostic(
                         code="AD000",
                         severity="warning",
-                        message=f"Syntax error ({exc.message}); showing the last valid version of this file.",
+                        message=f"Syntax error ({shorten(exc.message, 120)}); showing the last valid version.",
                         ref=where,
                     )
                 )
@@ -209,7 +214,9 @@ class Analyzer:
                 elif d.kind != "function":  # MyTool() -> the Tool subclass, client.get_tools() -> client
                     if isinstance(expr.func, cst.Attribute) and d.kind != "class":
                         args = ", ".join(module.code(a).rstrip(", ") for a in expr.args)
-                        return [replace(t, wrappers=(*t.wrappers, f"{expr.func.attr.value}({shorten(args, 40) or ''})"))]
+                        return [
+                            replace(t, wrappers=(*t.wrappers, f"{expr.func.attr.value}({shorten(args, 40) or ''})"))
+                        ]
                     return [t]
             return [Target(module=module, node=expr)]
         if isinstance(expr, cst.Name | cst.Attribute):

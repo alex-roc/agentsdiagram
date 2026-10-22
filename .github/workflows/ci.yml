@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uv sync --locked
+      - run: uv run ruff check
+      - run: uv run ruff format --check
+      - run: uv run pyright
+      - run: uv run pytest -q
+
+  node:
+    name: Viewer + extension
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Generated protocol types are up to date
+        run: pnpm --filter @agentsdiagram/protocol run check
+      - run: pnpm -r run typecheck
+      - run: pnpm --filter @agentsdiagram/viewer test
+      - run: pnpm run build
+      - name: Extension smoke test
+        run: xvfb-run -a pnpm --filter agentsdiagram test
+      - run: pnpm --filter agentsdiagram run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: packages/vscode/*.vsix
+
+  wheel:
+    name: Wheel ships the viewer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: astral-sh/setup-uv@v6
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @agentsdiagram/viewer build
+      - run: uv build
+      - name: _static is inside the wheel and the sdist
+        run: |
+          unzip -l dist/*.whl | grep -q "agentsdiagram/_static/viewer.js"
+          tar tzf dist/*.tar.gz | grep -q "_static/viewer.js"
+      - name: The wheel works from a clean environment
+        run: |
+          uvx --from dist/*.whl agentsdiagram scan tests/fixtures -f html -o /tmp/fixtures.html
+          grep -q agentsdiagram-data /tmp/fixtures.html

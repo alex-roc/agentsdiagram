@@ -100,9 +100,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.format == "json":
         text = project.model_dump_json(indent=2) + "\n"
     elif args.format == "html":
+        from .render.html import ViewerBundleMissing
         from .render.html import render as render_html
 
-        text = render_html(project, title=title)
+        try:
+            text = render_html(project, title=title)
+        except ViewerBundleMissing as exc:
+            print(f"agentsdiagram: {exc}", file=sys.stderr)
+            return 2
     else:
         from .render.mermaid import MAX_EDGES, render, too_large
 

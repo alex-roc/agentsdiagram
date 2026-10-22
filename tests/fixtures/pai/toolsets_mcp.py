@@ -1,8 +1,8 @@
 """Toolsets, wrappers, MCP servers and capabilities (PydanticAI 2.x)."""
 
 from fastmcp.client.transports import StdioTransport
-from pydantic_ai import Agent, Capability, FunctionToolset, NativeTool, WebSearchTool
-from pydantic_ai.capabilities import MCP, Thinking, WebFetch
+from pydantic_ai import Agent, Capability, FunctionToolset, WebSearchTool
+from pydantic_ai.capabilities import MCP, NativeTool, Thinking, WebFetch
 from pydantic_ai.mcp import MCPToolset
 
 math = FunctionToolset(id="math")

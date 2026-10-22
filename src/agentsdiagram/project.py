@@ -264,14 +264,14 @@ class _Collector(cst.CSTVisitor):
                 self.scope.names[star.name.value] = None
 
     def leave_FunctionDef(self, original_node: cst.FunctionDef) -> None:
-        self.scope = self.scope.parent  # type: ignore[assignment]
+        self.scope = self.scope.parent or self.scope
 
     def visit_ClassDef(self, node: cst.ClassDef) -> None:
         self._bind(node.name.value, "class", node, node.name)
         self.scope = _Scope("class", f"{self.scope.prefix}{node.name.value}.", self.scope)
 
     def leave_ClassDef(self, original_node: cst.ClassDef) -> None:
-        self.scope = self.scope.parent  # type: ignore[assignment]
+        self.scope = self.scope.parent or self.scope
 
     def _bind_target(self, target: cst.BaseExpression, kind: str, value: cst.CSTNode | None) -> None:
         if isinstance(target, cst.Name):
@@ -328,7 +328,7 @@ class _Collector(cst.CSTVisitor):
         self.calls.append(node)
 
     # ---- resolution (after the pass, so later module-level definitions are visible)
-    def resolve(self) -> dict[cst.CSTNode, str]:
+    def resolve_names(self) -> dict[cst.CSTNode, str]:
         qnames: dict[cst.CSTNode, str] = {}
         for node, scope in self.uses:
             qn = self._lookup(node.value, scope)
@@ -389,7 +389,7 @@ def parse_module(root: Path, path: Path, text: str | None = None) -> Module:
         sha256=hashlib.sha256(text.encode("utf-8")).hexdigest(),
         tree=tree,
         bindings=collector.bindings,
-        qnames=collector.resolve(),
+        qnames=collector.resolve_names(),
         parents=collector.parents,
         calls=collector.calls,
         is_package=is_package,

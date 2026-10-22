@@ -65,7 +65,7 @@ class SmolagentsAdapter:
                 node=call,
                 name_node=name_node,
                 framework="smolagents",
-                status=status,
+                status=status,  # type: ignore[arg-type]
                 attrs=attrs or NodeAttrs(),
             ),
             call,

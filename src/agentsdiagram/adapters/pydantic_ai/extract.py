@@ -317,8 +317,9 @@ class PydanticAIAdapter:
                 return None, None
             cls = module.code(expr.func).rsplit(".", 1)[-1]
             if cls in ("StdioTransport", "MCPServerStdio"):
-                command = string_value(value_of(module, arg(expr, "command", 0)))
-                command = command or (module.code(arg(expr, "command", 0)) if arg(expr, "command", 0) else None)
+                command_expr = arg(expr, "command", 0)
+                command = string_value(value_of(module, command_expr))
+                command = command or (module.code(command_expr) if command_expr is not None else None)
                 args = elements(arg(expr, "args", 1))
                 parts = [string_value(a) or module.code(a) for a in args or []]
                 return None, shorten(" ".join([command or "?", *parts]), 160)

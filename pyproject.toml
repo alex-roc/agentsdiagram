@@ -51,11 +51,12 @@ dev = [
     "ruff>=0.13",
     "pyright>=1.1.400",
     "pygls>=2.1",
+    "pytest-asyncio>=1.4.0",
 ]
 oracle = [
-    "pydantic-ai-slim[mcp,spec]>=2.59",
+    "pydantic-ai[spec]>=2.59",
     "pydantic-ai-harness>=0.59",
-    "smolagents>=1.26",
+    "smolagents[toolkit]>=1.26",
 ]
 
 [tool.uv]
@@ -86,10 +87,13 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = ["oracle: compares the static IR against the real libraries (imports fixtures)"]
+filterwarnings = ["ignore::DeprecationWarning:pygls.*", "ignore::DeprecationWarning:pytest_lsp.*"]
 
 [tool.pyright]
 include = ["src"]
 pythonVersion = "3.11"
+# LibCST visitors return bool | None by design; their typed stubs flag every override
+reportIncompatibleMethodOverride = false
 
 [tool.agentsdiagram]
 exclude = ["tests/fixtures/**"]

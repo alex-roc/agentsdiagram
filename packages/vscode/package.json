@@ -1,0 +1,172 @@
+{
+  "name": "agentsdiagram",
+  "displayName": "Agents Diagram",
+  "description": "Live diagram of your PydanticAI and smolagents agents, tools and toolsets, from static analysis.",
+  "version": "0.1.0",
+  "publisher": "alex-roc",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alex-roc/agentsdiagram.git",
+    "directory": "packages/vscode"
+  },
+  "homepage": "https://github.com/alex-roc/agentsdiagram",
+  "bugs": "https://github.com/alex-roc/agentsdiagram/issues",
+  "icon": "resources/icon.png",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Visualization",
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "pydantic-ai",
+    "pydantic",
+    "smolagents",
+    "agents",
+    "diagram",
+    "mermaid",
+    "llm"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "The language server is not started in untrusted workspaces with a custom server command.",
+      "restrictedConfigurations": [
+        "agentsdiagram.server.command"
+      ]
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "agentsdiagram.showWorkspace",
+        "title": "Show Workspace Diagram",
+        "category": "Agents Diagram",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "agentsdiagram.showFile",
+        "title": "Show Diagram of Current File",
+        "category": "Agents Diagram",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "agentsdiagram.showNode",
+        "title": "Show Node in Diagram",
+        "category": "Agents Diagram"
+      },
+      {
+        "command": "agentsdiagram.exportMermaid",
+        "title": "Export as Mermaid",
+        "category": "Agents Diagram"
+      },
+      {
+        "command": "agentsdiagram.restartServer",
+        "title": "Restart Language Server",
+        "category": "Agents Diagram"
+      },
+      {
+        "command": "agentsdiagram.showOutput",
+        "title": "Show Output",
+        "category": "Agents Diagram"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "agentsdiagram.showFile",
+          "when": "resourceLangId == python",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "agentsdiagram.showWorkspace",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation@99"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "agentsdiagram.showNode",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Agents Diagram",
+      "properties": {
+        "agentsdiagram.server.command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "scope": "machine",
+          "markdownDescription": "Command (and arguments) that starts the language server over stdio, used as is. Example: `[\"uv\", \"run\", \"agentsdiagram\", \"lsp\"]`. When empty, the extension runs `uvx --from \"agentsdiagram[lsp]==<version>\" agentsdiagram lsp`."
+        },
+        "agentsdiagram.server.uvPath": {
+          "type": "string",
+          "scope": "machine",
+          "markdownDescription": "Absolute path to the `uvx` executable. Leave empty to search `PATH` and the usual install locations."
+        },
+        "agentsdiagram.include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Glob patterns of files to analyze (passed to the server). Empty means everything."
+        },
+        "agentsdiagram.exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Glob patterns of files to skip (passed to the server)."
+        },
+        "agentsdiagram.codeLens.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Show \"Show in diagram\" code lenses above agents and tools."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "pnpm run build && vscode-test --label smoke",
+    "icon": "rsvg-convert -w 128 -h 128 resources/icon.svg -o resources/icon.png",
+    "vscode:prepublish": "pnpm run typecheck && node esbuild.mjs --production",
+    "package": "vsce package --no-dependencies",
+    "publish:vsce": "vsce publish --no-dependencies",
+    "publish:ovsx": "ovsx publish --no-dependencies",
+    "test:e2e": "pnpm run build && vscode-test --label e2e"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@agentsdiagram/protocol": "workspace:*",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.0.0",
+    "@types/vscode": "~1.93.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.25.0",
+    "mocha": "^11.0.0",
+    "ovsx": "^1.3.0",
+    "typescript": "^5.6.0",
+    "vscode-languageclient": "10.1.2"
+  }
+}

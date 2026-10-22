@@ -1,0 +1,4330 @@
+# serializer version: 1
+# name: test_ir_snapshot
+  dict({
+    'diagnostics': list([
+      dict({
+        'code': 'AD001',
+        'message': '`extra_toolsets` cannot be resolved statically; shown as a dynamic node.',
+        'node_id': 'pydantic_ai:agent:pai.dynamic.agent~dynamic#1',
+        'ref': dict({
+          'file': 'pai/dynamic.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 56,
+              'line': 7,
+            }),
+            'start': dict({
+              'column': 42,
+              'line': 7,
+            }),
+          }),
+        }),
+        'severity': 'info',
+      }),
+      dict({
+        'code': 'AD301',
+        'message': 'Agent `build()` is created inside a function; its arguments may vary at runtime.',
+        'node_id': None,
+        'ref': dict({
+          'file': 'pai/dynamic.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 57,
+              'line': 7,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 7,
+            }),
+          }),
+        }),
+        'severity': 'info',
+      }),
+      dict({
+        'code': 'AD301',
+        'message': 'Agent `make_reviewer()` is created inside a function; its arguments may vary at runtime.',
+        'node_id': None,
+        'ref': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 69,
+              'line': 10,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 10,
+            }),
+          }),
+        }),
+        'severity': 'info',
+      }),
+      dict({
+        'code': 'AD000',
+        'message': 'Syntax error: parser error: error at 4:0: expected one of !=, %, &, (, *, **, +, ,, -, ., /, //, <, <<, <=, ==, >, >=, >>, @, ASYNC, …',
+        'node_id': None,
+        'ref': dict({
+          'file': 'pai/syntax_error.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 0,
+              'line': 3,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 3,
+            }),
+          }),
+        }),
+        'severity': 'error',
+      }),
+      dict({
+        'code': 'AD101',
+        'message': '`MCPServerStdio` is PydanticAI v1 API; use `MCPToolset` in v2.',
+        'node_id': 'pydantic_ai:mcp_server:pai.v1_api.server',
+        'ref': dict({
+          'file': 'pai/v1_api.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 59,
+              'line': 6,
+            }),
+            'start': dict({
+              'column': 9,
+              'line': 6,
+            }),
+          }),
+        }),
+        'severity': 'warning',
+      }),
+      dict({
+        'code': 'AD101',
+        'message': '`mcp_servers=` is PydanticAI v1 API; in v2 use toolsets=[...].',
+        'node_id': 'pydantic_ai:agent:pai.v1_api.legacy',
+        'ref': dict({
+          'file': 'pai/v1_api.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 53,
+              'line': 7,
+            }),
+            'start': dict({
+              'column': 9,
+              'line': 7,
+            }),
+          }),
+        }),
+        'severity': 'warning',
+      }),
+      dict({
+        'code': 'AD203',
+        'message': '@tool `bad_tool` needs type hints (parameters x missing).',
+        'node_id': None,
+        'ref': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 12,
+              'line': 9,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 9,
+            }),
+          }),
+        }),
+        'severity': 'warning',
+      }),
+      dict({
+        'code': 'AD203',
+        'message': '@tool `bad_tool` needs a docstring with an `Args:` section.',
+        'node_id': None,
+        'ref': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 12,
+              'line': 9,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 9,
+            }),
+          }),
+        }),
+        'severity': 'warning',
+      }),
+      dict({
+        'code': 'AD201',
+        'message': 'Managed agent `helper` needs both `name=` and `description=`.',
+        'node_id': 'smolagents:agent:smol.managed_without_name.helper',
+        'ref': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 62,
+              'line': 14,
+            }),
+            'start': dict({
+              'column': 56,
+              'line': 14,
+            }),
+          }),
+        }),
+        'severity': 'error',
+      }),
+      dict({
+        'code': 'AD204',
+        'message': "executor_type='wasm' was removed in smolagents 1.26.",
+        'node_id': 'smolagents:agent:smol.managed_without_name.boss',
+        'ref': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 86,
+              'line': 14,
+            }),
+            'start': dict({
+              'column': 7,
+              'line': 14,
+            }),
+          }),
+        }),
+        'severity': 'error',
+      }),
+    ]),
+    'edges': list([
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.base_nodes.<graph>->pydantic_ai:graph_step:pai.base_nodes.Ask',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.base_nodes.<graph>',
+        'target': 'pydantic_ai:graph_step:pai.base_nodes.Ask',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.base_nodes.<graph>->pydantic_ai:graph_step:pai.base_nodes.Check',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.base_nodes.<graph>',
+        'target': 'pydantic_ai:graph_step:pai.base_nodes.Check',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.base_nodes.Ask->pydantic_ai:graph_step:pai.base_nodes.Check',
+        'kind': 'transitions',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/base_nodes.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 54,
+              'line': 14,
+            }),
+            'start': dict({
+              'column': 49,
+              'line': 14,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.base_nodes.Ask',
+        'target': 'pydantic_ai:graph_step:pai.base_nodes.Check',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.base_nodes.Check->pydantic_ai:graph_step:pai.base_nodes.Ask',
+        'kind': 'transitions',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/base_nodes.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 63,
+              'line': 20,
+            }),
+            'start': dict({
+              'column': 49,
+              'line': 20,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.base_nodes.Check',
+        'target': 'pydantic_ai:graph_step:pai.base_nodes.Ask',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.base_nodes.<graph>->pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.base_nodes.<graph>',
+        'target': 'pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.base_nodes.Check->pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>',
+        'kind': 'transitions',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/base_nodes.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 63,
+              'line': 20,
+            }),
+            'start': dict({
+              'column': 49,
+              'line': 20,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.base_nodes.Check',
+        'target': 'pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.basic_tools.assistant->pydantic_ai:tool:pai.basic_tools.<Tool>#1',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/basic_tools.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 74,
+              'line': 24,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 24,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.basic_tools.assistant',
+        'target': 'pydantic_ai:tool:pai.basic_tools.<Tool>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.basic_tools.assistant->pydantic_ai:tool:pai.basic_tools.weather',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/basic_tools.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 15,
+              'line': 28,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 28,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.basic_tools.assistant',
+        'target': 'pydantic_ai:tool:pai.basic_tools.weather',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.basic_tools.assistant->pydantic_ai:tool:pai.basic_tools.roll_dice',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/basic_tools.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 34,
+              'line': 34,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 34,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.basic_tools.assistant',
+        'target': 'pydantic_ai:tool:pai.basic_tools.roll_dice',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.dynamic.agent->pydantic_ai:agent:pai.dynamic.agent~dynamic#1',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/dynamic.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 56,
+              'line': 7,
+            }),
+            'start': dict({
+              'column': 42,
+              'line': 7,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.dynamic.agent',
+        'target': 'pydantic_ai:agent:pai.dynamic.agent~dynamic#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.graph_builder.build.<locals>.g',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.graph_builder.build.<locals>.g',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.graph_builder.build.<locals>.g',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.graph_builder.build.<locals>.g',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch',
+        'kind': 'transitions',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 43,
+              'line': 34,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 34,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.graph_builder.build.<locals>.g',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize',
+        'kind': 'transitions',
+        'label': 'long',
+        'order': None,
+        'ref': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 93,
+              'line': 37,
+            }),
+            'start': dict({
+              'column': 12,
+              'line': 36,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip',
+        'kind': 'transitions',
+        'label': 'str',
+        'order': None,
+        'ref': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 42,
+              'line': 38,
+            }),
+            'start': dict({
+              'column': 12,
+              'line': 36,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1',
+        'kind': 'transitions',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 9,
+              'line': 39,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 35,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'contains:pydantic_ai:graph:pai.graph_builder.build.<locals>.g->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>',
+        'kind': 'contains',
+        'label': None,
+        'order': None,
+        'ref': None,
+        'source': 'pydantic_ai:graph:pai.graph_builder.build.<locals>.g',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>',
+        'kind': 'transitions',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 51,
+              'line': 40,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 40,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'transitions:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip->pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>',
+        'kind': 'transitions',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 51,
+              'line': 40,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 40,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip',
+        'target': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'delegates_to:pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1->pydantic_ai:agent:pai.multi.orchestrator.reviewer',
+        'kind': 'delegates_to',
+        'label': 'reviewer',
+        'order': None,
+        'ref': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 71,
+              'line': 18,
+            }),
+            'start': dict({
+              'column': 36,
+              'line': 18,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1',
+        'target': 'pydantic_ai:agent:pai.multi.orchestrator.reviewer',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.multi.orchestrator.lead->pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 73,
+              'line': 18,
+            }),
+            'start': dict({
+              'column': 18,
+              'line': 18,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.multi.orchestrator.lead',
+        'target': 'pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.multi.orchestrator.lead->pydantic_ai:tool:pai.multi.orchestrator.research',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 10,
+              'line': 22,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 22,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.multi.orchestrator.lead',
+        'target': 'pydantic_ai:tool:pai.multi.orchestrator.research',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.spec.spec_agent->pydantic_ai:mcp_server:pai.spec.spec_agent.<MCP>https://docs.example.com/mcp',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/spec.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 42,
+              'line': 5,
+            }),
+            'start': dict({
+              'column': 13,
+              'line': 5,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.spec.spec_agent',
+        'target': 'pydantic_ai:mcp_server:pai.spec.spec_agent.<MCP>https://docs.example.com/mcp',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:toolset:pai.toolsets_mcp.math',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 60,
+              'line': 40,
+            }),
+            'start': dict({
+              'column': 13,
+              'line': 40,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.toolsets_mcp.analyst',
+        'target': 'pydantic_ai:toolset:pai.toolsets_mcp.math',
+        'wrappers': list([
+          'prefixed("math")',
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:mcp_server:pai.toolsets_mcp.files',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 60,
+              'line': 40,
+            }),
+            'start': dict({
+              'column': 13,
+              'line': 40,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.toolsets_mcp.analyst',
+        'target': 'pydantic_ai:mcp_server:pai.toolsets_mcp.files',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:mcp_server:pai.toolsets_mcp.docs',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 60,
+              'line': 40,
+            }),
+            'start': dict({
+              'column': 13,
+              'line': 40,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.toolsets_mcp.analyst',
+        'target': 'pydantic_ai:mcp_server:pai.toolsets_mcp.docs',
+        'wrappers': list([
+          'filtered(lambda ctx, t: True)',
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:capability:pai.toolsets_mcp.research',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 16,
+              'line': 42,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 42,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.toolsets_mcp.analyst',
+        'target': 'pydantic_ai:capability:pai.toolsets_mcp.research',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:native_tool:pai.toolsets_mcp.<WebSearchTool>#1',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 35,
+              'line': 43,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 43,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.toolsets_mcp.analyst',
+        'target': 'pydantic_ai:native_tool:pai.toolsets_mcp.<WebSearchTool>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:native_tool:pai.toolsets_mcp.<WebFetch>#1',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 18,
+              'line': 44,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 44,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.toolsets_mcp.analyst',
+        'target': 'pydantic_ai:native_tool:pai.toolsets_mcp.<WebFetch>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.toolsets_mcp.analyst->pydantic_ai:mcp_server:pai.toolsets_mcp.<MCP>#1',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 46,
+              'line': 45,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 45,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.toolsets_mcp.analyst',
+        'target': 'pydantic_ai:mcp_server:pai.toolsets_mcp.<MCP>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'provides:pydantic_ai:toolset:pai.toolsets_mcp.math->pydantic_ai:tool:pai.toolsets_mcp.add',
+        'kind': 'provides',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 16,
+              'line': 11,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 11,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:toolset:pai.toolsets_mcp.math',
+        'target': 'pydantic_ai:tool:pai.toolsets_mcp.add',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'provides:pydantic_ai:capability:pai.toolsets_mcp.research->pydantic_ai:tool:pai.toolsets_mcp.cite',
+        'kind': 'provides',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 20,
+              'line': 30,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 30,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:capability:pai.toolsets_mcp.research',
+        'target': 'pydantic_ai:tool:pai.toolsets_mcp.cite',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'provides:pydantic_ai:toolset:pai.toolsets_mcp.math->pydantic_ai:tool:pai.toolsets_mcp.multiply',
+        'kind': 'provides',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 27,
+              'line': 22,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 22,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:toolset:pai.toolsets_mcp.math',
+        'target': 'pydantic_ai:tool:pai.toolsets_mcp.multiply',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:pydantic_ai:agent:pai.v1_api.legacy->pydantic_ai:mcp_server:pai.v1_api.server',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/v1_api.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 51,
+              'line': 7,
+            }),
+            'start': dict({
+              'column': 45,
+              'line': 7,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:agent:pai.v1_api.legacy',
+        'target': 'pydantic_ai:mcp_server:pai.v1_api.server',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.managed.web_agent->smolagents:tool:smol.managed.<WebSearchTool>#1',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/managed.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 26,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 19,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.managed.web_agent',
+        'target': 'smolagents:tool:smol.managed.<WebSearchTool>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.managed.web_agent->smolagents:tool:smol.managed.<VisitWebpageTool>#1',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/managed.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 46,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 28,
+              'line': 19,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.managed.web_agent',
+        'target': 'smolagents:tool:smol.managed.<VisitWebpageTool>#1',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.managed.manager->smolagents:tool:smol.managed.get_weather',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/managed.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 22,
+              'line': 27,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 27,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.managed.manager',
+        'target': 'smolagents:tool:smol.managed.get_weather',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'manages:smolagents:agent:smol.managed.manager->smolagents:agent:smol.managed.web_agent',
+        'kind': 'manages',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/managed.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 29,
+              'line': 29,
+            }),
+            'start': dict({
+              'column': 20,
+              'line': 29,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.managed.manager',
+        'target': 'smolagents:agent:smol.managed.web_agent',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.managed_without_name.helper->smolagents:tool:smol.managed_without_name.bad_tool',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 41,
+              'line': 13,
+            }),
+            'start': dict({
+              'column': 33,
+              'line': 13,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.managed_without_name.helper',
+        'target': 'smolagents:tool:smol.managed_without_name.bad_tool',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'manages:smolagents:agent:smol.managed_without_name.boss->smolagents:agent:smol.managed_without_name.helper',
+        'kind': 'manages',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 62,
+              'line': 14,
+            }),
+            'start': dict({
+              'column': 56,
+              'line': 14,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.managed_without_name.boss',
+        'target': 'smolagents:agent:smol.managed_without_name.helper',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.mcp.agent->smolagents:mcp_server:smol.mcp.collection',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 46,
+              'line': 9,
+            }),
+            'start': dict({
+              'column': 30,
+              'line': 9,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.mcp.agent',
+        'target': 'smolagents:mcp_server:smol.mcp.collection',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.mcp.http_agent->smolagents:mcp_server:smol.mcp.tools',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 38,
+              'line': 12,
+            }),
+            'start': dict({
+              'column': 33,
+              'line': 12,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.mcp.http_agent',
+        'target': 'smolagents:mcp_server:smol.mcp.tools',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.tool_class.agent->smolagents:tool:smol.tool_class.agent.<base>.web_search',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 23,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 19,
+              'line': 19,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.tool_class.agent',
+        'target': 'smolagents:tool:smol.tool_class.agent.<base>.web_search',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.tool_class.agent->smolagents:tool:smol.tool_class.agent.<base>.visit_webpage',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 23,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 19,
+              'line': 19,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.tool_class.agent',
+        'target': 'smolagents:tool:smol.tool_class.agent.<base>.visit_webpage',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.tool_class.agent->smolagents:tool:smol.tool_class.agent.<base>.python_interpreter',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 23,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 19,
+              'line': 19,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.tool_class.agent',
+        'target': 'smolagents:tool:smol.tool_class.agent.<base>.python_interpreter',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'uses:smolagents:agent:smol.tool_class.agent->smolagents:tool:smol.tool_class.StockPrice',
+        'kind': 'uses',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 23,
+              'line': 17,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 17,
+            }),
+          }),
+        }),
+        'source': 'smolagents:agent:smol.tool_class.agent',
+        'target': 'smolagents:tool:smol.tool_class.StockPrice',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'runs:pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize->pydantic_ai:agent:pai.graph_builder.summarizer',
+        'kind': 'runs',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 48,
+              'line': 27,
+            }),
+            'start': dict({
+              'column': 22,
+              'line': 27,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize',
+        'target': 'pydantic_ai:agent:pai.graph_builder.summarizer',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'delegates_to:pydantic_ai:tool:pai.multi.orchestrator.research->pydantic_ai:agent:pai.multi.agents.researcher',
+        'kind': 'delegates_to',
+        'label': None,
+        'order': None,
+        'ref': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 57,
+              'line': 25,
+            }),
+            'start': dict({
+              'column': 19,
+              'line': 25,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:tool:pai.multi.orchestrator.research',
+        'target': 'pydantic_ai:agent:pai.multi.agents.researcher',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'runs:pydantic_ai:workflow:pai.multi.orchestrator.pipeline->pydantic_ai:agent:pai.multi.agents.researcher#1',
+        'kind': 'runs',
+        'label': None,
+        'order': 1,
+        'ref': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 39,
+              'line': 31,
+            }),
+            'start': dict({
+              'column': 18,
+              'line': 31,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:workflow:pai.multi.orchestrator.pipeline',
+        'target': 'pydantic_ai:agent:pai.multi.agents.researcher',
+        'wrappers': list([
+        ]),
+      }),
+      dict({
+        'id': 'runs:pydantic_ai:workflow:pai.multi.orchestrator.pipeline->pydantic_ai:agent:pai.multi.agents.writer#2',
+        'kind': 'runs',
+        'label': None,
+        'order': 2,
+        'ref': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 43,
+              'line': 32,
+            }),
+            'start': dict({
+              'column': 19,
+              'line': 32,
+            }),
+          }),
+        }),
+        'source': 'pydantic_ai:workflow:pai.multi.orchestrator.pipeline',
+        'target': 'pydantic_ai:agent:pai.multi.agents.writer',
+        'wrappers': list([
+        ]),
+      }),
+    ]),
+    'files': list([
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.base_nodes',
+        'path': 'pai/base_nodes.py',
+        'sha256': '03e22c54466b44903167304519bab096a92ef8f16fcb077fdcdf5b5282fe56a2',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.basic_tools',
+        'path': 'pai/basic_tools.py',
+        'sha256': '87f547ca52377f4d9045942b9a105c2de34bfe3b3a0efd0faa34c776902e58bd',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.dynamic',
+        'path': 'pai/dynamic.py',
+        'sha256': 'e90c25f1c8381d2ce588f9cb42911120be2081ca3bbfd479d19a1e265e602ae9',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.graph_builder',
+        'path': 'pai/graph_builder.py',
+        'sha256': 'ef64c3caca6b8b70cbba2f23b2a17aaaac9bd7cc423f83fcac544b45e4e9b988',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.multi.agents',
+        'path': 'pai/multi/agents.py',
+        'sha256': 'ecd04a233d03dc598b764b1446a9a3b399c19b89248057771af0fe50dce08104',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.multi.orchestrator',
+        'path': 'pai/multi/orchestrator.py',
+        'sha256': '99e10b8b402742e6eef8190c0c19f795354ac312df7f711ab98bdafc50adb742',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.spec',
+        'path': 'pai/spec.py',
+        'sha256': 'f34fcf1031ead9b74f193240c6f0f6015ffca65f991745cc8c4a21e1df8dff35',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.toolsets_mcp',
+        'path': 'pai/toolsets_mcp.py',
+        'sha256': 'ad4422fefb45152b2034a94665b1044a0062a8a110f16e533bf617808fad11d9',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'pydantic_ai',
+        ]),
+        'module': 'pai.v1_api',
+        'path': 'pai/v1_api.py',
+        'sha256': '6d703c8d13651a8d98e9ed9f85d0e612dcdd7d48f1a7264394cb9d1b4b94cfca',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'smolagents',
+        ]),
+        'module': 'smol.managed',
+        'path': 'smol/managed.py',
+        'sha256': '7525cb1d561f3d25924e74cd84c7ef0df12d1e8cf49dba68b4e9ce04f4ed0574',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'smolagents',
+        ]),
+        'module': 'smol.managed_without_name',
+        'path': 'smol/managed_without_name.py',
+        'sha256': '73740d0f39633ca215b27780915417426d80a44282eb93e6ff251a8e377ee215',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'smolagents',
+        ]),
+        'module': 'smol.mcp',
+        'path': 'smol/mcp.py',
+        'sha256': 'ae19de6305584d7929f332c1f3facf77ea6c79c38b49a8b40ba13b1ba25a001d',
+        'status': 'ok',
+      }),
+      dict({
+        'frameworks': list([
+          'smolagents',
+        ]),
+        'module': 'smol.tool_class',
+        'path': 'smol/tool_class.py',
+        'sha256': '94af65c1da43afae8c748ac1c6f8ef50254fd3681c0d40f69f98757d4e967633',
+        'status': 'ok',
+      }),
+    ]),
+    'frameworks': list([
+      'pydantic_ai',
+      'smolagents',
+    ]),
+    'ir_version': '1',
+    'nodes': list([
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+            'output_validator',
+          ]),
+          'command': None,
+          'deps_type': 'Deps',
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+            'add_city',
+          ]),
+          'extra': dict({
+          }),
+          'instructions': 'You are a helpful travel assistant.',
+          'model': 'openai:gpt-5',
+          'output_type': 'str',
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.basic_tools.assistant',
+        'kind': 'agent',
+        'name': 'assistant',
+        'source': dict({
+          'file': 'pai/basic_tools.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 9,
+              'line': 18,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 18,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 25,
+            }),
+            'start': dict({
+              'column': 12,
+              'line': 18,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': 'openai:gpt-5',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.dynamic.agent',
+        'kind': 'agent',
+        'name': 'agent',
+        'source': dict({
+          'file': 'pai/dynamic.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 5,
+              'line': 10,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 10,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 17,
+              'line': 10,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 10,
+            }),
+          }),
+        }),
+        'status': 'partial',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': 'openai:gpt-5-mini',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.graph_builder.summarizer',
+        'kind': 'agent',
+        'name': 'summarizer',
+        'source': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 10,
+              'line': 8,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 8,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 58,
+              'line': 8,
+            }),
+            'start': dict({
+              'column': 13,
+              'line': 8,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': 'Find facts.',
+          'model': 'openai:gpt-5-mini',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.multi.agents.researcher',
+        'kind': 'agent',
+        'name': 'researcher',
+        'source': dict({
+          'file': 'pai/multi/agents.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 10,
+              'line': 5,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 5,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 86,
+              'line': 5,
+            }),
+            'start': dict({
+              'column': 13,
+              'line': 5,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': 'Write a short report.',
+          'model': 'openai:gpt-5',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.multi.agents.writer',
+        'kind': 'agent',
+        'name': 'writer',
+        'source': dict({
+          'file': 'pai/multi/agents.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 6,
+              'line': 6,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 6,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 83,
+              'line': 6,
+            }),
+            'start': dict({
+              'column': 9,
+              'line': 6,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': 'openai:gpt-5',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.multi.orchestrator.lead',
+        'kind': 'agent',
+        'name': 'lead',
+        'source': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 4,
+              'line': 15,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 15,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 7,
+              'line': 15,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': 'Review the report critically.',
+          'model': 'model',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.multi.orchestrator.reviewer',
+        'kind': 'agent',
+        'name': 'reviewer',
+        'source': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 8,
+              'line': 13,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 13,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 40,
+              'line': 13,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 13,
+            }),
+          }),
+        }),
+        'status': 'partial',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent (spec)',
+          'badges': list([
+            'Thinking',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': 'An agent defined in YAML',
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'spec': 'agent.yaml',
+          }),
+          'instructions': 'You answer questions about the docs.',
+          'model': 'anthropic:claude-sonnet-5-5',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.spec.spec_agent',
+        'kind': 'agent',
+        'name': 'spec_agent',
+        'source': dict({
+          'file': 'pai/spec.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 10,
+              'line': 5,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 5,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 42,
+              'line': 5,
+            }),
+            'start': dict({
+              'column': 13,
+              'line': 5,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+            'Thinking',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': 'anthropic:claude-sonnet-5-5',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.toolsets_mcp.analyst',
+        'kind': 'agent',
+        'name': 'analyst',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 7,
+              'line': 38,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 38,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 48,
+            }),
+            'start': dict({
+              'column': 10,
+              'line': 38,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'Agent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': 'openai:gpt-4o',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.v1_api.legacy',
+        'kind': 'agent',
+        'name': 'legacy',
+        'source': dict({
+          'file': 'pai/v1_api.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 6,
+              'line': 7,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 7,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 53,
+              'line': 7,
+            }),
+            'start': dict({
+              'column': 9,
+              'line': 7,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'tool_name': 'delegate_task',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:capability:pai.multi.orchestrator.<SubAgents>#1',
+        'kind': 'capability',
+        'name': 'SubAgents',
+        'source': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 73,
+              'line': 18,
+            }),
+            'start': dict({
+              'column': 18,
+              'line': 18,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': 'Look things up on the web',
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:capability:pai.toolsets_mcp.research',
+        'kind': 'capability',
+        'name': 'research',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 8,
+              'line': 27,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 27,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 77,
+              'line': 27,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 27,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'style': 'BaseNode',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph:pai.base_nodes.<graph>',
+        'kind': 'graph',
+        'name': 'base_nodes graph',
+        'source': dict({
+          'file': 'pai/base_nodes.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 22,
+              'line': 15,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 11,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'output_type': 'str',
+            'state_type': 'State',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph:pai.graph_builder.build.<locals>.g',
+        'kind': 'graph',
+        'name': 'build',
+        'source': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 5,
+              'line': 17,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 17,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 55,
+              'line': 17,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 17,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'role': 'end',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.base_nodes.<graph>.<end>',
+        'kind': 'graph_step',
+        'name': 'end',
+        'source': dict({
+          'file': 'pai/base_nodes.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 22,
+              'line': 15,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 11,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Ask a question.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.base_nodes.Ask',
+        'kind': 'graph_step',
+        'name': 'Ask',
+        'source': dict({
+          'file': 'pai/base_nodes.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 9,
+              'line': 11,
+            }),
+            'start': dict({
+              'column': 6,
+              'line': 11,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 22,
+              'line': 15,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 11,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.base_nodes.Check',
+        'kind': 'graph_step',
+        'name': 'Check',
+        'source': dict({
+          'file': 'pai/base_nodes.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 11,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 6,
+              'line': 19,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 24,
+              'line': 21,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 19,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Fetch the document.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'async def fetch(ctx: StepContext[State, None, None]) -> str',
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.fetch',
+        'kind': 'graph_step',
+        'name': 'fetch',
+        'source': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 19,
+              'line': 20,
+            }),
+            'start': dict({
+              'column': 14,
+              'line': 20,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 21,
+              'line': 22,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 20,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'role': 'decision',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<decision>#1',
+        'kind': 'graph_step',
+        'name': 'decision',
+        'source': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 42,
+              'line': 38,
+            }),
+            'start': dict({
+              'column': 12,
+              'line': 36,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'role': 'end',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<end>',
+        'kind': 'graph_step',
+        'name': 'end',
+        'source': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 55,
+              'line': 17,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 17,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'role': 'start',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.g.<start>',
+        'kind': 'graph_step',
+        'name': 'start',
+        'source': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 55,
+              'line': 17,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 17,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'async def skip(ctx: StepContext[State, None, str]) -> str',
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.skip',
+        'kind': 'graph_step',
+        'name': 'skip',
+        'source': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 18,
+              'line': 30,
+            }),
+            'start': dict({
+              'column': 14,
+              'line': 30,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 25,
+              'line': 31,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 30,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Summarize with an agent.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'async def summarize(ctx: StepContext[State, None, str]) -> str',
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:graph_step:pai.graph_builder.build.<locals>.summarize',
+        'kind': 'graph_step',
+        'name': 'summarize',
+        'source': dict({
+          'file': 'pai/graph_builder.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 23,
+              'line': 25,
+            }),
+            'start': dict({
+              'column': 14,
+              'line': 25,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 56,
+              'line': 27,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 25,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'capability',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': 'https://docs.example.com/mcp',
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:mcp_server:pai.spec.spec_agent.<MCP>https://docs.example.com/mcp',
+        'kind': 'mcp_server',
+        'name': 'MCP docs.example.com',
+        'source': dict({
+          'file': 'pai/spec.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 42,
+              'line': 5,
+            }),
+            'start': dict({
+              'column': 13,
+              'line': 5,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'capability',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': 'https://mcp.example.com/mcp',
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:mcp_server:pai.toolsets_mcp.<MCP>#1',
+        'kind': 'mcp_server',
+        'name': 'MCP mcp.example.com',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 46,
+              'line': 45,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 45,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': 'https://docs.example.com/mcp',
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:mcp_server:pai.toolsets_mcp.docs',
+        'kind': 'mcp_server',
+        'name': 'MCP docs.example.com',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 4,
+              'line': 25,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 25,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 49,
+              'line': 25,
+            }),
+            'start': dict({
+              'column': 7,
+              'line': 25,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': 'uvx mcp-server-filesystem /tmp',
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:mcp_server:pai.toolsets_mcp.files',
+        'kind': 'mcp_server',
+        'name': 'files',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 5,
+              'line': 24,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 24,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 101,
+              'line': 24,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 24,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': 'python -m my_server',
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:mcp_server:pai.v1_api.server',
+        'kind': 'mcp_server',
+        'name': 'MCP python',
+        'source': dict({
+          'file': 'pai/v1_api.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 6,
+              'line': 6,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 6,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 59,
+              'line': 6,
+            }),
+            'start': dict({
+              'column': 9,
+              'line': 6,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'native-or-local',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:native_tool:pai.toolsets_mcp.<WebFetch>#1',
+        'kind': 'native_tool',
+        'name': 'WebFetch',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 18,
+              'line': 44,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 44,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'native',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:native_tool:pai.toolsets_mcp.<WebSearchTool>#1',
+        'kind': 'native_tool',
+        'name': 'WebSearchTool',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 34,
+              'line': 43,
+            }),
+            'start': dict({
+              'column': 19,
+              'line': 43,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'requires_approval',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Convert an amount of USD to another currency.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'def convert_currency(amount: float, to: str) -> float',
+          'takes_ctx': False,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:tool:pai.basic_tools.<Tool>#1',
+        'kind': 'tool',
+        'name': 'convert_currency',
+        'source': dict({
+          'file': 'pai/basic_tools.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 74,
+              'line': 24,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 24,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Roll a six-sided die.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'def roll_dice() -> int',
+          'takes_ctx': False,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:tool:pai.basic_tools.roll_dice',
+        'kind': 'tool',
+        'name': 'roll',
+        'source': dict({
+          'file': 'pai/basic_tools.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 13,
+              'line': 35,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 35,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 12,
+              'line': 37,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 35,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': "Weather forecast for the user's city.",
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'async def weather(ctx: RunContext[Deps], day: str) -> str',
+          'takes_ctx': True,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:tool:pai.basic_tools.weather',
+        'kind': 'tool',
+        'name': 'weather',
+        'source': dict({
+          'file': 'pai/basic_tools.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 17,
+              'line': 29,
+            }),
+            'start': dict({
+              'column': 10,
+              'line': 29,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 47,
+              'line': 31,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 29,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Delegate research to the researcher agent.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'async def research(ctx: RunContext[None], topic: str) -> str',
+          'takes_ctx': True,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:tool:pai.multi.orchestrator.research',
+        'kind': 'tool',
+        'name': 'research',
+        'source': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 18,
+              'line': 23,
+            }),
+            'start': dict({
+              'column': 10,
+              'line': 23,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 24,
+              'line': 26,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 23,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Add two numbers.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'def add(a: int, b: int) -> int',
+          'takes_ctx': False,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:tool:pai.toolsets_mcp.add',
+        'kind': 'tool',
+        'name': 'add',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 7,
+              'line': 12,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 12,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 16,
+              'line': 14,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 12,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Format a citation.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'def cite(url: str) -> str',
+          'takes_ctx': False,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:tool:pai.toolsets_mcp.cite',
+        'kind': 'tool',
+        'name': 'cite',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 8,
+              'line': 31,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 31,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 14,
+              'line': 33,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 31,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Multiply two numbers.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'def multiply(a: int, b: int) -> int',
+          'takes_ctx': False,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:tool:pai.toolsets_mcp.multiply',
+        'kind': 'tool',
+        'name': 'multiply',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 12,
+              'line': 17,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 17,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 16,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 17,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'FunctionToolset',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:toolset:pai.toolsets_mcp.math',
+        'kind': 'toolset',
+        'name': 'math',
+        'source': dict({
+          'file': 'pai/toolsets_mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 4,
+              'line': 8,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 8,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 33,
+              'line': 8,
+            }),
+            'start': dict({
+              'column': 7,
+              'line': 8,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Research, then write: a hand-off between two agents.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'async def pipeline(topic: str) -> str',
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:workflow:pai.multi.orchestrator.pipeline',
+        'kind': 'workflow',
+        'name': 'pipeline',
+        'source': dict({
+          'file': 'pai/multi/orchestrator.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 18,
+              'line': 29,
+            }),
+            'start': dict({
+              'column': 10,
+              'line': 29,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 24,
+              'line': 33,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 29,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'CodeAgent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'additional_authorized_imports': '["time", "json"]',
+            'explicit_name': False,
+            'planning_interval': '3',
+          }),
+          'instructions': None,
+          'model': "InferenceClientModel('Qwen/Qwen3-Next-80B-A3B-Thinking')",
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:agent:smol.managed.manager',
+        'kind': 'agent',
+        'name': 'manager',
+        'source': dict({
+          'file': 'smol/managed.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 7,
+              'line': 26,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 26,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 32,
+            }),
+            'start': dict({
+              'column': 10,
+              'line': 26,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'ToolCallingAgent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': 'Browses the web for you.',
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'explicit_name': True,
+            'max_steps': '10',
+          }),
+          'instructions': None,
+          'model': "InferenceClientModel('Qwen/Qwen3-Next-80B-A3B-Thinking')",
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:agent:smol.managed.web_agent',
+        'kind': 'agent',
+        'name': 'web_agent',
+        'source': dict({
+          'file': 'smol/managed.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 9,
+              'line': 18,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 18,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 24,
+            }),
+            'start': dict({
+              'column': 12,
+              'line': 18,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'CodeAgent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'executor_type': 'wasm',
+            'explicit_name': False,
+          }),
+          'instructions': None,
+          'model': 'InferenceClientModel(…)',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:agent:smol.managed_without_name.boss',
+        'kind': 'agent',
+        'name': 'boss',
+        'source': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 4,
+              'line': 14,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 14,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 86,
+              'line': 14,
+            }),
+            'start': dict({
+              'column': 7,
+              'line': 14,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'ToolCallingAgent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'explicit_name': False,
+          }),
+          'instructions': None,
+          'model': 'InferenceClientModel(…)',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:agent:smol.managed_without_name.helper',
+        'kind': 'agent',
+        'name': 'helper',
+        'source': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 6,
+              'line': 13,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 13,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 56,
+              'line': 13,
+            }),
+            'start': dict({
+              'column': 9,
+              'line': 13,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'CodeAgent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'explicit_name': False,
+          }),
+          'instructions': None,
+          'model': 'InferenceClientModel(…)',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:agent:smol.mcp.agent',
+        'kind': 'agent',
+        'name': 'agent',
+        'source': dict({
+          'file': 'smol/mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 9,
+              'line': 9,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 9,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 78,
+              'line': 9,
+            }),
+            'start': dict({
+              'column': 12,
+              'line': 9,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'CodeAgent',
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'explicit_name': False,
+          }),
+          'instructions': None,
+          'model': 'InferenceClientModel(…)',
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:agent:smol.mcp.http_agent',
+        'kind': 'agent',
+        'name': 'http_agent',
+        'source': dict({
+          'file': 'smol/mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 14,
+              'line': 12,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 12,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 69,
+              'line': 12,
+            }),
+            'start': dict({
+              'column': 17,
+              'line': 12,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': 'ToolCallingAgent',
+          'badges': list([
+            'add_base_tools',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'explicit_name': False,
+          }),
+          'instructions': None,
+          'model': "OpenAIModel('gpt-5')",
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:agent:smol.tool_class.agent',
+        'kind': 'agent',
+        'name': 'agent',
+        'source': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 5,
+              'line': 16,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 16,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 20,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 16,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': 'uvx pubmedmcp@0.1.3',
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'ToolCollection.from_mcp',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:mcp_server:smol.mcp.collection',
+        'kind': 'mcp_server',
+        'name': 'MCP uvx',
+        'source': dict({
+          'file': 'smol/mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 74,
+              'line': 8,
+            }),
+            'start': dict({
+              'column': 64,
+              'line': 8,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 60,
+              'line': 8,
+            }),
+            'start': dict({
+              'column': 5,
+              'line': 8,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'MCPClient',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': 'http://127.0.0.1:8000/mcp',
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:mcp_server:smol.mcp.tools',
+        'kind': 'mcp_server',
+        'name': 'MCP 127.0.0.1:8000',
+        'source': dict({
+          'file': 'smol/mcp.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 93,
+              'line': 11,
+            }),
+            'start': dict({
+              'column': 88,
+              'line': 11,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 84,
+              'line': 11,
+            }),
+            'start': dict({
+              'column': 5,
+              'line': 11,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'default',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'VisitWebpageTool',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:tool:smol.managed.<VisitWebpageTool>#1',
+        'kind': 'tool',
+        'name': 'visit_webpage',
+        'source': dict({
+          'file': 'smol/managed.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 46,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 28,
+              'line': 19,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'default',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'WebSearchTool',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:tool:smol.managed.<WebSearchTool>#1',
+        'kind': 'tool',
+        'name': 'web_search',
+        'source': dict({
+          'file': 'smol/managed.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 26,
+              'line': 19,
+            }),
+            'start': dict({
+              'column': 11,
+              'line': 19,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            '@tool',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': 'Get the weather for a city. Args: city: The city name.',
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'def get_weather(city: str) -> str',
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:tool:smol.managed.get_weather',
+        'kind': 'tool',
+        'name': 'get_weather',
+        'source': dict({
+          'file': 'smol/managed.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 15,
+              'line': 9,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 9,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 18,
+              'line': 15,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 9,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            '@tool',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'def bad_tool(x)',
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:tool:smol.managed_without_name.bad_tool',
+        'kind': 'tool',
+        'name': 'bad_tool',
+        'source': dict({
+          'file': 'smol/managed_without_name.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 12,
+              'line': 9,
+            }),
+            'start': dict({
+              'column': 4,
+              'line': 9,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 12,
+              'line': 10,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 9,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'Tool subclass',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': 'Latest price of a stock.',
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'StockPrice',
+            'inputs': '{"symbol": {"type": "string", "description": "Ticker symbol"}}',
+            'output_type': 'number',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': 'def forward(self, symbol: str) -> float',
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:tool:smol.tool_class.StockPrice',
+        'kind': 'tool',
+        'name': 'stock_price',
+        'source': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': dict({
+            'end': dict({
+              'column': 16,
+              'line': 6,
+            }),
+            'start': dict({
+              'column': 6,
+              'line': 6,
+            }),
+          }),
+          'range': dict({
+            'end': dict({
+              'column': 18,
+              'line': 13,
+            }),
+            'start': dict({
+              'column': 0,
+              'line': 6,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'base',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'PythonInterpreterTool',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:tool:smol.tool_class.agent.<base>.python_interpreter',
+        'kind': 'tool',
+        'name': 'python_interpreter',
+        'source': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 20,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 16,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'base',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'VisitWebpageTool',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:tool:smol.tool_class.agent.<base>.visit_webpage',
+        'kind': 'tool',
+        'name': 'visit_webpage',
+        'source': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 20,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 16,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+            'base',
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+            'class': 'DuckDuckGoSearchTool',
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'smolagents',
+        'id': 'smolagents:tool:smol.tool_class.agent.<base>.web_search',
+        'kind': 'tool',
+        'name': 'web_search',
+        'source': dict({
+          'file': 'smol/tool_class.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 1,
+              'line': 20,
+            }),
+            'start': dict({
+              'column': 8,
+              'line': 16,
+            }),
+          }),
+        }),
+        'status': 'resolved',
+      }),
+      dict({
+        'attrs': dict({
+          'agent_class': None,
+          'badges': list([
+          ]),
+          'command': None,
+          'deps_type': None,
+          'description': None,
+          'docstring': None,
+          'dynamic_instructions': list([
+          ]),
+          'extra': dict({
+          }),
+          'instructions': None,
+          'model': None,
+          'output_type': None,
+          'signature': None,
+          'takes_ctx': None,
+          'url': None,
+        }),
+        'framework': 'pydantic_ai',
+        'id': 'pydantic_ai:agent:pai.dynamic.agent~dynamic#1',
+        'kind': 'dynamic',
+        'name': 'extra_toolsets',
+        'source': dict({
+          'file': 'pai/dynamic.py',
+          'name_range': None,
+          'range': dict({
+            'end': dict({
+              'column': 56,
+              'line': 7,
+            }),
+            'start': dict({
+              'column': 42,
+              'line': 7,
+            }),
+          }),
+        }),
+        'status': 'dynamic',
+      }),
+    ]),
+    'root': '<fixtures>',
+    'tool_version': '<version>',
+  })
+# ---
+# name: test_mermaid_snapshot
+  '''
+  ---
+  title: pai
+  ---
+  flowchart LR
+      n1["<b>assistant</b><br/><small>openai:gpt-5</small>"]
+      n2["<b>agent</b><br/><small>openai:gpt-5</small><br/><i>partial</i>"]
+      n3["<b>summarizer</b><br/><small>openai:gpt-5-mini</small>"]
+      n4["<b>researcher</b><br/><small>openai:gpt-5-mini</small>"]
+      n5["<b>writer</b><br/><small>openai:gpt-5</small>"]
+      n6["<b>lead</b><br/><small>openai:gpt-5</small>"]
+      n7["<b>reviewer</b><br/><small>model</small><br/><i>partial</i>"]
+      n8["<b>spec_agent</b><br/><small>anthropic:claude-sonnet-5-5</small>"]
+      n9["<b>analyst</b><br/><small>anthropic:claude-sonnet-5-5</small>"]
+      n10["<b>legacy</b><br/><small>openai:gpt-4o</small>"]
+      n11>"<b>SubAgents</b>"]
+      n12>"<b>research</b>"]
+      subgraph n13["base_nodes graph"]
+      direction TB
+          n16("<b>Ask</b>")
+          n17("<b>Check</b>")
+          n15(("end"))
+      end
+      subgraph n14["build"]
+      direction TB
+          n18("<b>fetch</b>")
+          n23("<b>summarize</b>")
+          n22("<b>skip</b>")
+          n21(("start"))
+          n19{"decision"}
+          n20(("end"))
+      end
+      n24[("<b>MCP docs.example.com</b><br/><small>https://docs.example.com/mcp</small>")]
+      n25[("<b>MCP mcp.example.com</b><br/><small>https://mcp.example.com/mcp</small>")]
+      n26[("<b>MCP docs.example.com</b><br/><small>https://docs.example.com/mcp</small>")]
+      n27[("<b>files</b><br/><small>uvx mcp-server-filesystem /tmp</small>")]
+      n28[("<b>MCP python</b><br/><small>python -m my_server</small>")]
+      n29{{"<b>WebFetch</b>"}}
+      n30{{"<b>WebSearchTool</b>"}}
+      n31[["<b>convert_currency</b>"]]
+      n32[["<b>roll</b>"]]
+      n33[["<b>weather</b>"]]
+      n34[["<b>research</b>"]]
+      n35[["<b>add</b>"]]
+      n36[["<b>cite</b>"]]
+      n37[["<b>multiply</b>"]]
+      n38[/"<b>math</b>"/]
+      n39[\"<b>pipeline</b>"/]
+      n40["<b>extra_toolsets</b><br/><i>dynamic</i>"]
+      n16 --> n17
+      n17 --> n16
+      n17 --> n15
+      n1 --> n31
+      n1 --> n33
+      n1 --> n32
+      n2 --> n40
+      n21 --> n18
+      n19 -->|"long"| n23
+      n19 -->|"str"| n22
+      n18 --> n19
+      n23 --> n20
+      n22 --> n20
+      n11 ==>|"delegates · reviewer"| n7
+      n6 --> n11
+      n6 --> n34
+      n8 --> n24
+      n9 -->|"prefixed(#quot;math#quot;)"| n38
+      n9 --> n27
+      n9 -->|"filtered(lambda ctx, t: True)"| n26
+      n9 --> n12
+      n9 --> n30
+      n9 --> n29
+      n9 --> n25
+      n38 --> n35
+      n12 --> n36
+      n38 --> n37
+      n10 --> n28
+      n23 --> n3
+      n34 ==>|"delegates"| n4
+      n39 -->|"1"| n4
+      n39 -->|"2"| n5
+      classDef agent fill:#e8f0fe,stroke:#1a73e8,stroke-width:2px,color:#0b3d91
+      classDef tool fill:#e6f4ea,stroke:#188038,color:#0d4a1f
+      classDef toolset fill:#f1f8e9,stroke:#558b2f,color:#33691e
+      classDef mcp_server fill:#fff4e5,stroke:#e8710a,color:#7a3b00
+      classDef native_tool fill:#f3e8fd,stroke:#8430ce,color:#4a148c
+      classDef capability fill:#fce8f3,stroke:#c2185b,color:#880e4f
+      classDef workflow fill:#fffde7,stroke:#f9a825,color:#5d4300
+      classDef graph_step fill:#e0f7fa,stroke:#00838f,color:#004d55
+      classDef dynamic fill:#fafafa,stroke:#9e9e9e,stroke-dasharray:4 3,color:#616161
+      class n1,n2,n3,n4,n5,n6,n7,n8,n9,n10 agent
+      class n11,n12 capability
+      class n15,n16,n17,n18,n19,n20,n21,n22,n23 graph_step
+      class n24,n25,n26,n27,n28 mcp_server
+      class n29,n30 native_tool
+      class n31,n32,n33,n34,n35,n36,n37 tool
+      class n38 toolset
+      class n39 workflow
+      class n40 dynamic
+  
+  '''
+# ---
+# name: test_mermaid_snapshot.1
+  '''
+  ---
+  title: smol
+  ---
+  flowchart LR
+      n1["<b>manager</b><br/><small>InferenceClientModel('Qwen/Qwen3-Next-80B-A3B-Thinking')</small>"]
+      n2["<b>web_agent</b><br/><small>InferenceClientModel('Qwen/Qwen3-Next-80B-A3B-Thinking')</small>"]
+      n3["<b>boss</b><br/><small>InferenceClientModel(…)</small>"]
+      n4["<b>helper</b><br/><small>InferenceClientModel(…)</small>"]
+      n5["<b>agent</b><br/><small>InferenceClientModel(…)</small>"]
+      n6["<b>http_agent</b><br/><small>InferenceClientModel(…)</small>"]
+      n7["<b>agent</b><br/><small>OpenAIModel('gpt-5')</small>"]
+      n8[("<b>MCP uvx</b><br/><small>uvx pubmedmcp@0.1.3</small>")]
+      n9[("<b>MCP 127.0.0.1:8000</b><br/><small>http://127.0.0.1:8000/mcp</small>")]
+      n10[["<b>visit_webpage</b>"]]
+      n11[["<b>web_search</b>"]]
+      n12[["<b>get_weather</b>"]]
+      n13[["<b>bad_tool</b>"]]
+      n14[["<b>stock_price</b>"]]
+      n15[["<b>python_interpreter</b>"]]
+      n16[["<b>visit_webpage</b>"]]
+      n17[["<b>web_search</b>"]]
+      n2 --> n11
+      n2 --> n10
+      n1 --> n12
+      n1 ==>|"manages"| n2
+      n4 --> n13
+      n3 ==>|"manages"| n4
+      n5 --> n8
+      n6 --> n9
+      n7 --> n17
+      n7 --> n16
+      n7 --> n15
+      n7 --> n14
+      classDef agent fill:#e8f0fe,stroke:#1a73e8,stroke-width:2px,color:#0b3d91
+      classDef tool fill:#e6f4ea,stroke:#188038,color:#0d4a1f
+      classDef mcp_server fill:#fff4e5,stroke:#e8710a,color:#7a3b00
+      class n1,n2,n3,n4,n5,n6,n7 agent
+      class n8,n9 mcp_server
+      class n10,n11,n12,n13,n14,n15,n16,n17 tool
+  
+  '''
+# ---

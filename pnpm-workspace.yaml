@@ -3,3 +3,5 @@ packages:
 
 allowBuilds:
   esbuild: true
+  # only needed to sign extensions; `vsce package` works without its native download
+  "@vscode/vsce-sign": false

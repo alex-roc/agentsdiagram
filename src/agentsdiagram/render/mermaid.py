@@ -128,7 +128,6 @@ def render(project: Project, *, title: str | None = None) -> str:
         label = f'|"{_esc(" · ".join(label_parts))}"|' if label_parts else ""
         out.append(f"    {ids[e.source]} {arrow}{label} {ids[e.target]}")
 
-    out.append(CLASSES)
     groups: dict[str, list[str]] = {}
     for n in project.nodes:
         if n.kind == "graph":
@@ -136,6 +135,7 @@ def render(project: Project, *, title: str | None = None) -> str:
         groups.setdefault(n.kind, []).append(ids[n.id])
         if n.status in ("stale", "planned"):
             groups.setdefault(n.status, []).append(ids[n.id])
+    out.extend(line for line in CLASSES.splitlines() if line.split()[1] in groups)
     for cls, members in groups.items():
         out.append(f"    class {','.join(members)} {cls}")
     return "\n".join(out) + "\n"
