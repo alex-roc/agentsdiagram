@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 — 2026-10-22
+
+- Releases are now fully automated: PyPI (trusted publishing), VS Code Marketplace (Microsoft
+  Entra ID workload identity, no tokens) and Open VSX, from one tag.
+
 ## 0.1.0 — 2026-10-22
 
 First release.

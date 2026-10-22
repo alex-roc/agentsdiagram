@@ -17,13 +17,34 @@ and the `.vsix`, then publishes PyPI → Open VSX + Marketplace → GitHub relea
 | Registry | State |
 |---|---|
 | PyPI | trusted publishing active (`release.yml`, environment `release`) |
-| VS Code Marketplace | publisher `alex-roc`; v0.1.0 uploaded by hand from the GitHub release `.vsix`; CI publishing waits for Entra ID |
+| VS Code Marketplace | publisher `alex-roc`; CI publishes with Microsoft Entra ID (no PAT) since 0.1.1 |
 | Open VSX | namespace `alex-roc` created, ownership claim [EclipseFdn/open-vsx.org#14573](https://github.com/EclipseFdn/open-vsx.org/issues/14573); v0.1.0 published with `OVSX_PAT` but inactive until the claim is approved |
 
 After the claim is approved: register a Trusted Publisher in Open VSX (Settings → Trusted
 Publishers, namespace `alex-roc`, repo `alex-roc/agentsdiagram`, workflow `release.yml`,
 environment `release`), switch the step to `npx ovsx publish --trusted-publishing` and delete
 the `OVSX_PAT` secret. Trusted publishing needs an owned namespace and an existing extension.
+
+## Marketplace via Entra ID (how it is wired)
+
+- Tenant: personal *Default Directory* `complexooutlook.onmicrosoft.com`
+  (`7c4a3e39-f90e-429b-abef-760378f49bf0`), created by an Azure free account. A personal
+  Microsoft account alone has no tenant.
+- App registration **`github-extension-publisher`** (client id
+  `dbcdd7d2-ab8a-49fd-b1cb-f962a05fbc3b`), reusable for every extension: add one federated
+  credential per repo (scenario *GitHub Actions*, entity *Environment* `release`). GitHub now
+  issues immutable subjects, e.g. `repo:alex-roc@10243925/agentsdiagram@1429589378:environment:release`
+  (check with `gh api repos/OWNER/REPO/actions/oidc/customization/sub`).
+- Azure DevOps organization `alex-roc`, connected to that tenant; the service principal is a
+  **Stakeholder** user there (free, does not use a Basic seat).
+- Marketplace publisher member: the service principal's **global** identity id
+  (`1a724d15-f7bf-4b2a-9177-69c23ac0de8f`, from `app.vssps.visualstudio.com/_apis/connectionData`),
+  role Contributor. The organization-scoped id (`dev.azure.com/<org>/_apis/connectionData`) is
+  rejected with TF14045, and `profiles/me` fails for service principals (VSS011031).
+- `.github/workflows/marketplace-identity.yml` (manual) prints both ids and runs
+  `vsce verify-pat` with the federated token: use it to set up or debug a new repo.
+- Repository variables `AZURE_CLIENT_ID` / `AZURE_TENANT_ID`; `release.yml` runs `azure/login`
+  and `vsce publish --azure-credential` in environment `release`.
 
 ## One-time setup
 
