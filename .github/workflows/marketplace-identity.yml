@@ -22,8 +22,10 @@ jobs:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           allow-no-subscriptions: true
-      - name: Azure DevOps profile of the service principal
+      - name: Azure DevOps identity of the service principal
+        # Service principals have no Azure DevOps "profile"; their identity id comes from
+        # connectionData of an organization they belong to (alex-roc, Stakeholder access).
         run: |
-          az rest -u https://app.vssps.visualstudio.com/_apis/profile/profiles/me \
+          az rest -u "https://dev.azure.com/alex-roc/_apis/connectionData?api-version=7.1-preview" \
             --resource 499b84ac-1321-427f-aa17-267ca6975798 \
-            --query "{id: id, displayName: displayName}" -o json
+            --query "authenticatedUser.{id: id, descriptor: descriptor, name: providerDisplayName}" -o json
