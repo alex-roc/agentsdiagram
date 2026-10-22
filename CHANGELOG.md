@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.1.3 — 2026-10-22
 
+- Releases: Open VSX now publishes with trusted publishing (OIDC, no token).
 - Redesigned viewer: light and dark themes (a toggle in the HTML page; VS Code follows the
   editor), line icons per node kind, agents as larger cards with their model, a legend that
   counts and filters node kinds, a Problems drawer with severity markers on the nodes, a minimap,

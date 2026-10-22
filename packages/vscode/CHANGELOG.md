@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.3 — 2026-10-22
 
 - Redesigned diagram: follows your light or dark theme, icons per node kind, a legend that
   filters node kinds, a Problems drawer, a minimap, and selecting a node highlights its neighbors.
