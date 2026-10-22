@@ -5,7 +5,8 @@ name: Release
 #
 # One-time setup (see docs/releasing.md):
 #   - PyPI: Trusted Publisher for this repo + workflow `release.yml` + environment `release`.
-#   - Open VSX: secret OVSX_PAT (namespace `alex-roc` claimed).
+#   - Open VSX: Trusted Publisher for this repo + workflow `release.yml` + environment `release`
+#     (namespace `alex-roc`, verified). No token.
 #   - Marketplace: Entra ID workload identity (secrets AZURE_CLIENT_ID, AZURE_TENANT_ID) or,
 #     until global PATs are retired on 2026-12-01, secret VSCE_PAT.
 
@@ -66,8 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: release
     env:
-      # step `if:` cannot read step-level env, so the secrets are exposed at job level
-      OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      # step `if:` cannot read step-level env, so the secret is exposed at job level
       VSCE_PAT: ${{ secrets.VSCE_PAT }}
     steps:
       - uses: actions/checkout@v7
@@ -79,8 +79,7 @@ jobs:
         with:
           node-version: 24
       - name: Open VSX
-        if: env.OVSX_PAT != ''
-        run: npx --yes ovsx@1.3.0 publish vsix/*.vsix -p "$OVSX_PAT"
+        run: npx --yes ovsx@1.3.0 publish vsix/*.vsix --trusted-publishing
       - name: Azure login (Marketplace via Entra ID)
         if: vars.AZURE_CLIENT_ID != ''
         uses: azure/login@v3

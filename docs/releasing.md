@@ -18,12 +18,13 @@ and the `.vsix`, then publishes PyPI → Open VSX + Marketplace → GitHub relea
 |---|---|
 | PyPI | trusted publishing active (`release.yml`, environment `release`) |
 | VS Code Marketplace | publisher `alex-roc`; CI publishes with Microsoft Entra ID (no PAT) since 0.1.1 |
-| Open VSX | namespace `alex-roc` verified (claim [EclipseFdn/open-vsx.org#14573](https://github.com/EclipseFdn/open-vsx.org/issues/14573) granted); published with `OVSX_PAT`. 0.1.0 and 0.1.1 stayed inactive (published before the claim) |
+| Open VSX | namespace `alex-roc` verified (claim [EclipseFdn/open-vsx.org#14573](https://github.com/EclipseFdn/open-vsx.org/issues/14573) granted); CI publishes with trusted publishing (OIDC, no token) from 0.1.3 on. 0.1.0 and 0.1.1 stayed inactive (published before the claim) |
 
-After the claim is approved: register a Trusted Publisher in Open VSX (Settings → Trusted
-Publishers, namespace `alex-roc`, repo `alex-roc/agentsdiagram`, workflow `release.yml`,
-environment `release`), switch the step to `npx ovsx publish --trusted-publishing` and delete
-the `OVSX_PAT` secret. Trusted publishing needs an owned namespace and an existing extension.
+Trusted publishing is registered per extension (one registration each) in Open VSX → Settings →
+Trusted Publishers: namespace `alex-roc`, extension `agentsdiagram`, repo `alex-roc/agentsdiagram`,
+workflow `release.yml`, environment `release`. `release.yml` runs `ovsx publish --trusted-publishing`.
+It needs a verified namespace and an existing, active extension, so the first version of a new
+extension still goes out with a token.
 
 ## Marketplace via Entra ID (how it is wired)
 
