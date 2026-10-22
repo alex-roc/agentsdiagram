@@ -15,7 +15,7 @@
 - Website with live demos of the examples at https://alex-roc.github.io/agentsdiagram/
   (`site/`, deployed by `.github/workflows/pages.yml`).
 - VS Code: fixed duplicated code lenses when the server was restarted while still starting.
-- CLI: hint when `--include` matches nothing (globs are relative to the project root), and the
+- CLI: `scan -o` creates missing folders; hint when `--include` matches nothing (globs are relative to the project root), and the
   `lsp` command suggests `uvx --from 'agentsdiagram[lsp]'`.
 
 ## 0.1.2 — 2026-10-22

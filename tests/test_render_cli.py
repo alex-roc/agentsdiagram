@@ -76,3 +76,9 @@ def test_html_embeds_graph_and_viewer():
     assert page.count("</script>") == 3  # data, mermaid, viewer: nothing inside closes them early
     data = page.split('id="agentsdiagram-data">', 1)[1].split("</script>", 1)[0]
     assert json.loads(data.replace("<\\/", "</"))["project"]["nodes"]
+
+
+def test_cli_output_creates_parent_dirs(tmp_path):
+    out = tmp_path / "site" / "demo" / "smol.md"
+    assert main(["scan", str(FIXTURES / "smol" / "managed.py"), "-f", "markdown", "-o", str(out)]) == 0
+    assert out.read_text(encoding="utf-8").startswith("# managed.py")

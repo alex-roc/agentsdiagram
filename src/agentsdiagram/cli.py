@@ -53,7 +53,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 def _write(text: str, output: str | None) -> None:
     if output:
-        Path(output).write_text(text, encoding="utf-8")
+        path = Path(output)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
     else:
         sys.stdout.write(text)
 
