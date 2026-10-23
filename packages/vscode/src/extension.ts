@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { LanguageClient, type LanguageClientOptions, type ServerOptions, TransportKind } from "vscode-languageclient/node";
-import type { GraphParams, GraphResult, Scope } from "@agentsdiagram/protocol/src/messages";
+import type { EditParams } from "@agentsdiagram/protocol/src/ir";
+import type { EditResponse, GraphParams, GraphResult, Scope } from "@agentsdiagram/protocol/src/messages";
 import { PROTOCOL_VERSION } from "@agentsdiagram/protocol/src/messages";
 import { DiagramPanel } from "./panel";
 import { resolveServerCommand, UV_INSTALL_URL } from "./server";
@@ -77,6 +78,11 @@ async function startClient(): Promise<void> {
   panel.setBackend({
     graph: (params: GraphParams) => next.sendRequest<GraphResult>("agentsdiagram/graph", params),
     mermaid: (params: GraphParams) => next.sendRequest<{ text: string }>("agentsdiagram/mermaid", params),
+    edit: (params: EditParams) => next.sendRequest<EditResponse>("agentsdiagram/edit", params),
+    toWorkspaceEdit: async (edit: unknown) => {
+      type LspEdit = Parameters<typeof next.protocol2CodeConverter.asWorkspaceEdit>[0];
+      return (await next.protocol2CodeConverter.asWorkspaceEdit(edit as LspEdit)) ?? new vscode.WorkspaceEdit();
+    },
   });
 }
 
@@ -138,6 +144,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       await ensureStarted();
     }),
     vscode.commands.registerCommand("agentsdiagram.showOutput", () => output.show()),
+    // the same edits as the diagram, for scripts, other extensions and tests: (EditParams) -> EditResult
+    vscode.commands.registerCommand("agentsdiagram.edit", async (params: EditParams) => {
+      await ensureStarted();
+      return panel.edit(params);
+    }),
     vscode.workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration("agentsdiagram") && client) {
         void vscode.window

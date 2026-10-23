@@ -1,7 +1,10 @@
 // Line icons on a 16px grid (1.5px stroke, currentColor). Drawn for agentsdiagram, no icon library.
 import type { Kind } from "./model";
 
-const PATHS: Record<Kind | "search" | "problems" | "copy" | "check" | "sun" | "moon" | "close" | "code" | "filter", string> = {
+type Extra = "search" | "problems" | "copy" | "check" | "sun" | "moon" | "close" | "code" | "filter";
+type EditIcons = "plus" | "link" | "unlink" | "edit" | "trash";
+
+const PATHS: Record<Kind | Extra | EditIcons, string> = {
   // a head with an antenna and two eyes
   agent: "M8 1.8v2.2 M4 4h8a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 12 13H4a1.5 1.5 0 0 1-1.5-1.5v-6A1.5 1.5 0 0 1 4 4z M6 8.2v.6 M10 8.2v.6 M6.2 10.8h3.6",
   // a wrench
@@ -33,6 +36,12 @@ const PATHS: Record<Kind | "search" | "problems" | "copy" | "check" | "sun" | "m
   close: "M4 4l8 8 M12 4l-8 8",
   code: "M5.5 4.5 2 8l3.5 3.5 M10.5 4.5 14 8l-3.5 3.5",
   filter: "M2 3.5h12 M4.5 8h7 M6.5 12.5h3",
+  plus: "M8 3v10 M3 8h10",
+  // two chain links, and the same links apart
+  link: "M7 9a2.5 2.5 0 0 0 3.5 0l2.3-2.3a2.5 2.5 0 0 0-3.5-3.5L8.6 3.9 M9 7a2.5 2.5 0 0 0-3.5 0L3.2 9.3a2.5 2.5 0 0 0 3.5 3.5l.7-.7",
+  unlink: "M9.3 3.2a2.5 2.5 0 0 1 3.5 3.5L11.3 8.2 M6.7 12.8a2.5 2.5 0 0 1-3.5-3.5l1.5-1.5 M2.5 2.5l2 2 M13.5 13.5l-2-2",
+  edit: "M10.5 2.5l3 3L6 13H3v-3z M9 4l3 3",
+  trash: "M2.5 4.5h11 M6.5 4.5V3h3v1.5 M4 4.5l.7 9h6.6l.7-9 M6.8 7v4.5 M9.2 7v4.5",
 };
 
 export type IconName = keyof typeof PATHS;

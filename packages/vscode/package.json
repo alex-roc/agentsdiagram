@@ -1,7 +1,7 @@
 {
   "name": "agentsdiagram",
   "displayName": "Agents Diagram",
-  "description": "Live diagram of your PydanticAI and smolagents agents, tools and toolsets, from static analysis.",
+  "description": "See, plan and edit your smolagents and PydanticAI agents: a live diagram from static analysis that can also write the code.",
   "version": "0.1.3",
   "publisher": "alex-roc",
   "license": "MIT",
@@ -22,10 +22,12 @@
     "Other"
   ],
   "keywords": [
+    "smolagents",
     "pydantic-ai",
     "pydantic",
-    "smolagents",
     "agents",
+    "multi-agent",
+    "mcp",
     "diagram",
     "mermaid",
     "llm"
@@ -77,6 +79,11 @@
         "command": "agentsdiagram.showOutput",
         "title": "Show Output",
         "category": "Agents Diagram"
+      },
+      {
+        "command": "agentsdiagram.edit",
+        "title": "Apply an Edit (internal)",
+        "category": "Agents Diagram"
       }
     ],
     "menus": {
@@ -97,6 +104,10 @@
       "commandPalette": [
         {
           "command": "agentsdiagram.showNode",
+          "when": "false"
+        },
+        {
+          "command": "agentsdiagram.edit",
           "when": "false"
         }
       ]
@@ -137,6 +148,11 @@
           "type": "boolean",
           "default": true,
           "markdownDescription": "Show \"Show in diagram\" code lenses above agents and tools."
+        },
+        "agentsdiagram.edits.save": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Save the files changed by an edit from the diagram (plan an agent, add a tool, connect…). Files that already had unsaved changes are left unsaved. Undo works either way."
         }
       }
     }

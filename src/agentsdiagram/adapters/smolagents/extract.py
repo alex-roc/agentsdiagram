@@ -165,6 +165,8 @@ class SmolagentsAdapter:
                 literal = string_value(v)
                 extra[k] = literal if literal is not None else module.code(v)
         extra["explicit_name"] = arg(call, "name") is not None
+        if arg(call, "instructions") is not None and string_value(arg(call, "instructions")) is None:
+            extra["instructions_code"] = True  # not a literal: edit it in code
         attrs = NodeAttrs(
             agent_class=cls,
             model=model,

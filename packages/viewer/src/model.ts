@@ -1,5 +1,5 @@
 // Pure IR -> React Flow transformation (no DOM, no React): unit-tested with the sample IR.
-import type { Edge as IrEdge, Node as IrNode, Project } from "@agentsdiagram/protocol";
+import type { Edge as IrEdge, EditRequest, FileVersion, Node as IrNode, Project } from "@agentsdiagram/protocol";
 
 export type Kind = IrNode["kind"];
 export type EdgeKind = IrEdge["kind"];
@@ -180,4 +180,85 @@ export function neighborhood(graph: FlowGraph, id: string): Set<string> {
     if (n.id === id && n.parentId) out.add(n.parentId);
   }
   return out;
+}
+
+// ---------------------------------------------------------------- plan and edit (pure helpers)
+
+/** The files an edit touches, with the hash the diagram saw: the host refuses the edit if one changed. */
+export function expectFor(project: Project, request: EditRequest): FileVersion[] {
+  const files = new Set<string>();
+  const addNode = (id: string | null | undefined) => {
+    const n = id ? project.nodes.find((x) => x.id === id) : undefined;
+    if (n?.source) files.add(n.source.file);
+  };
+  switch (request.op) {
+    case "add_agent":
+      files.add(request.file);
+      addNode(request.parent);
+      break;
+    case "connect":
+      addNode(request.source);
+      addNode(request.target);
+      break;
+    case "disconnect": {
+      const e = project.edges.find((x) => x.id === request.edge);
+      if (e?.ref) files.add(e.ref.file);
+      break;
+    }
+    case "remove":
+      addNode(request.node);
+      for (const e of project.edges) if (e.target === request.node && e.ref) files.add(e.ref.file);
+      break;
+    default:
+      addNode(request.agent);
+  }
+  return project.files.filter((f) => files.has(f.path)).map((f) => ({ file: f.path, sha256: f.sha256 }));
+}
+
+export interface Connection {
+  edge: IrEdge;
+  other: IrNode;
+  outgoing: boolean;
+}
+
+/** Edges of a node (without graph containment), with the node at the other end. */
+export function connectionsOf(project: Project, id: string): Connection[] {
+  const byId = new Map(project.nodes.map((n) => [n.id, n]));
+  const out: Connection[] = [];
+  for (const e of project.edges) {
+    if (e.kind === "contains") continue;
+    const outgoing = e.source === id;
+    if (!outgoing && e.target !== id) continue;
+    const other = byId.get(outgoing ? e.target : e.source);
+    if (other) out.push({ edge: e, other, outgoing });
+  }
+  return out;
+}
+
+/** Relations written as a list item or a decorator; calls inside function bodies are edited in code. */
+export function canDisconnect(project: Project, e: IrEdge): boolean {
+  if (!e.ref || e.kind === "contains" || e.kind === "transitions" || e.kind === "runs") return false;
+  if (e.kind === "delegates_to") return project.nodes.find((n) => n.id === e.source)?.kind === "capability";
+  return true;
+}
+
+/** Where a new agent goes: next to its parent, else the first file with agents of that framework. */
+export function defaultAgentFile(project: Project, framework: IrNode["framework"], parentId: string | null): string {
+  const parent = parentId ? project.nodes.find((n) => n.id === parentId) : undefined;
+  if (parent?.source) return parent.source.file;
+  const agent = project.nodes.find((n) => n.kind === "agent" && n.framework === framework && n.source);
+  return agent?.source?.file ?? "agents.py";
+}
+
+/** `InferenceClientModel('Qwen/…')` -> `Qwen/…`; PydanticAI model strings stay as they are. */
+export function modelId(n: IrNode): string {
+  const m = n.attrs.model ?? "";
+  const inner = /\(['"]([^'"]+)['"]\)$/.exec(m);
+  return inner ? inner[1]! : m.includes("(") ? "" : m;
+}
+
+/** Instructions can be edited from the diagram only when they are a literal shown in full. */
+export function instructionsEditable(n: IrNode): boolean {
+  const text = n.attrs.instructions;
+  return n.attrs.extra["instructions_code"] !== true && !(text ?? "").endsWith("…");
 }

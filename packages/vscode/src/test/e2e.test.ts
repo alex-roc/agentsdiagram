@@ -45,4 +45,35 @@ suite("Agents Diagram e2e (real server)", () => {
     assert.strictEqual(doc.languageId, "markdown");
     assert.ok(doc.getText().includes("flowchart LR"), doc.getText());
   });
+
+  test("plan an agent and a tool from the diagram's edit command", async () => {
+    const folder = vscode.workspace.workspaceFolders![0].uri;
+    const file = vscode.Uri.joinPath(folder, "smol", "_e2e_planned.py");
+    type Result = { ok: boolean; message: string; files: string[]; focus: string | null };
+    try {
+      const planned = await vscode.commands.executeCommand<Result>("agentsdiagram.edit", {
+        request: { op: "add_agent", framework: "smolagents", name: "scout", file: "smol/_e2e_planned.py" },
+      });
+      assert.ok(planned.ok, planned.message);
+      assert.strictEqual(planned.focus, "smolagents:agent:smol._e2e_planned.scout");
+      const doc = await vscode.workspace.openTextDocument(file);
+      assert.ok(!doc.isDirty, "the new file is saved");
+      assert.ok(doc.getText().includes("# agentsdiagram: planned\nscout = CodeAgent("), doc.getText());
+
+      const tool = await vscode.commands.executeCommand<Result>("agentsdiagram.edit", {
+        request: { op: "add_tool", agent: planned.focus, name: "lookup", params: "term: str" },
+      });
+      assert.ok(tool.ok, tool.message);
+      assert.ok(doc.getText().includes("tools=[lookup]"), doc.getText());
+
+      const refused = await vscode.commands.executeCommand<Result>("agentsdiagram.edit", {
+        request: { op: "set_model", agent: planned.focus, model: "x" },
+        expect: [{ file: "smol/_e2e_planned.py", sha256: "0".repeat(64) }],
+      });
+      assert.ok(!refused.ok && refused.message.includes("changed since"), refused.message);
+    } finally {
+      await vscode.commands.executeCommand("workbench.action.closeAllEditors");
+      await vscode.workspace.fs.delete(file).then(undefined, () => undefined);
+    }
+  });
 });

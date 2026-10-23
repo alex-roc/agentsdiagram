@@ -332,6 +332,21 @@ button {
   .brand-name {
     max-width: 120px;
   }
+  .topbar {
+    gap: 6px;
+    padding: 0 8px;
+  }
+  .brand {
+    flex: none;
+    margin-right: 0;
+  }
+  .search {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .search kbd {
+    display: none;
+  }
   .tbtn .label-long {
     display: none;
   }
@@ -932,4 +947,249 @@ body[class*="vscode-"] .ad-node.kind-agent .ad-tile {
 }
 .ad-problem.p-warning {
   background: var(--warn);
+}
+
+/* ---------------------------------------------------------------- plan and edit */
+.tbtn.plan {
+  color: var(--vscode-button-foreground, var(--accent-ink));
+  background: var(--vscode-button-background, var(--accent));
+  border-color: transparent;
+}
+.tbtn.plan:hover {
+  background: var(--vscode-button-hoverBackground, var(--accent));
+  filter: brightness(1.06);
+}
+.tbtn.plan.on {
+  filter: brightness(0.92);
+}
+.ad-status.s-planned {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.ad-node.status-planned {
+  border-color: color-mix(in srgb, var(--k) 55%, var(--line));
+  background: color-mix(in srgb, var(--k) 5%, var(--surface));
+}
+.plan-tile {
+  color: var(--accent-ink);
+  background: var(--accent);
+}
+.overlay-cta {
+  margin-top: 10px;
+  pointer-events: auto;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.btn.ghost {
+  border-color: var(--line);
+  background: transparent;
+}
+.btn.ghost:hover {
+  background: var(--raised);
+  border-color: var(--line-strong);
+}
+.btn.danger {
+  color: #fff;
+  background: var(--err);
+}
+.btn.danger-text {
+  color: var(--err);
+}
+.icon-btn.small {
+  width: 22px;
+  height: 22px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.actions .btn {
+  height: 30px;
+  padding: 0 8px;
+  font-size: 12px;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.panel > .form {
+  margin-top: 4px;
+}
+.form-lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.field input,
+.field select,
+.field textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 30px;
+  padding: 5px 8px;
+  border: 1px solid var(--vscode-input-border, var(--line-strong));
+  border-radius: 6px;
+  background: var(--vscode-input-background, var(--canvas));
+  color: var(--vscode-input-foreground, var(--ink));
+  font: inherit;
+}
+.field textarea {
+  resize: vertical;
+  line-height: 1.45;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-color: transparent;
+}
+.field input:user-invalid {
+  border-color: var(--err);
+}
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+.form-error {
+  margin: 4px 0 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: var(--err);
+  background: color-mix(in srgb, var(--err) 10%, transparent);
+  font-size: 12px;
+}
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+.segmented {
+  display: flex;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  gap: 2px;
+}
+.segmented button {
+  flex: 1;
+  height: 26px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+}
+.segmented button.on {
+  background: var(--raised);
+  box-shadow: var(--shadow);
+  font-weight: 600;
+}
+
+.conn-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.conn-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-top: 1px solid var(--line);
+}
+.conn-verb {
+  flex: none;
+  width: 92px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.conn-node {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--vscode-editor-font-family, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: 12px;
+}
+.conn-node svg {
+  color: var(--k);
+  flex: none;
+}
+.conn-node span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.conn-node:hover {
+  background: var(--raised);
+}
+.remove {
+  margin-top: 16px;
+}
+.confirm {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+}
+.confirm span {
+  flex-basis: 100%;
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(560px, calc(100% - 32px));
+  padding: 8px 8px 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 12.5px;
+}
+.toast.ok svg:first-child {
+  color: var(--k-tool);
+}
+.toast.err {
+  border-color: color-mix(in srgb, var(--err) 45%, transparent);
+}
+.toast.err svg:first-child {
+  color: var(--err);
 }

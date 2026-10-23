@@ -470,6 +470,479 @@
       ],
       "title": "SourceRef",
       "type": "object"
+    },
+    "AddAgent": {
+      "additionalProperties": false,
+      "description": "Write a new (planned) agent. With ``parent`` it is wired to an existing agent:\na managed agent in smolagents, a delegation tool in PydanticAI.",
+      "properties": {
+        "op": {
+          "const": "add_agent",
+          "type": "string"
+        },
+        "framework": {
+          "enum": [
+            "pydantic_ai",
+            "smolagents"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "file": {
+          "description": "POSIX path relative to the project root; created if missing",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "instructions": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "agent_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "CodeAgent",
+                "ToolCallingAgent"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "smolagents only"
+        },
+        "parent": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Node id of the agent that manages / delegates to it"
+        }
+      },
+      "required": [
+        "op",
+        "framework",
+        "name",
+        "file"
+      ],
+      "title": "AddAgent",
+      "type": "object"
+    },
+    "AddMcp": {
+      "additionalProperties": false,
+      "description": "Connect an MCP server (URL or stdio command) to an agent.",
+      "properties": {
+        "op": {
+          "const": "add_mcp",
+          "type": "string"
+        },
+        "agent": {
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "command": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Shell-style command line, e.g. 'uvx arxiv-mcp-server'"
+        }
+      },
+      "required": [
+        "op",
+        "agent"
+      ],
+      "title": "AddMcp",
+      "type": "object"
+    },
+    "AddTool": {
+      "additionalProperties": false,
+      "description": "Write a planned tool stub and give it to an agent.",
+      "properties": {
+        "op": {
+          "const": "add_tool",
+          "type": "string"
+        },
+        "agent": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "params": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Parameter list, e.g. 'order_id: str, limit: int = 5'"
+        },
+        "returns": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "op",
+        "agent",
+        "name"
+      ],
+      "title": "AddTool",
+      "type": "object"
+    },
+    "Connect": {
+      "additionalProperties": false,
+      "description": "Let ``source`` hand work to ``target``: managed_agents (smolagents) or a delegation tool (PydanticAI).",
+      "properties": {
+        "op": {
+          "const": "connect",
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "smolagents: description added to the target if missing"
+        }
+      },
+      "required": [
+        "op",
+        "source",
+        "target"
+      ],
+      "title": "Connect",
+      "type": "object"
+    },
+    "Disconnect": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "disconnect",
+          "type": "string"
+        },
+        "edge": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "edge"
+      ],
+      "title": "Disconnect",
+      "type": "object"
+    },
+    "EditParams": {
+      "additionalProperties": false,
+      "properties": {
+        "request": {
+          "discriminator": {
+            "mapping": {
+              "add_agent": "#/$defs/AddAgent",
+              "add_mcp": "#/$defs/AddMcp",
+              "add_tool": "#/$defs/AddTool",
+              "connect": "#/$defs/Connect",
+              "disconnect": "#/$defs/Disconnect",
+              "export_spec": "#/$defs/ExportSpec",
+              "remove": "#/$defs/Remove",
+              "set_instructions": "#/$defs/SetInstructions",
+              "set_model": "#/$defs/SetModel"
+            },
+            "propertyName": "op"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/AddAgent"
+            },
+            {
+              "$ref": "#/$defs/AddTool"
+            },
+            {
+              "$ref": "#/$defs/AddMcp"
+            },
+            {
+              "$ref": "#/$defs/Connect"
+            },
+            {
+              "$ref": "#/$defs/Disconnect"
+            },
+            {
+              "$ref": "#/$defs/Remove"
+            },
+            {
+              "$ref": "#/$defs/SetModel"
+            },
+            {
+              "$ref": "#/$defs/SetInstructions"
+            },
+            {
+              "$ref": "#/$defs/ExportSpec"
+            }
+          ]
+        },
+        "expect": {
+          "description": "The files as the diagram saw them; the edit is refused if one changed since",
+          "items": {
+            "$ref": "#/$defs/FileVersion"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "request"
+      ],
+      "title": "EditParams",
+      "type": "object"
+    },
+    "EditResult": {
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "files": {
+          "description": "Files changed or created",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "focus": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Id of the node to select once the graph is redrawn"
+        }
+      },
+      "required": [
+        "ok",
+        "message",
+        "files",
+        "focus"
+      ],
+      "title": "EditResult",
+      "type": "object"
+    },
+    "ExportSpec": {
+      "additionalProperties": false,
+      "description": "PydanticAI: move an agent's literal settings to an Agent Spec (YAML).",
+      "properties": {
+        "op": {
+          "const": "export_spec",
+          "type": "string"
+        },
+        "agent": {
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Spec file relative to the project root"
+        },
+        "replace": {
+          "default": true,
+          "description": "Rewrite the code to load the spec with Agent.from_file",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "op",
+        "agent"
+      ],
+      "title": "ExportSpec",
+      "type": "object"
+    },
+    "FileVersion": {
+      "additionalProperties": false,
+      "properties": {
+        "file": {
+          "description": "POSIX path relative to the project root",
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "sha256"
+      ],
+      "title": "FileVersion",
+      "type": "object"
+    },
+    "Remove": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "remove",
+          "type": "string"
+        },
+        "node": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "node"
+      ],
+      "title": "Remove",
+      "type": "object"
+    },
+    "SetInstructions": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "set_instructions",
+          "type": "string"
+        },
+        "agent": {
+          "type": "string"
+        },
+        "instructions": {
+          "description": "Empty removes them",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "agent",
+        "instructions"
+      ],
+      "title": "SetInstructions",
+      "type": "object"
+    },
+    "SetModel": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "set_model",
+          "type": "string"
+        },
+        "agent": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "agent",
+        "model"
+      ],
+      "title": "SetModel",
+      "type": "object"
     }
   },
   "additionalProperties": false,

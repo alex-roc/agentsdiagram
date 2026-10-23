@@ -24,6 +24,7 @@ from .ir import (
     Range,
     SourceRef,
 )
+from .planned import is_planned
 from .project import FileSet, Module, collect, module_name, parse_module
 
 INSTANCE_KINDS = {"agent", "toolset", "mcp_server", "capability"}
@@ -524,6 +525,15 @@ def _takes_ctx(module: Module, fn: cst.FunctionDef) -> bool:
     return "RunContext" in module.code(params[0].annotation.annotation)
 
 
+def _planned(an: Analyzer, d: Def) -> bool:
+    """Planned marker (see ``agentsdiagram.planned``): a stub body, or a comment on a named statement."""
+    fn = d.fn if d.fn is not None else _implementation(an, d)
+    if fn is not None and is_planned(_fn_module(an, d) if d.fn is None else d.module, fn, fn):
+        return True
+    named = d.name_node is not None or isinstance(d.node, cst.FunctionDef | cst.ClassDef)
+    return named and is_planned(d.module, d.node, None)
+
+
 def _node_id(d: Def, framework: str) -> str:
     return f"{framework}:{d.kind}:{d.module.name}.{d.qualname}"
 
@@ -557,8 +567,11 @@ def _build(an: Analyzer, seeds: list[str], visible: set[str], links: list[_Link]
     stale = {rel for rel, status in an.file_status.items() if status == "stale"}
     ids = {k: _node_id(d, d.framework) for k, d in defs.items()}  # type: ignore[arg-type]
     nodes: list[Node] = []
+    planned: list[Node] = []
     for k, d in sorted(defs.items(), key=lambda kv: ids[kv[0]]):
         status = "stale" if d.module.rel in stale else d.status
+        if status != "stale" and _planned(an, d):
+            status = "planned"
         nodes.append(
             Node(
                 id=ids[k],
@@ -570,6 +583,8 @@ def _build(an: Analyzer, seeds: list[str], visible: set[str], links: list[_Link]
                 attrs=d.attrs,
             )
         )
+        if status == "planned":
+            planned.append(nodes[-1])
 
     edges: list[Edge] = []
     diagnostics: list[Diagnostic] = list(an.diagnostics)
@@ -650,6 +665,17 @@ def _build(an: Analyzer, seeds: list[str], visible: set[str], links: list[_Link]
 
     for name in seeds:
         diagnostics.extend(an.facts[name].diagnostics)
+    for n in planned:
+        how = "implement it" if n.kind == "tool" else "remove the `# agentsdiagram: planned` comment when it is ready"
+        diagnostics.append(
+            Diagnostic(
+                code="AD401",
+                severity="info",
+                message=f"`{n.name}` is planned: {how}.",
+                ref=SourceRef(file=n.source.file, range=n.source.name_range or n.source.range) if n.source else None,
+                node_id=n.id,
+            )
+        )
     for d in diagnostics:
         if d.node_id is None and d.ref is not None:
             match = _innermost_node(nodes, d.ref)

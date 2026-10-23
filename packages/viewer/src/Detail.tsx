@@ -2,6 +2,9 @@ import type { Diagnostic, Node as IrNode } from "@agentsdiagram/protocol";
 import { Icon } from "./icons";
 import { KIND_LABELS } from "./model";
 
+/** Flags the analyzer leaves for the viewer and the checks; not worth showing. */
+const INTERNAL_EXTRA = new Set(["explicit_name", "instructions_code"]);
+
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="d-row">
@@ -16,14 +19,17 @@ export function Detail({
   diagnostics,
   onReveal,
   onClose,
+  children,
 }: {
   node: IrNode;
   diagnostics: Diagnostic[];
   onReveal: () => void;
   onClose: () => void;
+  /** Plan and edit actions, when the host can change the code. */
+  children?: React.ReactNode;
 }) {
   const a = node.attrs;
-  const extra = Object.entries(a.extra);
+  const extra = Object.entries(a.extra).filter(([k]) => !INTERNAL_EXTRA.has(k));
   return (
     <section className={`panel detail kind-${node.kind}`} aria-label={`Details of ${node.name}`}>
       <header className="panel-head">
@@ -80,6 +86,7 @@ export function Detail({
           </Row>
         )}
       </dl>
+      {children}
       {diagnostics.length > 0 && (
         <>
           <h3>Problems in this node</h3>

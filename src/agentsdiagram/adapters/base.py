@@ -157,3 +157,32 @@ def unwrap_chain(module: Module, expr: cst.BaseExpression, methods: set[str]) ->
         wrappers.insert(0, f"{expr.func.attr.value}({shorten(args, 40) or ''})")
         expr = expr.func.value
     return expr, wrappers
+
+
+def path_value(module: Module, expr: cst.BaseExpression | None) -> tuple[str, str] | None:
+    """A file path written in code: ``"spec.yaml"`` or ``Path(__file__).parent / "spec.yaml"``
+    (also ``.with_name("spec.yaml")``). Returns (path to look up, text to show)."""
+    expr = value_of(module, expr)
+    text = string_value(expr)
+    if text is not None:
+        return text, text
+    parts: list[str] = []
+    while isinstance(expr, cst.BinaryOperation) and isinstance(expr.operator, cst.Divide):
+        right = string_value(expr.right)
+        if right is None:
+            return None
+        parts.insert(0, right)
+        expr = expr.left
+    here = module.code(expr).replace(" ", "") if expr is not None else ""
+    if isinstance(expr, cst.Call) and isinstance(expr.func, cst.Attribute) and expr.func.attr.value == "with_name":
+        name = string_value(arg(expr, "name", 0))
+        if name is None or module.code(expr.func.value).replace(" ", "") not in _HERE:
+            return None
+        return str(module.path.parent / name), name
+    if parts and here in {f"{h}.parent" for h in _HERE}:
+        shown = "/".join(parts)
+        return str(module.path.parent.joinpath(*parts)), shown
+    return None
+
+
+_HERE = {"Path(__file__)", "pathlib.Path(__file__)", "Path(__file__).resolve()", "Path(__file__).absolute()"}

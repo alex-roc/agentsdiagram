@@ -19,6 +19,7 @@ from ..base import (
     describe_model,
     docstring,
     elements,
+    path_value,
     shorten,
     signature,
     string_value,
@@ -42,7 +43,8 @@ class PydanticAIAdapter:
             self._register_call(module, facts, call)
         for call in calls:
             key = facts.call_keys.get(call)
-            if key and facts.defs[key].kind == "agent" and call_symbol(module, call, S.ROOTS) in S.AGENT:
+            sym = call_symbol(module, call, S.ROOTS) if key else None
+            if key and facts.defs[key].kind == "agent" and (sym in S.AGENT or sym in S.AGENT_LOADERS):
                 self._agent_relations(module, facts, call, facts.defs[key])
         self._decorators(module, facts)
         self._add_function_calls(module, facts)
@@ -90,7 +92,7 @@ class PydanticAIAdapter:
 
         if sym in S.AGENT:
             self._agent(module, facts, call, add)
-        elif sym == "pydantic_ai.from_file" or sym == "pydantic_ai.from_spec":
+        elif sym in S.AGENT_LOADERS:
             self._agent_spec(module, facts, call, add)
         elif sym in S.TOOL or sym == "pydantic_ai.from_schema":
             fn = arg(call, "function", 0)
@@ -178,6 +180,8 @@ class PydanticAIAdapter:
         attrs.instructions = shorten(
             text if text is not None else (module.code(instructions) if instructions else None)
         )
+        if instructions is not None and (string_value(instructions) is None or arg(call, "instructions") is None):
+            attrs.extra["instructions_code"] = True  # a constant, an expression or system_prompt=: edit it in code
         attrs.description = shorten(string_value(arg(call, "description")))
         for name, field_name in (("output_type", "output_type"), ("deps_type", "deps_type")):
             value = arg(call, name)
@@ -371,16 +375,16 @@ class PydanticAIAdapter:
     def _agent_spec(self, module: Module, facts: Facts, call: cst.Call, add) -> None:
         if not isinstance(call.func, cst.Attribute) or symbol(module, call.func.value, S.ROOTS) not in S.AGENT:
             return
-        path_expr = value_of(module, arg(call, "path", 0) if module.code(call.func).endswith("from_file") else None)
-        path_text = string_value(path_expr)
+        found = path_value(module, arg(call, "path", 0)) if module.code(call.func).endswith("from_file") else None
+        lookup, path_text = found if found else (None, None)
         spec: dict = {}
-        if path_text:
-            spec = _read_spec(module, path_text) or {}
+        if lookup:
+            spec = _read_spec(module, lookup) or {}
             if not spec:
                 facts.diag("AD002", "info", f"Agent spec `{path_text}` not found or unreadable.", call)
         attrs = NodeAttrs(
             agent_class="Agent (spec)",
-            model=spec.get("model"),
+            model=spec.get("model") or describe_model(module, arg(call, "model")),
             instructions=shorten(_join(spec.get("instructions"))),
             description=shorten(spec.get("description")),
             extra={"spec": path_text} if path_text else {},

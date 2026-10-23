@@ -1,12 +1,18 @@
 import * as path from "node:path";
 import * as vscode from "vscode";
-import type { HostMessage, GraphParams, GraphResult, Scope, ViewerMessage } from "@agentsdiagram/protocol/src/messages";
+import * as fs from "node:fs";
+import type { EditParams, EditResult } from "@agentsdiagram/protocol/src/ir";
+import type { EditResponse, HostMessage, GraphParams, GraphResult, Scope, ViewerMessage } from "@agentsdiagram/protocol/src/messages";
 import { innermostNode, irRangeToVsCode, utf16ToCodePoints } from "./positions";
 
 /** The slice of the language client the panel needs; keeps the panel testable and restart-safe. */
 export interface GraphBackend {
   graph(params: GraphParams): Promise<GraphResult>;
   mermaid(params: GraphParams): Promise<{ text: string }>;
+  /** `agentsdiagram/edit`: the server computes the change, the editor applies it (so undo works). */
+  edit(params: EditParams): Promise<EditResponse>;
+  /** LSP WorkspaceEdit (JSON) -> VS Code WorkspaceEdit. */
+  toWorkspaceEdit(edit: unknown): Promise<vscode.WorkspaceEdit>;
 }
 
 const DEBOUNCE_MS = 250;
@@ -147,6 +153,36 @@ export class DiagramPanel implements vscode.Disposable {
         break;
       case "selectionChanged":
         break;
+      case "edit":
+        void this.edit(message.params).then((result) => this.post({ type: "editResult", id: message.id, result }));
+        break;
+    }
+  }
+
+  /** Apply an edit from the diagram. Files that had no unsaved changes are saved afterwards. */
+  async edit(params: EditParams): Promise<EditResult> {
+    const fail = (message: string): EditResult => ({ ok: false, message, files: [], focus: null });
+    if (!this.backend) return fail("The analyzer is not running yet.");
+    try {
+      const { edit, ...result } = await this.backend.edit(params);
+      if (!result.ok || !edit) return result;
+      const workspaceEdit = await this.backend.toWorkspaceEdit(edit);
+      const dirty = new Set(vscode.workspace.textDocuments.filter((d) => d.isDirty).map((d) => d.uri.toString()));
+      if (!(await vscode.workspace.applyEdit(workspaceEdit))) {
+        return fail("VS Code could not apply the edit; the file probably changed. Try again.");
+      }
+      if (vscode.workspace.getConfiguration("agentsdiagram").get<boolean>("edits.save", true)) {
+        for (const [uri] of workspaceEdit.entries()) {
+          if (dirty.has(uri.toString())) continue;
+          const doc = await vscode.workspace.openTextDocument(uri);
+          await doc.save();
+        }
+      }
+      this.output.info(`edit ${params.request.op}: ${result.message}`);
+      return result;
+    } catch (err) {
+      this.output.info(`agentsdiagram/edit failed: ${err}`);
+      return fail(String(err instanceof Error ? err.message : err));
     }
   }
 
@@ -155,13 +191,23 @@ export class DiagramPanel implements vscode.Disposable {
     const root = this.lastGraph?.project.root;
     if (!root) return;
     try {
-      const doc = await vscode.workspace.openTextDocument(vscode.Uri.file(path.join(root, source.file)));
+      const doc = await vscode.workspace.openTextDocument(vscode.Uri.file(this.clientPath(root, source.file)));
       const range = irRangeToVsCode(doc, source.name_range ?? source.range);
       const editor = await vscode.window.showTextDocument(doc, { viewColumn: vscode.ViewColumn.One, selection: range });
       editor.revealRange(range, vscode.TextEditorRevealType.InCenterIfOutsideViewport);
     } catch (err) {
       void vscode.window.showWarningMessage(`Agents Diagram: cannot open ${source.file}: ${err}`);
     }
+  }
+
+  /** The analyzer reports resolved paths (/private/var/...); open the workspace's spelling of them. */
+  private clientPath(root: string, file: string): string {
+    for (const folder of vscode.workspace.workspaceFolders ?? []) {
+      const real = realpath(folder.uri.fsPath);
+      const rel = path.relative(real, path.join(root, file));
+      if (!rel.startsWith("..") && !path.isAbsolute(rel)) return path.join(folder.uri.fsPath, rel);
+    }
+    return path.join(root, file);
   }
 
   private async copyMermaid(): Promise<void> {
@@ -183,7 +229,7 @@ export class DiagramPanel implements vscode.Disposable {
     this.cursorTimer = setTimeout(() => {
       const graph = this.lastGraph;
       if (!graph) return;
-      const rel = path.relative(graph.project.root, doc.uri.fsPath).split(path.sep).join("/");
+      const rel = path.relative(graph.project.root, realpath(doc.uri.fsPath)).split(path.sep).join("/");
       const cursor = e.selections[0].active;
       const at = { line: cursor.line + 1, column: utf16ToCodePoints(doc.lineAt(cursor.line).text, cursor.character) };
       const node = innermostNode(graph.project.nodes, rel, at);
@@ -196,5 +242,13 @@ export class DiagramPanel implements vscode.Disposable {
     clearTimeout(this.cursorTimer);
     this.panel?.dispose();
     this.disposables.forEach((d) => d.dispose());
+  }
+}
+
+function realpath(p: string): string {
+  try {
+    return fs.realpathSync(p);
+  } catch {
+    return p;
   }
 }

@@ -14,7 +14,7 @@ from .. import __version__
 from ..ir import Project
 from .mermaid import render as render_mermaid
 
-PROTOCOL_VERSION = "1"
+PROTOCOL_VERSION = "2"
 # the viewer's brand mark: connected nodes on the accent color
 FAVICON = (
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E"
@@ -43,7 +43,8 @@ def _script_safe(text: str) -> str:
     return text.replace("</", "<\\/").replace("<!--", "<\\!--")
 
 
-def render(project: Project, *, title: str = "agentsdiagram") -> str:
+def render(project: Project, *, title: str = "agentsdiagram", live: dict | None = None) -> str:
+    """``live`` (from ``agentsdiagram serve``) makes the page follow the server and allows edits."""
     js = _asset("viewer.js")
     css = _asset("viewer.css")
     result = {
@@ -55,6 +56,11 @@ def render(project: Project, *, title: str = "agentsdiagram") -> str:
     data = _script_safe(json.dumps(result, ensure_ascii=False))
     mermaid = _script_safe(render_mermaid(project, title=title))
     js = js.replace("</script", "<\\/script")
+    live_script = (
+        f'<script type="application/json" id="agentsdiagram-live">{_script_safe(json.dumps(live))}</script>\n'
+        if live is not None
+        else ""
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -69,7 +75,7 @@ def render(project: Project, *, title: str = "agentsdiagram") -> str:
 <div id="root" data-title="{html.escape(title)}"></div>
 <script type="application/json" id="agentsdiagram-data">{data}</script>
 <script type="text/plain" id="agentsdiagram-mermaid">{mermaid}</script>
-<script type="module">{js}</script>
+{live_script}<script type="module">{js}</script>
 </body>
 </html>
 """

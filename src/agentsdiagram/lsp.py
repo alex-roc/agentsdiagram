@@ -4,10 +4,13 @@ Standard LSP: diagnostics (publishDiagnostics) and code lenses ("Show in diagram
 Custom methods (see packages/protocol/src/messages.ts):
   request      agentsdiagram/graph    {scope} -> {protocolVersion, version, scope, project}
   request      agentsdiagram/mermaid  {scope} -> {text}
+  request      agentsdiagram/edit     EditParams -> EditResult + {edit: WorkspaceEdit | null}
   notification agentsdiagram/graphChanged {version}   (server -> client, debounced)
 
 Analysis runs in a worker thread on the open documents' unsaved text, reusing a
-content-hash cache, so only edited files are parsed again.
+content-hash cache, so only edited files are parsed again. Edits are computed against that
+same text and returned as a ``WorkspaceEdit`` for the client to apply (so undo works); the
+server never writes files itself.
 """
 
 from __future__ import annotations
@@ -19,16 +22,18 @@ from typing import Any
 from urllib.parse import unquote, urlparse
 
 from lsprotocol import types
+from pydantic import ValidationError
 from pygls.capabilities import ServerCapabilitiesBuilder
 from pygls.lsp.server import LanguageServer
 from pygls.protocol import language_server as _ls_protocol
 
 from . import __version__
 from .analyze import Cache, analyze
-from .ir import Project
+from .edit import Change, EditError, line_edits, plan_edit
+from .ir import EditParams, EditResult, Project
 from .render.mermaid import render as render_mermaid
 
-PROTOCOL_VERSION = "1"
+PROTOCOL_VERSION = "2"
 DEBOUNCE_SECONDS = 0.3
 LENS_KINDS = {"agent", "workflow", "graph"}
 SEVERITY = {
@@ -45,7 +50,7 @@ class _Capabilities(ServerCapabilitiesBuilder):
 
     def build(self) -> types.ServerCapabilities:
         caps = super().build()
-        caps.experimental = {"agentsdiagram": {"protocolVersion": PROTOCOL_VERSION}}
+        caps.experimental = {"agentsdiagram": {"protocolVersion": PROTOCOL_VERSION, "edit": True}}
         return caps
 
 
@@ -118,7 +123,7 @@ class AgentsDiagramServer(LanguageServer):
     # ---------------------------------------------------------------- positions
 
     def _lines(self, path: Path) -> list[str]:
-        uri = path.as_uri()
+        uri = self._client_uri(path)
         doc = self.workspace.text_documents.get(uri)
         if doc is not None:
             return list(doc.lines)
@@ -140,6 +145,50 @@ class AgentsDiagramServer(LanguageServer):
 
         return types.Range(start=pos(ir_range.start), end=pos(ir_range.end))
 
+    def workspace_edit(self, changes: list[Change]) -> types.WorkspaceEdit:
+        """Minimal line edits per file (versioned for open documents), plus creates for new files."""
+        codec = self.workspace.position_codec
+        document_changes: list[Any] = []
+        open_docs = {uri_to_path(u).resolve(): u for u in self.workspace.text_documents}
+        for change in changes:
+            uri = open_docs.get(change.path) or self._client_uri(change.path)
+            if change.before is None:
+                create = types.CreateFile(uri=uri, options=types.CreateFileOptions(ignore_if_exists=True))
+                document_changes.append(create)
+                edits = [types.TextEdit(range=types.Range(start=_pos(0, 0), end=_pos(0, 0)), new_text=change.after)]
+                version = None
+            else:
+                lines = change.before.splitlines(keepends=True)
+                closed = not change.before or change.before.endswith(("\n", "\r"))
+
+                def at(line: int, lines=lines, closed=closed) -> types.Position:
+                    if line < len(lines) or closed:
+                        return _pos(line, 0)
+                    return _pos(len(lines) - 1, codec.client_num_units(lines[-1]))
+
+                edits = [
+                    types.TextEdit(range=types.Range(start=at(e.start), end=at(e.end)), new_text=e.text)
+                    for e in line_edits(change.before, change.after)
+                ]
+                doc = self.workspace.text_documents.get(uri)
+                version = doc.version if doc is not None else None
+            document_changes.append(
+                types.TextDocumentEdit(
+                    text_document=types.OptionalVersionedTextDocumentIdentifier(uri=uri, version=version),
+                    edits=edits,
+                )
+            )
+        return types.WorkspaceEdit(document_changes=document_changes)
+
+    def _client_uri(self, path: Path) -> str:
+        """The URI the client knows: paths are resolved internally (``/var`` -> ``/private/var``)."""
+        if self.root is not None:
+            try:
+                return (self.root / path.relative_to(self.root.resolve())).as_uri()
+            except ValueError:
+                pass
+        return path.as_uri()
+
     # ---------------------------------------------------------------- diagnostics
 
     def publish_diagnostics(self, project: Project) -> None:
@@ -149,7 +198,7 @@ class AgentsDiagramServer(LanguageServer):
             if d.ref is None:
                 continue
             path = root / d.ref.file
-            by_file.setdefault(path.as_uri(), []).append(
+            by_file.setdefault(self._client_uri(path), []).append(
                 types.Diagnostic(
                     range=self.to_lsp_range(path, d.ref.range),
                     message=d.message,
@@ -219,7 +268,7 @@ def code_lens(ls: AgentsDiagramServer, params: types.CodeLensParams) -> list[typ
         return []
     path = uri_to_path(params.text_document.uri)
     try:
-        rel = path.relative_to(Path(project.root)).as_posix()
+        rel = path.resolve().relative_to(Path(project.root)).as_posix()
     except ValueError:
         return []
     lenses = []
@@ -257,6 +306,43 @@ async def graph(ls: AgentsDiagramServer, params: Any) -> dict[str, Any]:
 async def mermaid(ls: AgentsDiagramServer, params: Any) -> dict[str, str]:
     project = await ls.project_for(_scope(params))
     return {"text": render_mermaid(project, title=Path(project.root).name)}
+
+
+@server.feature("agentsdiagram/edit")
+async def edit(ls: AgentsDiagramServer, params: Any) -> dict[str, Any]:
+    try:
+        request = EditParams.model_validate(_plain(params))
+    except ValidationError as exc:
+        return EditResult(ok=False, message=f"Bad edit request: {exc.errors()[0]['msg']}").model_dump(mode="json")
+    if ls.root is None:
+        return EditResult(ok=False, message="No workspace folder is open.").model_dump(mode="json")
+    root = ls.root
+    async with ls._lock:
+        try:
+            outcome = await asyncio.to_thread(
+                plan_edit, root, request.request, overrides=ls.overrides(), expect=request.expected(), cache=ls.cache
+            )
+        except EditError as exc:
+            return EditResult(ok=False, message=str(exc)).model_dump(mode="json")
+    result = EditResult(ok=True, message=outcome.message, files=outcome.files, focus=outcome.focus)
+    return result.model_dump(mode="json") | {
+        "edit": ls.protocol._converter.unstructure(ls.workspace_edit(outcome.changes))
+    }
+
+
+def _pos(line: int, character: int) -> types.Position:
+    return types.Position(line=line, character=character)
+
+
+def _plain(value: Any) -> Any:
+    """pygls hands custom-method params over as namedtuples; the edit models want dicts."""
+    if hasattr(value, "_asdict"):
+        return {k: _plain(v) for k, v in value._asdict().items()}
+    if isinstance(value, dict):
+        return {k: _plain(v) for k, v in value.items()}
+    if isinstance(value, list | tuple):
+        return [_plain(v) for v in value]
+    return value
 
 
 def _scope(params: Any) -> dict[str, Any]:

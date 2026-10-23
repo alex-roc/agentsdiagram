@@ -9,6 +9,8 @@ When the API changes, update this table and docs/adapters/pydantic_ai.md togethe
 ROOTS = ("pydantic_ai", "pydantic_ai_harness", "pydantic_graph", "fastmcp")
 
 AGENT = {"pydantic_ai.Agent"}
+# Agent.from_file / Agent.from_spec (Agent Specs, matched as root.method); kwargs such as tools= still apply.
+AGENT_LOADERS = {"pydantic_ai.from_file", "pydantic_ai.from_spec"}
 TOOL = {"pydantic_ai.Tool"}
 
 FUNCTION_TOOLSET = {"pydantic_ai.FunctionToolset"}
@@ -115,7 +117,6 @@ AGENT_KWARGS_V1 = {
 GRAPH_BUILDER = {"pydantic_graph.GraphBuilder"}
 GRAPH_BASE_NODE = {"pydantic_graph.BaseNode"}
 GRAPH_END = {"pydantic_graph.End"}
-AGENT_FROM_SPEC = {"from_file", "from_spec"}
 
 
 def all_symbols() -> set[str]:

@@ -28,7 +28,7 @@ def _common(p: argparse.ArgumentParser) -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="agentsdiagram",
-        description="Static diagrams of AI agents, tools and flows (PydanticAI, smolagents).",
+        description="See, plan and edit AI agents (smolagents, PydanticAI) from their code.",
     )
     parser.add_argument("--version", action="version", version=f"agentsdiagram {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -43,6 +43,17 @@ def build_parser() -> argparse.ArgumentParser:
     _common(check)
     check.add_argument("--strict", action="store_true", help="also fail on warnings")
     check.add_argument("--json", action="store_true", help="print diagnostics as JSON")
+
+    serve = sub.add_parser("serve", help="live, editable diagram in the browser")
+    _common(serve)
+    serve.add_argument("--port", type=int, default=8765, help="port on 127.0.0.1 (default: 8765, next free one)")
+    serve.add_argument("--no-open", action="store_true", help="do not open a browser")
+    serve.add_argument("--read-only", action="store_true", help="do not allow edits from the page")
+    serve.add_argument("--title", help="diagram title")
+
+    from .edit.cli import add_parser as add_edit_parser
+
+    add_edit_parser(sub)
 
     sub.add_parser("schema", help="print the JSON Schema of the IR")
 
@@ -79,9 +90,31 @@ def main(argv: list[str] | None = None) -> int:
         serve()
         return 0
 
-    from .analyze import analyze
+    if args.command == "edit":
+        from .edit.cli import run
+
+        return run(args)
 
     path = Path(args.path)
+    if args.command == "serve":
+        if not path.exists():
+            print(f"agentsdiagram: {path} does not exist", file=sys.stderr)
+            return 2
+        from .serve import serve as run_server
+
+        run_server(
+            path,
+            port=args.port,
+            open_browser=not args.no_open,
+            editable=not args.read_only,
+            include=args.include,
+            exclude=args.exclude,
+            title=args.title,
+        )
+        return 0
+
+    from .analyze import analyze
+
     if not path.exists():
         print(f"agentsdiagram: {path} does not exist", file=sys.stderr)
         return 2
