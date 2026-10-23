@@ -26,3 +26,13 @@ or `Args:`), AD204 (`executor_type="wasm"`, removed in 1.26).
 
 Note: in 1.26 `agent.to_dict()` returns `tools` and `managed_agents` as lists of dicts (with
 code), not names; the oracle tests use it as ground truth.
+
+## Editing
+
+What `agentsdiagram edit` and the diagram write for smolagents (see [Plan and edit](../editing.md)):
+a planned agent is a `CodeAgent`/`ToolCallingAgent` with `tools=[]` and the file's model; a planned
+tool is a `@tool` function with type hints and an `Args:` docstring, defined above the agent; an
+MCP server is an `MCPClient(..., structured_output=True)` spread into `tools=`; connecting adds to
+`managed_agents=` (and the `name`/`description` it requires); changing the model sets this agent's
+`model_id`. Agents must be module-level variables; the manager must come after the managed agent
+in the same file (or import it).

@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.4.0 — 2026-10-23
+
+Plan and edit: the roadmap's v0.3 (Plan) and v0.4 (Edit), released together. The code stays the
+only source of truth: every change is written to your files with LibCST.
+
+- **Plan.** Planned agents (`# agentsdiagram: planned`) and planned tools (a typed stub that raises
+  `NotImplementedError("agentsdiagram: planned")`) are drawn dashed with a *planned* badge and
+  listed by `check` as AD401 (info).
+- **Edit operations:** plan an agent (optionally managed by / delegated from another), plan a tool,
+  add an MCP server, connect two agents (smolagents `managed_agents`, PydanticAI delegation tool),
+  disconnect, remove, change the model or the instructions, and move a PydanticAI agent's settings
+  to an Agent Spec. Idiomatic code per framework; imports merged isort-style; imports an edit
+  leaves unused are removed. Edits are refused, with a reason, when the code changed since the
+  diagram was drawn or when they cannot be made cleanly.
+- **CLI:** `agentsdiagram edit <operation>` (prints the diff; `--dry-run`, `--json`) and
+  `agentsdiagram serve`, a live diagram in the browser that redraws on file changes and can edit.
+- **Viewer:** *Plan agent* button, *Plan and edit* actions and a *Connections* list (with
+  disconnect) in the node panel, success notices, and the new node selected after an edit.
+  Informational diagnostics get their own neutral counter.
+- **VS Code:** edits are applied as workspace edits (undo works) and saved
+  (`agentsdiagram.edits.save`); command `agentsdiagram.edit` for scripts and other extensions.
+- **LSP:** `agentsdiagram/edit` returns a versioned `WorkspaceEdit`; protocol version 2.
+- **Analyzer:** `Agent.from_file(...)` keeps the tools and toolsets passed in code, and spec paths
+  written as `Path(__file__).parent / "x.yaml"` are followed.
+- Fixed diagnostics and code lenses missing when the workspace path goes through a symlink (for
+  example `/var` → `/private/var` on macOS).
+- Docs: getting started, seven tutorials (from one agent to planning a team, CI and coding
+  agents), command line, plan and edit, VS Code guides; smolagents is presented first throughout.
+- Website: documentation pages rendered from `docs/`, five live demos (one made by the planner
+  itself), a *Plan and edit* section with a video, social preview image, `llms.txt` and sitemap.
+- Examples: `hello_smolagents` and `hello_pydantic_ai`, one agent each.
+
 ## 0.1.3 — 2026-10-22
 
 - Releases: Open VSX now publishes with trusted publishing (OIDC, no token).

@@ -3,9 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>agentsdiagram — see your AI agents</title>
-<meta name="description" content="Static analysis of PydanticAI and smolagents code that draws your agents, tools, MCP servers, delegation and flows. Your code is parsed, never run.">
+<title>agentsdiagram — see, plan and edit your AI agents</title>
+<meta name="description" content="Live diagrams of smolagents and PydanticAI agents from their code, and the other way round: plan agents and tools in the diagram and get idiomatic code. Static analysis; nothing runs. CLI and VS Code.">
 <meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://alex-roc.github.io/agentsdiagram/">
+<meta property="og:title" content="agentsdiagram — see, plan and edit your AI agents">
+<meta property="og:description" content="Live diagrams of smolagents and PydanticAI agents from their code. Plan agents and tools in the diagram and get the code. CLI and VS Code extension, MIT.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alex-roc.github.io/agentsdiagram/">
+<meta property="og:image" content="https://alex-roc.github.io/agentsdiagram/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "agentsdiagram",
+ "applicationCategory": "DeveloperApplication", "operatingSystem": "macOS, Linux, Windows",
+ "description": "See, plan and edit smolagents and PydanticAI agents from their code.",
+ "url": "https://alex-roc.github.io/agentsdiagram/", "license": "https://opensource.org/licenses/MIT",
+ "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235b5bd6'/%3E%3Cpath d='M10 10.5 22 16 10 21.5' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Ccircle cx='10' cy='10.5' r='3.2' fill='%23fff'/%3E%3Ccircle cx='22' cy='16' r='3.2' fill='%23fff'/%3E%3Ccircle cx='10' cy='21.5' r='3.2' fill='%23fff'/%3E%3C/svg%3E">
 <script>
   // Apply a stored theme before the first paint. Same key as the viewer, so the demos follow it.
@@ -26,9 +42,9 @@
       <span>agentsdiagram</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#how">How it works</a>
-      <a href="#coverage">Coverage</a>
-      <a href="#get">Get it</a>
+      <a href="#plan">Plan &amp; edit</a>
+      <a href="#learn">Tutorials</a>
+      <a href="docs/getting-started.html">Docs</a>
       <a href="https://github.com/alex-roc/agentsdiagram">GitHub</a>
       <button class="theme" type="button" id="theme" aria-label="Switch to dark theme">
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
@@ -40,39 +56,48 @@
 
 <main id="main">
   <section class="hero wrap">
-    <h1>See your AI agents.</h1>
+    <h1>See, plan and edit your AI&nbsp;agents.</h1>
     <p class="lede">
-      agentsdiagram reads the code of your <strong>PydanticAI</strong> and <strong>smolagents</strong>
-      agents and draws them: agents, tools, toolsets, MCP servers, capabilities, delegation,
-      hand-off workflows and pydantic-graph flows. Your code is parsed, never run.
+      agentsdiagram reads the code of your <strong>smolagents</strong> and <strong>PydanticAI</strong>
+      agents and draws them: agents, tools, MCP servers, managed agents, delegation, workflows and
+      flows. Then it works the other way round: plan agents and tools in the diagram and they are
+      written to your code. Static analysis: your code is parsed, never run.
     </p>
     <div class="cmd" id="hero-cmd">
       <span class="prompt" aria-hidden="true">$</span>
-      <code>uvx agentsdiagram scan . -f html -o agents.html</code>
-      <button type="button" class="copy" data-copy="uvx agentsdiagram scan . -f html -o agents.html">Copy</button>
+      <code>uvx agentsdiagram serve</code>
+      <button type="button" class="copy" data-copy="uvx agentsdiagram serve">Copy</button>
     </div>
+    <p class="hero-links">
+      <a class="btn primary" href="docs/getting-started.html">Get started</a>
+      <a class="btn" href="docs/tutorials/01-one-smolagents-agent.html">Tutorials</a>
+      <a class="btn" href="https://marketplace.visualstudio.com/items?itemName=alex-roc.agentsdiagram">VS Code extension</a>
+    </p>
   </section>
 
   <section class="demo wrap" aria-label="Live demo">
     <div class="demo-bar">
       <div class="tabs" role="tablist" aria-label="Example project">
-        <button type="button" role="tab" id="tab-support" aria-selected="true" aria-controls="demo-panel" data-demo="support">
-          <span class="mono">support_desk</span> <span class="fw">PydanticAI</span>
-        </button>
-        <button type="button" role="tab" id="tab-research" aria-selected="false" aria-controls="demo-panel" tabindex="-1" data-demo="research">
+        <button type="button" role="tab" id="tab-research" aria-selected="true" aria-controls="demo-panel" data-demo="research">
           <span class="mono">research_team</span> <span class="fw">smolagents</span>
         </button>
+        <button type="button" role="tab" id="tab-support" aria-selected="false" aria-controls="demo-panel" tabindex="-1" data-demo="support">
+          <span class="mono">support_desk</span> <span class="fw">PydanticAI</span>
+        </button>
+        <button type="button" role="tab" id="tab-planning" aria-selected="false" aria-controls="demo-panel" tabindex="-1" data-demo="planning">
+          <span class="mono">travel</span> <span class="fw">planned</span>
+        </button>
       </div>
-      <a class="full" id="demo-full" href="demo/support-desk.html" target="_blank" rel="noopener">Open full screen</a>
+      <a class="full" id="demo-full" href="demo/research-team.html" target="_blank" rel="noopener">Open full screen</a>
     </div>
 
-    <div class="demo-body" id="demo-panel" role="tabpanel" aria-labelledby="tab-support">
+    <div class="demo-body" id="demo-panel" role="tabpanel" aria-labelledby="tab-research">
       <div class="code">
         <div class="code-head">
-          <span class="mono" id="code-file">examples/support_desk/agents.py</span>
+          <span class="mono" id="code-file">examples/research_team/team.py</span>
           <span class="muted">excerpt</span>
         </div>
-<pre class="src" data-src="support"><code><span class="v">billing</span> = <span class="f">Agent</span>(
+<pre class="src" data-src="support" hidden><code><span class="v">billing</span> = <span class="f">Agent</span>(
     <span class="s">"openai:gpt-5-mini"</span>,
     name=<span class="s">"billing"</span>,
     toolsets=[crm.<span class="f">prefixed</span>(<span class="s">"crm"</span>)],
@@ -96,7 +121,7 @@
     <span class="c"># an agent run inside a tool: delegation</span>
     r = <span class="k">await</span> billing.<span class="f">run</span>(question, deps=ctx.deps)
     <span class="k">return</span> r.output</code></pre>
-<pre class="src" data-src="research" hidden><code><span class="d">@tool</span>
+<pre class="src" data-src="research"><code><span class="d">@tool</span>
 <span class="k">def</span> <span class="f">plot</span>(path: <span class="k">str</span>, x: <span class="k">str</span>, y: <span class="k">str</span>) -&gt; <span class="k">str</span>:
     <span class="s">"""Draw a line chart and return the image path."""</span>
 
@@ -122,19 +147,75 @@
         model=model,
         managed_agents=[web_researcher, analyst],
     )</code></pre>
+<pre class="src" data-src="planning" hidden><code><span class="c"># written by agentsdiagram edit / the diagram</span>
+<span class="d">@tool</span>
+<span class="k">def</span> <span class="f">search_flights</span>(origin: <span class="k">str</span>, destination: <span class="k">str</span>,
+                   date: <span class="k">str</span>) -&gt; <span class="k">list</span>[<span class="k">dict</span>]:
+    <span class="s">"""Flights between two cities on a date.
+
+    Args: ...
+    """</span>
+    <span class="k">raise</span> <span class="f">NotImplementedError</span>(<span class="s">"agentsdiagram: planned"</span>)
+
+<span class="v">maps_mcp</span> = <span class="f">MCPClient</span>({<span class="s">"url"</span>: <span class="s">"https://maps.example.com/mcp"</span>, ...})
+
+<span class="c"># agentsdiagram: planned</span>
+<span class="v">booker</span> = <span class="f">ToolCallingAgent</span>(
+    tools=[search_flights, *maps_mcp.<span class="f">get_tools</span>()],
+    model=model,
+    name=<span class="s">"booker"</span>,
+    description=<span class="s">"Finds and books flights and hotels."</span>,
+)
+
+<span class="v">assistant</span> = <span class="f">CodeAgent</span>(
+    tools=[get_weather, <span class="f">WebSearchTool</span>()],
+    model=model,
+    managed_agents=[booker],  <span class="c"># added</span>
+)</code></pre>
         <p class="code-foot" id="code-foot">
-          The diagram also reads <span class="mono">tools.py</span>, <span class="mono">escalation.py</span>
-          and <span class="mono">flow.py</span>.
-          <a href="https://github.com/alex-roc/agentsdiagram/tree/main/examples/support_desk" id="code-link">Full source</a>
+          One file: a manager <span class="mono">CodeAgent</span> with two managed agents and MCP tools.
+          <a href="https://github.com/alex-roc/agentsdiagram/blob/main/examples/research_team/team.py" id="code-link">Full source</a>
         </p>
       </div>
       <div class="frame">
-        <iframe id="demo-frame" src="demo/support-desk.html" title="Interactive diagram of the support_desk example"></iframe>
+        <iframe id="demo-frame" src="demo/research-team.html" title="Interactive diagram of the research_team example"></iframe>
       </div>
     </div>
     <p class="demo-note">This is the real viewer, generated by <span class="mono">agentsdiagram scan</span> from the
-      <a href="https://github.com/alex-roc/agentsdiagram/tree/main/examples">examples folder</a>.
-      Click a node to see where it is defined; drag, zoom and filter by kind.</p>
+      <a href="https://github.com/alex-roc/agentsdiagram/tree/main/examples">examples folder</a>; the
+      <em>planned</em> tab was written by the planner itself. Click a node to see where it is defined;
+      drag, zoom and filter by kind. Editing is on in VS Code and <span class="mono">agentsdiagram serve</span>.</p>
+  </section>
+
+  <section class="sec wrap" id="plan">
+    <h2>Plan and edit, in the diagram</h2>
+    <div class="plan">
+      <figure class="video">
+        <video src="plan.mp4" autoplay muted loop playsinline preload="metadata"
+          aria-label="Planning a managed agent, a tool and an MCP server from the diagram"></video>
+      </figure>
+      <div class="plan-text">
+        <p><strong>Plan.</strong> Sketch a system before you write it. <em>Plan agent</em> and
+          <em>Add tool</em> write planned stubs to your files: typed, documented, importable, and
+          drawn dashed until you implement them. <span class="mono">agentsdiagram check</span>
+          lists what is left.</p>
+        <p><strong>Edit.</strong> Hand work from one agent to another, add an MCP server, change a
+          model or the instructions, disconnect or remove. In smolagents that means
+          <span class="mono">managed_agents</span>, <span class="mono">@tool</span> stubs and
+          <span class="mono">MCPClient</span>; in PydanticAI, delegation tools,
+          <span class="mono">MCPToolset</span> and Agent Specs.</p>
+        <p><strong>Safe.</strong> Changes are made with LibCST: the rest of the file keeps its
+          formatting, imports land where they belong, and in VS Code everything can be undone.
+          Edits are refused if the code changed since the diagram was drawn.</p>
+        <div class="cmd">
+          <span class="prompt" aria-hidden="true">$</span>
+          <code>agentsdiagram edit connect lead analyst</code>
+          <button type="button" class="copy" data-copy="agentsdiagram edit connect lead analyst">Copy</button>
+        </div>
+        <p class="small"><a href="docs/editing.html">What each operation writes</a> ·
+          <a href="docs/tutorials/04-plan-before-you-code.html">Tutorial: plan before you code</a></p>
+      </div>
+    </div>
   </section>
 
   <section class="sec wrap" id="how">
@@ -148,8 +229,9 @@
         </p>
         <p>
           The result is a small, versioned JSON graph. The CLI turns it into Mermaid, Markdown or a
-          self-contained HTML page; the VS Code extension keeps it next to your code and redraws it as
-          you type.
+          self-contained HTML page; <span class="mono">serve</span> and the VS Code extension keep it
+          live and redraw it as you type. Edits made on the graph go back through the same pipeline
+          as minimal changes to your files.
         </p>
         <p>
           Anything that only exists at runtime, like tools fetched from a server or lists built in a
@@ -159,13 +241,13 @@
       <figure class="pipe" aria-label="Pipeline">
         <ol>
           <li><span class="mono">your code</span><span class="muted">.py files, read as text</span></li>
-          <li><span class="mono">adapters</span><span class="muted">pydantic_ai, smolagents</span></li>
+          <li><span class="mono">adapters</span><span class="muted">smolagents, pydantic_ai</span></li>
           <li><span class="mono">IR</span><span class="muted">versioned JSON graph</span></li>
-          <li class="outs"><span class="mono">Mermaid · HTML viewer · VS Code</span><span class="muted">front ends</span></li>
+          <li class="outs"><span class="mono">Mermaid · HTML · serve · VS Code</span><span class="muted">front ends, and edits back to your code</span></li>
         </ol>
       </figure>
     </div>
-    <p class="truth">The code stays the source of truth. The diagram is drawn from it on every scan and on every keystroke in VS Code; there is no second model to keep in sync.</p>
+    <p class="truth">The code stays the source of truth. The diagram is drawn from it on every scan and every keystroke, and edits are written to it; there is no project file and no second model to keep in sync.</p>
   </section>
 
   <section class="sec wrap" id="coverage">
@@ -173,36 +255,54 @@
     <div class="table-wrap" tabindex="0" role="region" aria-label="Framework coverage">
       <table>
         <thead>
-          <tr><th scope="col"></th><th scope="col">PydanticAI 2.x</th><th scope="col">smolagents 1.x</th></tr>
+          <tr><th scope="col"></th><th scope="col">smolagents 1.x</th><th scope="col">PydanticAI 2.x</th></tr>
         </thead>
         <tbody>
           <tr><th scope="row"><i class="dot" style="--c:var(--k-agent)"></i>Agents</th>
-            <td><code>Agent(...)</code>, <code>Agent.from_file("spec.yaml")</code>, factories (<code>make_agent()</code>)</td>
-            <td><code>CodeAgent</code>, <code>ToolCallingAgent</code></td></tr>
+            <td><code>CodeAgent</code>, <code>ToolCallingAgent</code></td>
+            <td><code>Agent(...)</code>, <code>Agent.from_file("spec.yaml")</code>, factories (<code>make_agent()</code>)</td></tr>
           <tr><th scope="row"><i class="dot" style="--c:var(--k-tool)"></i>Tools</th>
-            <td><code>@agent.tool</code>, <code>@agent.tool_plain</code>, <code>tools=[f, Tool(...)]</code></td>
-            <td><code>@tool</code>, <code>Tool</code> subclasses, default tools, <code>add_base_tools</code></td></tr>
+            <td><code>@tool</code>, <code>Tool</code> subclasses, default tools, <code>add_base_tools</code></td>
+            <td><code>@agent.tool</code>, <code>@agent.tool_plain</code>, <code>tools=[f, Tool(...)]</code></td></tr>
           <tr><th scope="row"><i class="dot" style="--c:var(--k-toolset)"></i>Toolsets</th>
-            <td><code>FunctionToolset</code>, wrappers (<code>.prefixed()</code>, <code>.filtered()</code>…), <code>@agent.toolset</code></td>
-            <td><code>ToolCollection</code>, Hub/Space/LangChain sources</td></tr>
+            <td><code>ToolCollection</code>, Hub/Space/LangChain sources</td>
+            <td><code>FunctionToolset</code>, wrappers (<code>.prefixed()</code>, <code>.filtered()</code>…), <code>@agent.toolset</code></td></tr>
           <tr><th scope="row"><i class="dot" style="--c:var(--k-mcp_server)"></i>MCP</th>
-            <td><code>MCPToolset(...)</code>, <code>load_mcp_toolsets("mcp.json")</code>, <code>MCP(url=...)</code></td>
-            <td><code>ToolCollection.from_mcp</code>, <code>MCPClient</code></td></tr>
+            <td><code>ToolCollection.from_mcp</code>, <code>MCPClient</code></td>
+            <td><code>MCPToolset(...)</code>, <code>load_mcp_toolsets("mcp.json")</code>, <code>MCP(url=...)</code></td></tr>
           <tr><th scope="row"><i class="dot" style="--c:var(--k-workflow)"></i>Multi-agent</th>
-            <td>agent run inside a tool, <code>SubAgents</code>, hand-off functions</td>
-            <td><code>managed_agents=[...]</code></td></tr>
+            <td><code>managed_agents=[...]</code></td>
+            <td>agent run inside a tool, <code>SubAgents</code>, hand-off functions</td></tr>
           <tr><th scope="row"><i class="dot" style="--c:var(--k-graph)"></i>Flows</th>
-            <td>pydantic-graph <code>GraphBuilder</code> (steps, decisions, joins) and <code>BaseNode</code></td>
-            <td class="muted">—</td></tr>
+            <td class="muted">—</td>
+            <td>pydantic-graph <code>GraphBuilder</code> (steps, decisions, joins) and <code>BaseNode</code></td></tr>
           <tr><th scope="row"><i class="dot" style="--c:var(--warn)"></i>Checks</th>
-            <td>v1 API still in use</td>
-            <td>managed agents without name/description, <code>@tool</code> without hints, name clashes</td></tr>
+            <td>managed agents without name/description, <code>@tool</code> without hints, name clashes</td>
+            <td>v1 API still in use</td></tr>
+          <tr><th scope="row"><i class="dot" style="--c:var(--accent)"></i>Plan &amp; edit</th>
+            <td>agents, <code>@tool</code> stubs, <code>MCPClient</code>, <code>managed_agents</code>, models</td>
+            <td>agents, <code>@agent.tool_plain</code> stubs, <code>MCPToolset</code>, delegation tools, models, Agent Specs</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="small">Full coverage matrices:
-      <a href="https://github.com/alex-roc/agentsdiagram/blob/main/docs/adapters/pydantic_ai.md">PydanticAI</a> ·
-      <a href="https://github.com/alex-roc/agentsdiagram/blob/main/docs/adapters/smolagents.md">smolagents</a></p>
+    <p class="small">Full coverage:
+      <a href="docs/adapters/smolagents.html">smolagents</a> ·
+      <a href="docs/adapters/pydantic_ai.html">PydanticAI</a></p>
+  </section>
+
+  <section class="sec wrap" id="learn">
+    <h2>Learn it in an afternoon</h2>
+    <p class="section-lede">Seven short tutorials, from one agent to a planned team, with live diagrams in every page.</p>
+    <ol class="cards">
+      <li><a href="docs/tutorials/01-one-smolagents-agent.html"><span class="n">1</span><strong>One smolagents agent</strong><span>Draw it, read it, let <span class="mono">check</span> catch a mistake.</span></a></li>
+      <li><a href="docs/tutorials/02-one-pydantic-ai-agent.html"><span class="n">2</span><strong>One PydanticAI agent</strong><span>The same agent, the PydanticAI way: decorators, deps, context.</span></a></li>
+      <li><a href="docs/tutorials/03-teams-of-agents.html"><span class="n">3</span><strong>Teams of agents</strong><span>Managers, managed agents, delegation, workflows and flows.</span></a></li>
+      <li><a href="docs/tutorials/04-plan-before-you-code.html"><span class="n">4</span><strong>Plan before you code</strong><span>Sketch a team in the diagram; get planned stubs in your files.</span></a></li>
+      <li><a href="docs/tutorials/05-edit-from-the-diagram.html"><span class="n">5</span><strong>Edit from the diagram</strong><span>Connect, change models, remove, move to an Agent Spec.</span></a></li>
+      <li><a href="docs/tutorials/06-ci-and-docs.html"><span class="n">6</span><strong>Diagrams in CI and docs</strong><span>Gate pull requests and keep a diagram in your README.</span></a></li>
+      <li><a href="docs/tutorials/07-coding-agents.html"><span class="n">7</span><strong>With coding agents</strong><span>Give Claude Code or Codex a map and structural commands.</span></a></li>
+      <li class="more"><a href="docs/getting-started.html"><span class="n">→</span><strong>All the docs</strong><span>Command line, plan and edit, VS Code, coverage, IR.</span></a></li>
+    </ol>
   </section>
 
   <section class="sec wrap" id="get">
@@ -218,12 +318,14 @@
             <button type="button" class="copy" data-copy="uvx agentsdiagram scan .">Copy</button>
           </div>
           <p class="small">Prints Mermaid. Add <code>-f html -o agents.html</code> for the interactive page,
-            <code>-f markdown</code> for GitHub, or run <code>agentsdiagram check .</code> in CI.</p>
+            <code>-f markdown</code> for GitHub, run <code>agentsdiagram serve</code> for a live, editable
+            diagram, or <code>agentsdiagram check .</code> in CI.</p>
         </li>
         <li>
           <h3>Keep it next to your code</h3>
           <p>The <strong>Agents Diagram</strong> extension shows a live diagram that follows your edits,
-            with “Show in diagram” code lenses and diagnostics. It runs the CLI through uv.</p>
+            lets you plan and edit from it (with undo), and adds “Show in diagram” code lenses and
+            diagnostics. It runs the analyzer through uv.</p>
           <p class="links">
             <a class="btn" href="https://marketplace.visualstudio.com/items?itemName=alex-roc.agentsdiagram">VS Code Marketplace</a>
             <a class="btn" href="https://open-vsx.org/extension/alex-roc/agentsdiagram">Open VSX</a>
@@ -248,17 +350,21 @@
     <h2>Roadmap</h2>
     <dl class="road">
       <div>
-        <dt><span class="ver">v0.3</span> Plan</dt>
-        <dd>Draw agents and tools that do not exist yet; agentsdiagram writes the stubs.</dd>
+        <dt><span class="ver done">v0.3</span> Plan</dt>
+        <dd>Draw agents and tools that do not exist yet; agentsdiagram writes the stubs. Shipped.</dd>
       </div>
       <div>
-        <dt><span class="ver">v0.4</span> Edit</dt>
-        <dd>Connect, add and remove tools and agents in the diagram. The change is written to your code
-          with LibCST, preserving formatting. The code stays the single source of truth.</dd>
+        <dt><span class="ver done">v0.4</span> Edit</dt>
+        <dd>Connect, add and remove tools and agents, change models, from the diagram or the CLI. Shipped.</dd>
       </div>
       <div>
-        <dt><span class="ver">later</span> More frameworks</dt>
-        <dd>Through adapters. See <a href="https://github.com/alex-roc/agentsdiagram/blob/main/docs/adding-a-framework.md">adding a framework</a>.</dd>
+        <dt><span class="ver">next</span> More frameworks</dt>
+        <dd>OpenAI Agents, Google ADK, Agno, Strands, LangGraph, through adapters. See
+          <a href="docs/adding-a-framework.html">adding a framework</a>.</dd>
+      </div>
+      <div>
+        <dt><span class="ver">later</span> Your layout</dt>
+        <dd>Keep a hand-arranged layout next to the code, matched by kind, file and name.</dd>
       </div>
     </dl>
   </section>
@@ -268,6 +374,7 @@
   <div class="wrap foot-row">
     <span>MIT © 2026 Alex Ojeda Copa</span>
     <span class="foot-links">
+      <a href="docs/getting-started.html">Docs</a>
       <a href="https://github.com/alex-roc/agentsdiagram">GitHub</a>
       <a href="https://github.com/alex-roc/agentsdiagram/blob/main/CHANGELOG.md">Changelog</a>
       <a href="https://pypi.org/project/agentsdiagram/">PyPI</a>
@@ -302,6 +409,13 @@
 
   // Demo switcher
   var demos = {
+    research: {
+      page: "demo/research-team.html",
+      title: "Interactive diagram of the research_team example",
+      file: "examples/research_team/team.py",
+      foot: 'One file: a manager <span class="mono">CodeAgent</span> with two managed agents and MCP tools.',
+      link: "https://github.com/alex-roc/agentsdiagram/blob/main/examples/research_team/team.py"
+    },
     support: {
       page: "demo/support-desk.html",
       title: "Interactive diagram of the support_desk example",
@@ -309,12 +423,12 @@
       foot: 'The diagram also reads <span class="mono">tools.py</span>, <span class="mono">escalation.py</span> and <span class="mono">flow.py</span>.',
       link: "https://github.com/alex-roc/agentsdiagram/tree/main/examples/support_desk"
     },
-    research: {
-      page: "demo/research-team.html",
-      title: "Interactive diagram of the research_team example",
-      file: "examples/research_team/team.py",
-      foot: 'One file: a manager <span class="mono">CodeAgent</span> with two managed agents and MCP tools.',
-      link: "https://github.com/alex-roc/agentsdiagram/blob/main/examples/research_team/team.py"
+    planning: {
+      page: "demo/planning.html",
+      title: "Interactive diagram of the planned travel team",
+      file: "travel/agent.py",
+      foot: 'Written by three <span class="mono">agentsdiagram edit</span> commands on the first tutorial\'s agent.',
+      link: "docs/tutorials/04-plan-before-you-code.html"
     }
   };
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
@@ -336,7 +450,7 @@
     panel.setAttribute("aria-labelledby", tab.id);
     Array.prototype.forEach.call(srcs, function (p) { p.hidden = p.dataset.src !== key; });
     file.textContent = d.file;
-    foot.innerHTML = d.foot + ' <a href="' + d.link + '">Full source</a>';
+    foot.innerHTML = d.foot + ' <a href="' + d.link + '">' + (key === "planning" ? "Tutorial" : "Full source") + "</a>";
     full.href = d.page;
     if (frame.getAttribute("src") !== d.page) {
       frame.title = d.title;

@@ -236,6 +236,10 @@ button {
   color: var(--err);
   background: color-mix(in srgb, var(--err) 16%, transparent);
 }
+.pcount.info {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--muted) 16%, transparent);
+}
 .pcount.warn {
   color: var(--warn);
   background: color-mix(in srgb, var(--warn) 16%, transparent);

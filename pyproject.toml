@@ -5,13 +5,13 @@ build-backend = "hatchling.build"
 [project]
 name = "agentsdiagram"
 dynamic = ["version"]
-description = "See your AI agents: static diagrams of agents, tools and flows for PydanticAI and smolagents — CLI and VS Code extension."
+description = "See, plan and edit your AI agents: live diagrams of smolagents and PydanticAI code that can also write the code — CLI, browser and VS Code."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [{ name = "Alex Ojeda Copa" }]
-keywords = ["agents", "pydantic-ai", "smolagents", "visualization", "static-analysis", "diagram", "mermaid", "llm"]
+keywords = ["agents", "smolagents", "pydantic-ai", "multi-agent", "mcp", "visualization", "static-analysis", "diagram", "mermaid", "llm"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
@@ -57,6 +57,10 @@ oracle = [
     "pydantic-ai[spec]>=2.59",
     "pydantic-ai-harness>=0.59",
     "smolagents[toolkit]>=1.26",
+]
+site = [
+    "markdown>=3.11.2",
+    "pygments>=2.21.0",
 ]
 
 [tool.uv]

@@ -338,3 +338,25 @@ def test_oracle_pydantic_ai_code_runs(app):
     p = analyze(app)
     assert node(p, "lead", "agent").attrs.agent_class == "Agent (spec)"
     assert {"ask_expert", "ask_writer"} <= {p.node(e.target).name for e in p.edges if e.source == f"{a}.lead"}
+
+
+# ---------------------------------------------------------------------- command line
+
+
+def test_cli_edit_commands(root, capsys):
+    from agentsdiagram.cli import main
+
+    p = str(root)
+    assert main(["edit", "add-tool", "analyst", "load", "-p", p, "--dry-run"]) == 0
+    assert "+def load(query: str) -> str:" in capsys.readouterr().out
+    assert "def load" not in (root / "examples/research_team/team.py").read_text()  # dry run
+    assert main(["edit", "add-mcp", "tech", "-p", p, "--command", "uvx mcp-server-fetch"]) == 0
+    assert main(["edit", "add-mcp", "analyst", "-p", p, "--url", "https://x.example.com/mcp", "--json"]) == 0
+    assert '"ok": true' in capsys.readouterr().out
+    assert main(["edit", "connect", "tech", "billing", "-p", p]) == 0
+    assert main(["edit", "disconnect", "triage", "billing", "-p", p]) == 1
+    assert "goes through `ask_billing`" in capsys.readouterr().err
+    assert main(["edit", "set-model", "lead", "Qwen/Qwen3-Coder", "-p", p]) == 0
+    assert main(["edit", "remove", "nope", "-p", p]) == 1
+    assert main(["edit", "add-agent", "x", "--file", "examples/x.py", "-p", p]) == 1  # two frameworks here
+    assert "--framework" in capsys.readouterr().err

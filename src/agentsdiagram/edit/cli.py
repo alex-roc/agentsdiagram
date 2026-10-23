@@ -50,7 +50,7 @@ def add_parser(sub: argparse._SubParsersAction) -> None:
 
     p = op("add-agent")
     p.add_argument("name")
-    p.add_argument("--file", required=True, help="file to write it in (created if missing)")
+    p.add_argument("--file", help="file to write it in, created if missing (default: the parent's file)")
     p.add_argument("--framework", choices=["smolagents", "pydantic_ai"])
     p.add_argument("--parent", help="agent that manages (smolagents) or delegates to (PydanticAI) the new one")
     p.add_argument("--model")
@@ -69,7 +69,7 @@ def add_parser(sub: argparse._SubParsersAction) -> None:
     p.add_argument("agent")
     target = p.add_mutually_exclusive_group(required=True)
     target.add_argument("--url")
-    target.add_argument("--command", help="stdio command line, e.g. 'uvx mcp-server-fetch'")
+    target.add_argument("--command", dest="mcp_command", help="stdio command line, e.g. 'uvx mcp-server-fetch'")
     p.add_argument("--name", help="variable name (default: derived from the URL or command)")
 
     p = op("connect")
@@ -122,6 +122,9 @@ def build_request(args: argparse.Namespace, project: Project) -> dict:
         parent = agent(args.parent) if args.parent else None
         if parent:
             framework = framework or project.node(parent).framework  # type: ignore[union-attr]
+        file = args.file or (project.node(parent).source.file if parent and project.node(parent).source else None)  # type: ignore[union-attr]
+        if not file:
+            raise EditError("Say where to write the agent with --file path/to/agents.py.")
         if framework is None:
             if len(project.frameworks) != 1:
                 raise EditError("Say which framework with --framework smolagents|pydantic_ai.")
@@ -130,7 +133,7 @@ def build_request(args: argparse.Namespace, project: Project) -> dict:
             "op": "add_agent",
             "framework": framework,
             "name": args.name,
-            "file": args.file,
+            "file": file,
             "parent": parent,
             "model": args.model,
             "instructions": args.instructions,
@@ -151,7 +154,7 @@ def build_request(args: argparse.Namespace, project: Project) -> dict:
             "op": "add_mcp",
             "agent": agent(args.agent),
             "url": args.url,
-            "command": args.command,
+            "command": args.mcp_command,
             "name": args.name,
         }
     if args.op == "connect":

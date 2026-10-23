@@ -1,23 +1,38 @@
 # Agents Diagram
 
-Live diagram of your **PydanticAI** and **smolagents** agents, tools, toolsets and MCP servers, straight from your code editor.
+See, plan and edit your **smolagents** and **PydanticAI** agents in a live diagram next to your
+code: agents, tools, MCP servers, managed agents, delegation, workflows and flows.
 
-The analysis is static: it reads your Python source and never imports or runs it.
+The analysis is static: it reads your Python source and never imports or runs it. No API keys, no
+dependencies of your project.
 
 ![Agents diagram](https://raw.githubusercontent.com/alex-roc/agentsdiagram/main/docs/images/viewer.png)
 
-## Features
+## See
 
-- Interactive diagram of agents, tools, toolsets, delegation and workflow edges, in your light
-  or dark theme.
-- Click a node to see its details and its neighbors; "Go to code" jumps to its source. Move the
-  cursor in a `.py` file and the diagram follows.
-- Search with `/`, filter node kinds from the legend, and open the Problems drawer from the
-  toolbar.
-- "Show in diagram" code lenses above agents and tools.
-- Diagnostics for things the analyzer cannot resolve statically.
-- Export to Mermaid: opens a Markdown document with a `mermaid` block ready for the built-in preview, or copy it from the diagram.
+- An interactive diagram of the workspace or of one file, in your light or dark theme.
+- Click a node to see its details and neighbors; **Go to code** jumps to its source. Move the
+  cursor in a `.py` file and the diagram selects the node under it.
+- It follows your edits as you type, unsaved changes included.
+- Search with `/`, filter node kinds from the legend, open **Problems** from the toolbar.
+- "Show in diagram" code lenses above agents, and diagnostics in the Problems panel (for
+  example a smolagents managed agent without a description, or PydanticAI v1 API).
+- Export to Mermaid.
 
+## Plan and edit
+
+The diagram can write code too. Every change is a normal edit: **Undo** works.
+
+- **Plan agent** (toolbar) writes a new agent marked `# agentsdiagram: planned`, optionally managed
+  by (smolagents) or delegated from (PydanticAI) another agent.
+- On an agent: **Add tool** (a typed stub that raises `NotImplementedError` until you write it),
+  **Add MCP server**, **Hand work to…** another agent, **Change model**, **Instructions**,
+  **Move to Agent Spec** (PydanticAI) and **Remove**.
+- **Connections** lists every relation of a node, with a disconnect button.
+
+The generated code is idiomatic for each framework, imports included, and nothing else in the file
+changes. Edits are refused, with a reason, if the file changed since the diagram was drawn or if
+the change cannot be made cleanly.
 
 ## Requirements
 
@@ -46,6 +61,7 @@ No Python extension is required, so it works in Cursor, Windsurf and Positron to
 | `agentsdiagram.server.uvPath` | Absolute path to `uvx` if it is not found automatically |
 | `agentsdiagram.include` / `agentsdiagram.exclude` | Glob patterns passed to the analyzer |
 | `agentsdiagram.codeLens.enabled` | Toggle the "Show in diagram" code lenses |
+| `agentsdiagram.edits.save` | Save the files an edit changes (default on; files with unsaved changes are left alone) |
 
 ## Privacy
 
@@ -53,4 +69,5 @@ Everything runs locally. The analyzer reads your files without executing them an
 
 ## Links
 
-[Source and issues](https://github.com/alex-roc/agentsdiagram) - MIT licensed.
+[Website, tutorials and live demos](https://alex-roc.github.io/agentsdiagram/) ·
+[Source and issues](https://github.com/alex-roc/agentsdiagram) · MIT licensed.

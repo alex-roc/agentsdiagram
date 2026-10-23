@@ -7,7 +7,7 @@ Verified against **pydantic-ai 2.59.0**, **pydantic-ai-harness 0.59.0** and **py
 |---|---|
 | `Agent(model, name=, instructions=/system_prompt=, deps_type=, output_type=, description=)` | `agent` node (name from `name=` or the variable) |
 | `Agent(...)` inside a function | `partial` agent; `x = factory(...)` gets its own node |
-| `Agent.from_file("x.yaml")` (literal path) | agent from the Agent Spec: model, instructions, capabilities, MCP |
+| `Agent.from_file("x.yaml")`, `Agent.from_file(Path(__file__).parent / "x.yaml", tools=..., toolsets=...)` | agent from the Agent Spec (model, instructions, capabilities, MCP) plus the tools and toolsets passed in code |
 | `@agent.tool`, `@agent.tool_plain` (`name=`, `requires_approval=`) | `tool` with docstring, signature, `takes_ctx` |
 | `tools=[f, Tool(f, ...), Tool.from_schema(...)]` | `uses` → `tool` |
 | `@agent.instructions`, `@agent.system_prompt` | `attrs.dynamic_instructions` |
@@ -36,3 +36,13 @@ Not detected (shown as `dynamic` when referenced): toolsets/tools built at runti
 passed as parameters, output functions that hand off (planned).
 
 FastMCP servers (`@server.tool()`) are deliberately **not** treated as agent tools.
+
+## Editing
+
+What `agentsdiagram edit` and the diagram write for PydanticAI (see [Plan and edit](../editing.md)):
+a planned agent is `Agent("<model>", name=...)` (the model of your other agents by default); a
+planned tool is an `@agent.tool_plain` stub after the agent; an MCP server is an `MCPToolset(url)` or
+`MCPToolset(StdioTransport(command, args))` in `toolsets=`; connecting writes an `@a.tool` delegation
+function that runs `b` with `usage=ctx.usage` (and `deps=ctx.deps` when both have the same
+`deps_type`); **Move to Agent Spec** writes `<agent>.agent.yaml` and loads it with `Agent.from_file`,
+keeping tools, toolsets, `deps_type` and non-literal capabilities in Python.

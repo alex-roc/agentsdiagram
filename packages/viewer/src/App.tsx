@@ -261,7 +261,8 @@ function Viewer({ transport }: { transport: ViewerTransport }) {
   const selectedNode = project?.nodes.find((n) => n.id === selectedId) ?? null;
   const diagnostics = project?.diagnostics ?? [];
   const errors = diagnostics.filter((d) => d.severity === "error").length;
-  const warnings = diagnostics.length - errors;
+  const warnings = diagnostics.filter((d) => d.severity === "warning").length;
+  const infos = diagnostics.length - errors - warnings;
 
   const onDiagnostic = (d: Diagnostic) => {
     if (d.node_id && laidOut?.nodes.some((n) => n.id === d.node_id)) {
@@ -361,6 +362,11 @@ function Viewer({ transport }: { transport: ViewerTransport }) {
             <span className="label-long">Problems</span>
             {errors > 0 && <span className="pcount err">{errors}</span>}
             {warnings > 0 && <span className="pcount warn">{warnings}</span>}
+            {infos > 0 && (
+              <span className="pcount info" title="Notes, such as planned nodes">
+                {infos}
+              </span>
+            )}
           </button>
         )}
         {transport.canCopyMermaid && (

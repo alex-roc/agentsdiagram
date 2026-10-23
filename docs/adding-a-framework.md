@@ -15,4 +15,10 @@
 4. Add fixtures under `tests/fixtures/<short>/`, unit tests, oracle tests (import the fixtures
    with the real library) and the symbol drift test, and add the library to the `oracle`
    dependency group and to `.github/workflows/drift.yml`.
-5. Document coverage in `docs/adapters/<framework>.md` and the README table.
+5. Optional, for plan and edit: `adapters/<framework>/edit.py` with a class implementing
+   `FrameworkEditor` (`edit/engine.py`): `add_agent`, `add_tool`, `add_mcp`, `connect`,
+   `set_model`, `export_spec` (raise `EditError` for what the framework does not have), using the
+   `Doc` primitives in `edit/doc.py` and the helpers in `edit/codegen.py`. Register it in
+   `EDITORS`. Disconnect, remove and instructions are generic. Add oracle tests that import the
+   edited code with the real library (`tests/test_edit.py`).
+6. Document coverage in `docs/adapters/<framework>.md` and the README table.

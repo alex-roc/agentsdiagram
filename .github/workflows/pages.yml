@@ -1,13 +1,15 @@
 name: Pages
 
-# Builds the website in site/ and the live demos (generated from examples/, not committed)
-# and deploys them to https://alex-roc.github.io/agentsdiagram/
+# Builds the website: the hand-written landing page in site/, the documentation rendered from
+# docs/ and the live demos generated from examples/ (site/build.py; not committed), and deploys
+# it to https://alex-roc.github.io/agentsdiagram/
 
 on:
   push:
     branches: [main]
     paths:
       - "site/**"
+      - "docs/**"
       - "examples/**"
       - "packages/viewer/**"
       - "src/**"
@@ -35,10 +37,8 @@ jobs:
       - uses: astral-sh/setup-uv@v10.3.2
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @agentsdiagram/viewer build
-      - name: Generate the demo pages
-        run: |
-          uv run agentsdiagram scan examples/support_desk -f html -o site/demo/support-desk.html --title "support_desk (PydanticAI)"
-          uv run agentsdiagram scan examples/research_team -f html -o site/demo/research-team.html --title "research_team (smolagents)"
+      - name: Generate the docs pages and the demos
+        run: uv run --group site python site/build.py
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site

@@ -89,7 +89,7 @@ export function Detail({
       {children}
       {diagnostics.length > 0 && (
         <>
-          <h3>Problems in this node</h3>
+          <h3>{diagnostics.some((d) => d.severity !== "info") ? "Problems in this node" : "Notes"}</h3>
           <ul className="diag-list">
             {diagnostics.map((d, i) => (
               <li key={i} className={`sev-${d.severity}`}>

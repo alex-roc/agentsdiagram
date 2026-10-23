@@ -2,7 +2,7 @@
 
 JSON produced by `agentsdiagram scan -f json` and by the language server (`agentsdiagram/graph`).
 Schema: `agentsdiagram schema` / [`packages/protocol/ir.schema.json`](../packages/protocol/ir.schema.json).
-Current version: `ir_version: "1"`.
+Current version: `ir_version: "1"`; editor protocol `2`.
 
 ```jsonc
 {
@@ -45,7 +45,8 @@ Positions: `line` is 1-based, `column` is 0-based and counted in code points.
 ## Status
 
 `resolved` · `partial` (built in a function / factory, arguments may vary) · `dynamic` ·
-`planned` (roadmap: stubs written by the planner) · `stale` (file has a syntax error; last valid version).
+`planned` (marked as not implemented yet, see [Plan and edit](editing.md#planned-code)) ·
+`stale` (file has a syntax error; last valid version).
 
 ## Diagnostic codes
 
@@ -60,4 +61,20 @@ Positions: `line` is 1-based, `column` is 0-based and counted in code points.
 | AD203 | warning | smolagents `@tool` without type hints or `Args:` docstring |
 | AD204 | error | smolagents `executor_type` that no longer exists |
 | AD301 | info | agent created inside a function |
+| AD401 | info | planned node: a tool raising `NotImplementedError("agentsdiagram: planned")` or a statement under `# agentsdiagram: planned` |
 | AD900 | error | an adapter crashed on a file (please report it) |
+
+## Edit protocol
+
+The same schema (`$defs`) describes the requests that change code, shared by the CLI
+(`agentsdiagram edit`), `agentsdiagram serve` (`POST /api/edit`), the language server
+(`agentsdiagram/edit`) and the VS Code command `agentsdiagram.edit`:
+
+- `EditParams`: `{ request, expect }`. `request` is one of `AddAgent`, `AddTool`, `AddMcp`,
+  `Connect`, `Disconnect`, `Remove`, `SetModel`, `SetInstructions`, `ExportSpec`, told apart by
+  `op`. Nodes and edges are named by their ids. `expect` lists `{ file, sha256 }` of the files the
+  diagram was drawn from; the edit is refused if one changed.
+- `EditResult`: `{ ok, message, files, focus }`. `focus` is the id of the node to select once the
+  graph is redrawn. Over LSP the response also has `edit`, the `WorkspaceEdit` to apply.
+
+What each operation writes is described in [Plan and edit](editing.md).

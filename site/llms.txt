@@ -1,0 +1,31 @@
+# agentsdiagram
+
+> See, plan and edit AI agents written with smolagents (1.x) and PydanticAI (2.x). agentsdiagram reads Python source with static analysis (LibCST; code is never imported or run) and draws agents, tools, MCP servers, managed agents, delegation, hand-off workflows and pydantic-graph flows. It can also change the code: plan agents and tools (written as stubs marked "agentsdiagram: planned"), connect agents, add MCP servers, change models and instructions, remove things. CLI (PyPI `agentsdiagram`), live browser view (`agentsdiagram serve`) and a VS Code / Open VSX extension ("Agents Diagram"). MIT.
+
+## Use
+
+- Draw: `uvx agentsdiagram scan . -f html -o agents.html` (also `-f mermaid|markdown|json`)
+- Live and editable in a browser: `uvx agentsdiagram serve`
+- Diagnostics for CI (exit 1 on errors): `uvx agentsdiagram check . [--strict] [--json]`
+- Structure as JSON for tools and agents: `uvx agentsdiagram scan . -f json`
+- Edit from the terminal (prints a diff; `--dry-run`, `--json`):
+  `agentsdiagram edit add-agent NAME [--parent AGENT] [--file F]`,
+  `add-tool AGENT NAME [--params "x: str"] [--returns T]`, `add-mcp AGENT (--url U | --command C)`,
+  `connect SOURCE TARGET`, `disconnect SOURCE TARGET`, `remove NODE`, `set-model AGENT MODEL`,
+  `set-instructions AGENT TEXT`, `export-spec AGENT` (PydanticAI Agent Spec)
+
+## Docs
+
+- [Getting started](https://alex-roc.github.io/agentsdiagram/docs/getting-started.html)
+- [Plan and edit](https://alex-roc.github.io/agentsdiagram/docs/editing.html): what each operation writes, per framework, and its limits
+- [Command line](https://alex-roc.github.io/agentsdiagram/docs/cli.html)
+- [VS Code extension](https://alex-roc.github.io/agentsdiagram/docs/vscode.html)
+- [Tutorials](https://alex-roc.github.io/agentsdiagram/docs/tutorials/01-one-smolagents-agent.html): one smolagents agent, one PydanticAI agent, teams, planning, editing, CI, coding agents
+- [smolagents coverage](https://alex-roc.github.io/agentsdiagram/docs/adapters/smolagents.html)
+- [PydanticAI coverage](https://alex-roc.github.io/agentsdiagram/docs/adapters/pydantic_ai.html)
+- [IR and diagnostic codes](https://alex-roc.github.io/agentsdiagram/docs/ir.html)
+
+## Optional
+
+- [Source](https://github.com/alex-roc/agentsdiagram)
+- [Architecture](https://alex-roc.github.io/agentsdiagram/docs/architecture.html)
