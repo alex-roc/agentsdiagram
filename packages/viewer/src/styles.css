@@ -1007,10 +1007,19 @@ body[class*="vscode-"] .ad-node.kind-agent .ad-tile {
   height: 22px;
 }
 
+.side {
+  container-type: inline-size;
+}
 .actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
+}
+/* a narrow side panel (VS Code splits the editor): one action per row, labels in full */
+@container (max-width: 340px) {
+  .actions {
+    grid-template-columns: 1fr;
+  }
 }
 .actions .btn {
   height: 30px;

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 — 2026-10-23
+
+- The plan and edit buttons fit a narrow diagram panel: one per row, labels in full.
+
 ## 0.4.0 — 2026-10-23
 
 - Plan and edit from the diagram: **Plan agent**, and in an agent's panel **Add tool**, **Add MCP

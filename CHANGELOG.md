@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1 — 2026-10-23
+
+- Viewer: in a narrow side panel (VS Code with a split editor) the plan and edit actions are
+  shown one per row, so their labels are never cut.
+
 ## 0.4.0 — 2026-10-23
 
 Plan and edit: the roadmap's v0.3 (Plan) and v0.4 (Edit), released together. The code stays the

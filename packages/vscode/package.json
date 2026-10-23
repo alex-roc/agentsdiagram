@@ -2,7 +2,7 @@
   "name": "agentsdiagram",
   "displayName": "Agents Diagram",
   "description": "See, plan and edit your smolagents and PydanticAI agents: a live diagram from static analysis that can also write the code.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "publisher": "alex-roc",
   "license": "MIT",
   "repository": {
