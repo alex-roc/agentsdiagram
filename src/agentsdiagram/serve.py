@@ -30,7 +30,7 @@ from .analyze import Cache, analyze
 from .edit import EditError, plan_edit
 from .ir import EditParams, EditResult, Project
 from .project import collect
-from .render.html import PROTOCOL_VERSION
+from .render.html import PROTOCOL_VERSION, ViewerBundleMissing
 from .render.html import render as render_html
 from .render.mermaid import render as render_mermaid
 
@@ -142,9 +142,11 @@ def make_server(
                 return self._send(HTTPStatus.FORBIDDEN, b"forbidden", "text/plain")
             route = self.path.split("?", 1)[0]
             if route == "/":
-                html = render_html(
-                    live.project, title=page_title, live={"token": token if editable else None, "editable": editable}
-                )
+                try:
+                    config = {"token": token if editable else None, "editable": editable}
+                    html = render_html(live.project, title=page_title, live=config)
+                except ViewerBundleMissing as exc:
+                    return self._send(HTTPStatus.INTERNAL_SERVER_ERROR, str(exc).encode(), "text/plain; charset=utf-8")
                 return self._send(200, html.encode(), "text/html; charset=utf-8")
             if route == "/api/graph":
                 return self._json(live.graph())

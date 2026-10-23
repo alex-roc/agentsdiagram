@@ -14,6 +14,16 @@ from agentsdiagram.serve import LiveProject, make_server
 EXAMPLES = Path(__file__).parent.parent / "examples"
 
 
+def page(base: str) -> str:
+    """The viewer page, or skip when the bundle is not built (the Python CI job does not build it)."""
+    try:
+        return get(base + "/")[1]
+    except urllib.error.HTTPError as exc:
+        if exc.code == 500 and b"viewer bundle" in exc.read():
+            pytest.skip("viewer bundle not built (pnpm --filter @agentsdiagram/viewer build)")
+        raise
+
+
 @pytest.fixture
 def server(tmp_path: Path):
     shutil.copytree(EXAMPLES / "research_team", tmp_path / "team")
@@ -46,13 +56,13 @@ def post(url: str, body: dict, headers: dict):
 
 def test_page_and_graph(server):
     srv, _, base = server
-    status, html = get(base + "/")
-    assert status == 200 and 'id="agentsdiagram-live"' in html and srv.token in html
     _, graph = get(base + "/api/graph")
     names = {n["name"] for n in json.loads(graph)["project"]["nodes"]}
     assert {"lead", "analyst", "web_researcher"} <= names
     _, mermaid = get(base + "/api/mermaid")
     assert mermaid.startswith("---") or "flowchart" in mermaid
+    html = page(base)
+    assert 'id="agentsdiagram-live"' in html and srv.token in html
 
 
 def test_edit_needs_the_token_and_writes(server, tmp_path):
@@ -86,10 +96,10 @@ def test_read_only(tmp_path):
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     try:
         base = f"http://127.0.0.1:{srv.server_port}"
-        _, html = get(base + "/")
-        assert '"editable": false' in html and srv.token not in html
         status, _ = post(base + "/api/edit", {"request": {}}, {"X-Agentsdiagram-Token": srv.token})
         assert status == 403
+        html = page(base)
+        assert '"editable": false' in html and srv.token not in html
     finally:
         srv.shutdown()
         srv.server_close()
