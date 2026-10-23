@@ -12,6 +12,12 @@ git tag v0.1.0 && git push origin v0.1.0
 `.github/workflows/release.yml` builds the viewer, the wheel/sdist (checking `_static/` is inside)
 and the `.vsix`, then publishes PyPI → Open VSX + Marketplace → GitHub release.
 
+After a green release, the public listings lag: the PyPI JSON API is cached for a few minutes
+(`/simple/agentsdiagram/` shows new versions first), and the Marketplace keeps a new version in
+verification for a while. Trust the job log ("Published alex-roc.agentsdiagram vX") and check
+again later. `pnpm --filter agentsdiagram test:visual` runs `uvx agentsdiagram==<version>`, so it
+only shows the panel once that version is on PyPI.
+
 ## Status (2026-10-22)
 
 | Registry | State |
